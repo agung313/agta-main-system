@@ -49,15 +49,14 @@ const NavigationButtom = () => {
         <ul className="flex flex-wrap justify-center space-x-2 sm:space-x-4">
           {tabs[codeLanguage].map((tab: { name: string; id: string }, index: number) => (
             <li key={index} className="flex-1">
-              <Link
-                href="/"
+              <button
                 className={`block text-center ${
                   tabActive.name === tab.name ? 'text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 border border-transparent bg-clip-border bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 font-bold text-[1.5vh] sm:text-[2vh] xl:text-[2.5vh] py-2 px-2 rounded-xl' : 'py-2 px-2 text-neutral-400 font-bold text-[1.5vh] sm:text-[2vh] xl:text-[2.5vh]'
                 }`}
                 onClick={() => clickTab(index)}
                >
                 {tab.name}
-              </Link>
+              </button>
             </li>
           ))}
         </ul>

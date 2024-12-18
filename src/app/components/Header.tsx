@@ -45,11 +45,16 @@ const Header = () => {
     }
     dispatch(changeLanguage(dataCode));
   };
+
+  const handleHome = () => {
+    dispatch(changeTabActive('homeTab'));
+    window.location.href = '/';
+  };
   return (
     <div className='w-full flex justify-center items-center fixed z-50 p-5'>
       <header className="text-black top-0 w-full">
         <nav className="container mx-auto flex justify-between items-center">
-          <button className="flex items-center" onClick={() => dispatch(changeTabActive('homeTab'))}>
+          <button className="flex items-center" onClick={() => handleHome()}>
             {/* <Image src={LogoUtama} alt="Logo" className="w-auto h-[5vh] sm:h-[10vh]" /> */}
             <div className="items-center">
               {/* <p className="font-extrabold text-[3vh] sm:text-[6vh] text-blueCustom-900">AGTA</p> */}
