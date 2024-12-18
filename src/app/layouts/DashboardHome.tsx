@@ -10,7 +10,7 @@ import Redux from "../icons/redux.svg";
 import Mui from "../icons/mui.svg";
 import Tailwind from "../icons/tailwind.svg";
 import Golang from "../icons/golang.svg";
-import Postgresql from "../icons/postgresql.svg";
+import Postgresql from "../icons/Postgresql.svg";
 import Image from "next/image";
 import useAnimateElements from "../components/useAnimateElements";
 
