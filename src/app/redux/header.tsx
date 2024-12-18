@@ -28,7 +28,7 @@ export const header = createSlice({
     codeLanguage: 'en', // default language
     idTabActive: 'homeTab',
     isFromHeader: false,
-    location: {} as any,
+    location: {},
     loading: false,
     error: '' as string | null,
   },

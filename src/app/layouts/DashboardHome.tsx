@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import NextJs from "../icons/nextJs.svg";
 import ReactJs from "../icons/reactJs.svg";

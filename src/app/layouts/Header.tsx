@@ -2,16 +2,17 @@
 
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 // import Link from 'next/link';
 // import LogoUtama from '../icons/logoUtama.svg';
 import IDFlag from '../icons/indonesiaFlag.svg';
 import ENFlag from '../icons/englishFlag.svg';
 import Globe from '../icons/globe.svg';
 import { changeLanguage, changeTabActive, fetchLocation } from '../redux/header';
+import { store } from '../redux/store'; // Adjust the path as necessary
 
 const Header = () => {
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch<typeof store.dispatch>();
   const codeLanguage = useSelector(
     (state: { header: { codeLanguage: "id" | "en" } }) => state.header.codeLanguage
   );
@@ -27,10 +28,10 @@ const Header = () => {
   type languageType = {
     name: string;
     code: string;
-    icont: any;
+    icont: StaticImageData;
   };
 
-  const languages = [
+  const languages: languageType[] = [
     { name: 'Indonesia', code: 'id', icont: IDFlag },
     { name: 'English', code: 'en', icont: ENFlag },
   ];

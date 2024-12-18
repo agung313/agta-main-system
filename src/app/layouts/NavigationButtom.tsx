@@ -1,18 +1,18 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeActiveFromHeader, changeTabActive } from '../redux/header';
 
 const NavigationButtom = () => {
   const idTabActive = useSelector((state: { header: { idTabActive: string } }) => state.header.idTabActive);
   const codeLanguage = useSelector((state: { header: { codeLanguage: 'id' | 'en' } }) => state.header.codeLanguage);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); 
 
-  const tabs = {
+  const tabs = useMemo(() => ({
     id: [{ name: 'Beranda', id: 'homeTab' }, { name: 'Tentang', id: 'aboutTab' }, { name: 'Layanan', id: 'servicesTab' }, { name: 'Kontak', id: 'contactTab' }],
     en: [{ name: 'Home', id: 'homeTab'}, { name: 'About', id: 'aboutTab' }, { name: 'Services', id: 'servicesTab' }, { name: 'Contact', id: 'contactTab' }],
-  };
+  }), []);
   const [tabActive, setTabActive] = useState<{ name: string; id: string }>(tabs[codeLanguage][0]);
 
   const clickTab = (index: number) => {
@@ -30,7 +30,7 @@ const NavigationButtom = () => {
     if (tab) {
       setTabActive(tab);
     }
-  }, [idTabActive, codeLanguage]);
+  }, [idTabActive, codeLanguage, tabs]);
 
   return (
     <div className="fixed bottom-0 left-0 right-0 p-2 z-50 flex justify-center">
