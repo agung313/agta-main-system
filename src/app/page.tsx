@@ -1,14 +1,14 @@
 "use client";
 
 import { useSelector } from "react-redux";
-import DashboardHome from "./components/DashboardHome";
-import Header from "./components/Header";
+import DashboardHome from "./layouts/DashboardHome";
+import Header from "./layouts/Header";
 import BackgroundImage from "./icons/backgroundImage.jpg"
 import Image from "next/image";
-import NavigationButtom from "./components/NavigationButtom";
-import DashboardAbout from "./components/DashboardAbout";
-import DashboardServices from "./components/DashboardServices";
-import DashboardContact from "./components/DashboardContact";
+import NavigationButtom from "./layouts/NavigationButtom";
+import DashboardAbout from "./layouts/DashboardAbout";
+import DashboardServices from "./layouts/DashboardServices";
+import DashboardContact from "./layouts/DashboardContact";
 
 export default function Home() {
   const idTabActive = useSelector((state: { header: { idTabActive: string } }) => state.header.idTabActive);

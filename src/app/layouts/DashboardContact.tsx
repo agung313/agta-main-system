@@ -2,26 +2,18 @@
 
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { motion } from "framer-motion";
 import Email from "../icons/email.svg";
 import Instagram from "../icons/instagram.svg";
 import Linkedin from "../icons/linkedin.svg";
 import Pinlocation from "../icons/pinLocation.svg";
 import Image from "next/image";
+import useAnimateElements from "../components/useAnimateElements";
 
 const DashboardContact = () => {
+  const { containerRef, iconsRef } = useAnimateElements();
   const codeLanguage = useSelector(
     (state: { header: { codeLanguage: "id" | "en" } }) => state.header.codeLanguage
   );
-
-  const containerVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: "easeOut" },
-    },
-  };
   
   const [inputData, setInputData] = useState({
     name: "",
@@ -31,21 +23,11 @@ const DashboardContact = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <motion.div
-        className="flex flex-col justify-center items-center"
-        initial="hidden"
-        animate="visible"
-        variants={containerVariants}
-      >
+      <div ref={containerRef} className="flex flex-col justify-center items-center">
         <p className="font-montserrat font-extrabold text-[5vh] xl:text-[8vh] text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 neon-glow">
           {codeLanguage === "id" ? "KONTAK" : "CONTACT"}
         </p>
-        <motion.div
-          className="w-[90vw] sm:w-[80vw] min-h-[20vh] max-h-[70vh] overflow-y-auto pb-[8vh]"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
-        >
+        <div ref={iconsRef} className="w-[90vw] sm:w-[80vw] min-h-[20vh] max-h-[70vh] overflow-y-auto pb-[8vh]">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-[4vh] mb-[2vh] sm:mb-[4vh]">
             
             <div className="flex items-center sm:justify-center">
@@ -124,8 +106,8 @@ const DashboardContact = () => {
               </button>
             </form>
           </div>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </div>
   );
 };

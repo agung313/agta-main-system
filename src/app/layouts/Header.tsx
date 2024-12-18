@@ -16,8 +16,6 @@ const Header = () => {
     (state: { header: { codeLanguage: "id" | "en" } }) => state.header.codeLanguage
   );
 
-  console.log('cek codeLanguage', codeLanguage);
-
   useEffect(() => {
     dispatch(fetchLocation());
   }, []);

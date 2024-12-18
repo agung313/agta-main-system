@@ -4,13 +4,16 @@ import React, { useState } from 'react'
 import Image from 'next/image';
 import NavigationBar from '../../icons/navigationBar.svg';
 import ProfileCircle from '../../icons/profileCircle.svg';
+import { useDispatch } from 'react-redux';
+import { changeTabActive } from '@/app/redux/header';
 
 const Header = () => {
+  const dispatch = useDispatch();
   const tabs = [
-    { name: 'Dashboard', id: 'homeTab' },
-    { name: 'Tentang', id: 'aboutTab' },
-    { name: 'Layanan', id: 'servicesTab' },
-    { name: 'Kontak', id: 'contactTab' },
+    { name: 'Dashboard', id: 'homeAdminTab' },
+    { name: 'Tentang', id: 'aboutAdminTab' },
+    { name: 'Layanan', id: 'servicesAdminTab' },
+    { name: 'Kontak', id: 'contactAdminTab' },
   ];
   const [tabActive, setTabActive] = useState<{ name: string; id: string }>(tabs[0]);
   const handleHome = () => {
@@ -24,9 +27,11 @@ const Header = () => {
   const clickTab = (index: number) => {
     setTabActive(() => {
       const newTab = tabs[index];
+      dispatch(changeTabActive(newTab.id));
       return newTab;
     });
   };
+
   return (
     <div className='w-full flex justify-center items-center fixed z-50 p-5'>
       <header className="text-black top-0 w-full">

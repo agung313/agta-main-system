@@ -2,25 +2,17 @@
 
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
-import { motion } from "framer-motion";
-import Header from '../components/Header';
+import Header from '../layouts/Header';
 import Google from '../icons/googleColor.svg'
 import Image from 'next/image';
 import BackgroundImage from '../icons/backgroundImage.jpg';
+import useAnimateElements from '../components/useAnimateElements';
 
 const Login = () => {
+  const { containerRef } = useAnimateElements();
   const codeLanguage = useSelector(
     (state: { header: { codeLanguage: "id" | "en" } }) => state.header.codeLanguage
   );
-
-  const containerVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: "easeOut" },
-    },
-  };
 
   const [inputData, setInputData] = useState({
     email: "",
@@ -37,12 +29,7 @@ const Login = () => {
       <div className="absolute inset-0 z-10">
         <Header />
         <div className='flex justify-center items-center w-[100vw] h-[100vh]'>
-          <motion.div
-            className="flex justify-center items-center w-[90vw]"
-            initial="hidden"
-            animate="visible"
-            variants={containerVariants}
-          >
+          <div ref={containerRef} className="flex justify-center items-center w-[90vw]">
             <div className="flex-col justify-center items-center w-[60%] xl:w-[65%] hidden xl:flex">
               <p className="text-[3vh] xl:text-[4vh] text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-300 -mb-3 xl:-mb-8 neon-glow">
                 WHERE
@@ -111,7 +98,7 @@ const Login = () => {
               </p>
 
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </div>

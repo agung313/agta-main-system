@@ -1,10 +1,8 @@
 "use client";
 
-import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeActiveFromHeader, changeTabActive } from '../redux/header';
-import scrollToElement from 'scroll-to-element';
 
 const NavigationButtom = () => {
   const idTabActive = useSelector((state: { header: { idTabActive: string } }) => state.header.idTabActive);
@@ -17,18 +15,9 @@ const NavigationButtom = () => {
   };
   const [tabActive, setTabActive] = useState<{ name: string; id: string }>(tabs[codeLanguage][0]);
 
-  const handleScroll = (divId: string) => {
-    scrollToElement(`#${divId}`, {
-      offset: 0,
-      ease: 'out-cube',
-      duration: 800
-    });
-  };
-
   const clickTab = (index: number) => {
     setTabActive(() => {
       const newTab = tabs[codeLanguage][index];
-      handleScroll(newTab.id);
       dispatch(changeActiveFromHeader(true));
       dispatch(changeTabActive(newTab.id));
       return newTab;
