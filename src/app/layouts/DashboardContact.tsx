@@ -33,7 +33,7 @@ const DashboardContact = () => {
             <div className="flex items-center sm:justify-center">
               <Image src={Email} alt="Logo" className="w-[2vh] md:w-[3vh] lg:w-[4vh] h-auto" />
               <div className="ml-4">
-                <a href="mailto:sholihhudinagung@gmail.com" target="_blank" className="text-[1.5vh] text-justify sm:text-[2vh] xl:text-[2.5vh] text-white">
+                <a href="mailto:sholihhudinagung@gmail.com" target="_blank" rel="noreferrer" className="text-[1.5vh] text-justify sm:text-[2vh] xl:text-[2.5vh] text-white">
                   sholihhudinagung@gmail.com
                 </a>
               </div>
@@ -42,7 +42,7 @@ const DashboardContact = () => {
             <div className="flex items-center sm:justify-center">
               <Image src={Instagram} alt="Logo" className="w-[2vh] md:w-[3vh] lg:w-[4vh] h-auto" />
               <div className="ml-4">
-                <a href="https://www.instagram.com/sholihhudinagung/" target="_blank" className="text-[1.5vh] text-justify sm:text-[2vh] xl:text-[2.5vh] text-white">
+                <a href="https://www.instagram.com/sholihhudinagung/" target="_blank" rel="noreferrer" className="text-[1.5vh] text-justify sm:text-[2vh] xl:text-[2.5vh] text-white">
                   sholihhudinagung
                 </a>
               </div>
@@ -51,7 +51,7 @@ const DashboardContact = () => {
             <div className="flex items-center sm:justify-center">
               <Image src={Linkedin} alt="Logo" className="w-[2vh] md:w-[3vh] lg:w-[4vh] h-auto" />
               <div className="ml-4">
-                <a href="https://www.linkedin.com/in/muhammad-agung-sholihhudin-567963265/" target="_blank" className="text-[1.5vh] text-justify sm:text-[2vh] xl:text-[2.5vh] text-white">
+                <a href="https://www.linkedin.com/in/muhammad-agung-sholihhudin-567963265/" target="_blank" rel="noreferrer" className="text-[1.5vh] text-justify sm:text-[2vh] xl:text-[2.5vh] text-white">
                   muhammad agung sholihhudin
                 </a>
               </div>
@@ -61,7 +61,7 @@ const DashboardContact = () => {
           <div className="flex items-center sm:justify-center">
             <Image src={Pinlocation} alt="Logo" className="w-[2vh] md:w-[3vh] lg:w-[4vh] h-auto" />
             <div className="ml-4">
-              <a href="https://maps.app.goo.gl/3v6oiY9DpT2AhfMa9" target="_blank" className="text-[1.5vh] text-justify sm:text-[2vh] xl:text-[2.5vh] text-white">
+              <a href="https://maps.app.goo.gl/3v6oiY9DpT2AhfMa9" target="_blank" rel="noreferrer" className="text-[1.5vh] text-justify sm:text-[2vh] xl:text-[2.5vh] text-white">
                 Jl. Daru - Daru VII, Pekanbaru, Riau, Indonesia
               </a>
             </div>

@@ -1,3 +1,28 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "extends": [
+    "next/core-web-vitals", // Aturan linting bawaan Next.js
+    "next/typescript", // Mendukung TypeScript
+    "eslint:recommended", // Aturan linting dasar
+    "plugin:react/recommended" // Mendukung React
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2020, // Mendukung fitur ES2020
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true // Mendukung JSX
+    }
+  },
+  "rules": {
+    // Aturan tambahan untuk linting
+    "react/react-in-jsx-scope": "off", // Tidak perlu import React di Next.js
+    "react/prop-types": "off", // Opsional: nonaktifkan prop-types jika Anda menggunakan TypeScript
+    "@next/next/no-html-link-for-pages": "off", // Nonaktifkan jika Anda tidak selalu menggunakan <Link>
+    "no-unused-vars": "warn", // Beri peringatan untuk variabel yang tidak digunakan
+    "no-console": "warn" // Beri peringatan jika ada console.log
+  },
+  "settings": {
+    "react": {
+      "version": "detect" // Otomatis deteksi versi React
+    }
+  }
 }

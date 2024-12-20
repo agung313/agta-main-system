@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Image, { StaticImageData } from 'next/image';
 // import Link from 'next/link';
@@ -19,11 +19,7 @@ const Header = () => {
 
   useEffect(() => {
     dispatch(fetchLocation());
-  }, []);
-
-  useEffect(() => {
-    selectedLanguage(codeLanguage);
-  }, [codeLanguage]);
+  }, [dispatch]);
 
   type languageType = {
     name: string;
@@ -31,19 +27,23 @@ const Header = () => {
     icont: StaticImageData;
   };
 
-  const languages: languageType[] = [
+  const languages: languageType[] = useMemo(() => [
     { name: 'Indonesia', code: 'id', icont: IDFlag },
     { name: 'English', code: 'en', icont: ENFlag },
-  ];
+  ], []);
 
   const [languageActive, setLanguageActive] = useState<languageType>(languages[0]);
-  const selectedLanguage = (dataCode: string) => {
+  const selectedLanguage = useCallback((dataCode: string) => {
     const selectedLanguage = languages.find(lang => lang.code === dataCode);
     if (selectedLanguage) {
       setLanguageActive(selectedLanguage);
     }
     dispatch(changeLanguage(dataCode));
-  };
+  }, [languages, dispatch]);
+
+  useEffect(() => {
+    selectedLanguage(codeLanguage);
+  }, [codeLanguage, selectedLanguage]);
 
   const handleHome = () => {
     dispatch(changeTabActive('homeTab'));

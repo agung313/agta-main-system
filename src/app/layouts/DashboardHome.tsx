@@ -41,43 +41,43 @@ const DashboardHome = () => {
             }
           </p>
           <div className="flex justify-center items-center space-x-10 lg:flex-row flex-wrap px-4">
-            <a href="https://nextjs.org/" target="_blank" className="relative group">
+            <a href="https://nextjs.org/" target="_blank" rel="noreferrer" className="relative group">
               <Image src={NextJs} alt="Logo" className="w-[4vh] md:w-[5vh] lg:w-[6vh] h-auto" />
               <span className="absolute bottom-full mb-2 hidden group-hover:block text-white bg-black p-1 rounded">Next.js</span>
             </a>
-            <a href="https://react.dev/" target="_blank" className="relative group">
+            <a href="https://react.dev/" target="_blank" rel="noreferrer" className="relative group">
               <Image src={ReactJs} alt="Logo" className="w-[5vh] md:w-[6vh] lg:w-[7vh] h-auto" />
               <span className="absolute bottom-full mb-2 hidden group-hover:block text-white bg-black p-1 rounded">React.js</span>
             </a>
-            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" className="relative group">
+            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer" className="relative group">
               <Image src={Javascript} alt="Logo" className="w-[4vh] md:w-[5vh] lg:w-[6vh] h-auto" />
               <span className="absolute bottom-full mb-2 hidden group-hover:block text-white bg-black p-1 rounded">JavaScript</span>
             </a>
-            <a href="https://reactnative.dev/" target="_blank" className="relative group">
+            <a href="https://reactnative.dev/" target="_blank" rel="noreferrer" className="relative group">
               <Image src={ReactJs} alt="Logo" className="w-[5vh] md:w-[6vh] lg:w-[7vh] h-auto" />
               <span className="absolute bottom-full mb-2 hidden group-hover:block text-white bg-black p-1 rounded">React Native</span>
             </a>
-            <a href="https://www.typescriptlang.org/" target="_blank" className="relative group">
+            <a href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer" className="relative group">
               <Image src={Typescript} alt="Logo" className="w-[4vh] md:w-[5vh] lg:w-[6vh] h-auto" />
               <span className="absolute bottom-full mb-2 hidden group-hover:block text-white bg-black p-1 rounded">TypeScript</span>
             </a>
-            <a href="https://redux.js.org/" target="_blank" className="relative group">
+            <a href="https://redux.js.org/" target="_blank" rel="noreferrer" className="relative group">
               <Image src={Redux} alt="Logo" className="w-[4vh] md:w-[5vh] lg:w-[6vh] h-auto" />
               <span className="absolute bottom-full mb-2 hidden group-hover:block text-white bg-black p-1 rounded">Redux</span>
             </a>
-            <a href="https://tailwindcss.com/" target="_blank" className="relative group">
+            <a href="https://tailwindcss.com/" target="_blank" rel="noreferrer" className="relative group">
               <Image src={Tailwind} alt="Logo" className="w-[5vh] md:w-[6vh] lg:w-[7vh] h-auto" />
               <span className="absolute bottom-full mb-2 hidden group-hover:block text-white bg-black p-1 rounded">Tailwind CSS</span>
             </a>
-            <a href="https://mui.com/" target="_blank" className="relative group">
+            <a href="https://mui.com/" target="_blank" rel="noreferrer" className="relative group">
               <Image src={Mui} alt="Logo" className="w-[4vh] md:w-[5vh] lg:w-[6vh] h-auto" />
               <span className="absolute bottom-full mb-2 hidden group-hover:block text-white bg-black p-1 rounded">Material UI</span>
             </a>
-            <a href="https://go.dev/" target="_blank" className="relative group">
+            <a href="https://go.dev/" target="_blank" rel="noreferrer" className="relative group">
               <Image src={Golang} alt="Logo" className="w-[7vh] md:w-[8vh] lg:w-[9vh] h-auto" />
               <span className="absolute bottom-full mb-2 hidden group-hover:block text-white bg-black p-1 rounded">Golang</span>
             </a>
-            <a href="https://www.postgresql.org/" target="_blank" className="relative group">
+            <a href="https://www.postgresql.org/" target="_blank" rel="noreferrer" className="relative group">
               <Image src={Postgresql} alt="Logo" className="w-[6vh] md:w-[7vh] lg:w-[8vh] h-auto" />
               <span className="absolute bottom-full mb-2 hidden group-hover:block text-white bg-black p-1 rounded">PostgreSQL</span>
             </a>

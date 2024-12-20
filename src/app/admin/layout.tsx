@@ -1,3 +1,4 @@
+import React from "react";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "../globals.css";
@@ -11,6 +12,11 @@ const geistSans = localFont({
 const geistMono = localFont({
   src: "../fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
+  weight: "100 900",
+});
+const montserrat = localFont({
+  src: "../fonts/Montserrat-VariableFont_wght.ttf",
+  variable: "--Montserrat",
   weight: "100 900",
 });
 
@@ -27,11 +33,8 @@ export default function RootLayout({
   return (
     <StoreProvider>
       <html lang="en">
-        <head>
-          <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
-        </head>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white`}
+          className={`${montserrat.variable} ${geistSans.variable} ${geistMono.variable} antialiased bg-white`}
         >
           {children}
         </body>

@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "eslint . && next dev -p 3002",
+    "dev": "concurrently \"next dev -p 3002\" \"npm run lint:watch\"",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:watch": "chokidar 'src/**/*.{js,jsx,ts,tsx}' -c 'eslint . --ext .js,.jsx,.ts,.tsx'"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.4.0",
@@ -23,8 +24,12 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/scroll-to-element": "^2.0.5",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.16",
+    "chokidar-cli": "^3.0.0",
+    "concurrently": "^8.2.2",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^14.2.16",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.1.0",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
