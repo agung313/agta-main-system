@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "../globals.css";
 import { StoreProvider } from "../redux/StoreProvider";
+import Header from "./components/Header";
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -32,13 +33,12 @@ export default function RootLayout({
 }>) {
   return (
     <StoreProvider>
-      <html lang="en">
-        <body
-          className={`${montserrat.variable} ${geistSans.variable} ${geistMono.variable} antialiased bg-white`}
-        >
-          {children}
-        </body>
-      </html>
+      <div
+        className={`${montserrat.variable} ${geistSans.variable} ${geistMono.variable} antialiased bg-black w-[100vw] h-[100vh] overflow-hidden`}
+      >
+        <Header />
+        {children}
+      </div>
     </StoreProvider>
   );
 }

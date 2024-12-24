@@ -1,18 +1,11 @@
-"use client";
-
 import React from 'react';
-import Header from './layouts/Header';
-import { useSelector } from 'react-redux';
-import DashboardHome from './layouts/DashboardHome';
 
-const Admin = () => {
-  const idTabActive = useSelector((state: { header: { idTabActive: string } }) => state.header.idTabActive);
+const DashboardHome = () => {
   return (
-    <div style={{ overflow: 'hidden' }}>
-      <Header />
-      {idTabActive === 'homeTab' && <DashboardHome />}
+    <div className="flex justify-center items-center min-h-screen text-white">
+      DashboardHome
     </div>
   );
 };
 
-export default Admin;
+export default DashboardHome;

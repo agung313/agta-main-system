@@ -33,6 +33,14 @@ export const header = createSlice({
     error: '' as string | null,
   },
   reducers: {
+    resetState: (state) => {
+      state.codeLanguage = 'en';
+      state.idTabActive = 'homeTab';
+      state.isFromHeader = false;
+      state.location = {};
+      state.loading = false;
+      state.error = null;
+    },
     changeLanguage: (state, action) => {
       state.codeLanguage = action.payload;
     },
@@ -59,6 +67,6 @@ export const header = createSlice({
   },
 });
 
-export const { changeLanguage, changeTabActive, changeActiveFromHeader } = header.actions;
+export const { changeLanguage, changeTabActive, changeActiveFromHeader, resetState } = header.actions;
 
 export default header.reducer;

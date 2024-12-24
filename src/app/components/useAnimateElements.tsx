@@ -14,7 +14,7 @@ const useAnimateElements = () => {
           containerRef.current.style.opacity = "1";
           containerRef.current.style.transform = "translateY(0)";
         }
-      }, 500);
+      }, 300);
     }
 
     if (iconsRef.current) {
@@ -26,7 +26,7 @@ const useAnimateElements = () => {
           iconsRef.current.style.opacity = "1";
           iconsRef.current.style.transform = "translateY(0)";
         }
-      }, 1000);
+      }, 600);
     }
   }, []);
 

@@ -2,7 +2,11 @@ import React from "react";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import Image from "next/image";
 import { StoreProvider } from "./redux/StoreProvider";
+import BackgroundImage from "./icons/backgroundImage.jpg"
+import Header from "./components/Header";
+import NavigationButtom from "./components/NavigationButtom";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -37,7 +41,12 @@ export default function RootLayout({
         <body
           className={`${montserrat.variable} ${geistSans.variable} ${geistMono.variable} antialiased bg-black`}
         >
-          {children}
+          <Image src={BackgroundImage} alt="Logo" layout="fill" objectFit="cover" className="z-0" style={{ opacity: 0.5 }} />
+          <div className="absolute inset-0 z-10">
+            <Header />
+            {children}
+            <NavigationButtom />
+          </div>
         </body>
       </html>
     </StoreProvider>

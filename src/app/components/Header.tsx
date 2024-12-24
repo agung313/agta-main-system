@@ -10,15 +10,19 @@ import ENFlag from '../icons/englishFlag.svg';
 import Globe from '../icons/globe.svg';
 import { changeLanguage, changeTabActive, fetchLocation } from '../redux/header';
 import { store } from '../redux/store'; // Adjust the path as necessary
+import { usePathname } from 'next/navigation';
 
 const Header = () => {
   const dispatch = useDispatch<typeof store.dispatch>();
+   const pathname = usePathname();
   const codeLanguage = useSelector(
     (state: { header: { codeLanguage: "id" | "en" } }) => state.header.codeLanguage
   );
 
   useEffect(() => {
-    dispatch(fetchLocation());
+    if (window.location.pathname === '/') {
+      dispatch(fetchLocation());
+    }
   }, [dispatch]);
 
   type languageType = {
@@ -49,6 +53,11 @@ const Header = () => {
     dispatch(changeTabActive('homeTab'));
     window.location.href = '/';
   };
+
+  if (pathname.startsWith('/admin')) {
+    return null;
+  }
+
   return (
     <div className='w-full flex justify-center items-center fixed z-50 p-5'>
       <header className="text-black top-0 w-full">
