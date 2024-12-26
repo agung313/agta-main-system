@@ -11,19 +11,20 @@ import Globe from '../icons/globe.svg';
 import { changeLanguage, changeTabActive, fetchLocation } from '../redux/header';
 import { store } from '../redux/store'; // Adjust the path as necessary
 import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 
 const Header = () => {
   const dispatch = useDispatch<typeof store.dispatch>();
-   const pathname = usePathname();
+  const pathname = usePathname();
   const codeLanguage = useSelector(
     (state: { header: { codeLanguage: "id" | "en" } }) => state.header.codeLanguage
   );
 
   useEffect(() => {
-    if (window.location.pathname === '/') {
+    if (pathname === '/' || pathname === '/login') {
       dispatch(fetchLocation());
     }
-  }, [dispatch]);
+  }, [dispatch, pathname]);
 
   type languageType = {
     name: string;
@@ -51,7 +52,6 @@ const Header = () => {
 
   const handleHome = () => {
     dispatch(changeTabActive('homeTab'));
-    window.location.href = '/';
   };
 
   if (pathname.startsWith('/admin')) {
@@ -62,14 +62,11 @@ const Header = () => {
     <div className='w-full flex justify-center items-center fixed z-50 p-5'>
       <header className="text-black top-0 w-full">
         <nav className="container mx-auto flex justify-between items-center">
-          <button className="flex items-center" onClick={() => handleHome()}>
-            {/* <Image src={LogoUtama} alt="Logo" className="w-auto h-[5vh] sm:h-[10vh]" /> */}
+          <Link href='/' className="flex items-center" onClick={() => handleHome()}>
             <div className="items-center">
-              {/* <p className="font-extrabold text-[3vh] sm:text-[6vh] text-blueCustom-900">AGTA</p> */}
               <p className="font-extrabold text-[3vh] sm:text-[5vh] text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">AGTA</p>
-              {/* <p className="text-[0.75vh] sm:text-[1.5vh] font-bold text-blueCustom-800 mt-[-0.3rem]">Where Ideas Come to Life</p> */}
             </div>
-          </button>
+          </Link>
           <div className="flex items-center">
             <div className="flex items-center ml-10 p-2 text-white rounded-xl bg-transparent cursor-pointer">
               <Image src={Globe} alt="Language Icon" className="w-6 h-6 mr-2" />

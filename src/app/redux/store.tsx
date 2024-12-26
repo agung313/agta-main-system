@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import header from './header';
+import admin from './admin';
 
 export const store = configureStore({
   reducer: {
     header: header,
+    admin: admin,
   },
 });
 

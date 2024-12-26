@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "../globals.css";
 import { StoreProvider } from "../redux/StoreProvider";
+import SideBar from "./components/SideBar";
 import Header from "./components/Header";
 
 const geistSans = localFont({
@@ -36,8 +37,19 @@ export default function RootLayout({
       <div
         className={`${montserrat.variable} ${geistSans.variable} ${geistMono.variable} antialiased bg-black w-[100vw] h-[100vh] overflow-hidden`}
       >
-        <Header />
-        {children}
+        <div className="flex h-[100vh]">
+          <div className="w-[20vw] hidden sm:flex">
+            <SideBar />
+          </div>
+          <div className="w-full sm:w-[80vw] h-[100vh]">
+            <div className="w-full h-[10vh]">
+              <Header />
+            </div>
+            <div className="w-full overflow-auto">
+              {children}
+            </div>
+          </div>
+        </div>
       </div>
     </StoreProvider>
   );
