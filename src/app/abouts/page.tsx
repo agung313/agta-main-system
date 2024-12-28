@@ -1,14 +1,20 @@
 "use client";
 
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import useAnimateElements from "../components/useAnimateElements";
+import { changeTabActive } from "../redux/header";
 
 const DashboardAbout = () => {
+  const dispatch = useDispatch();
   const { containerRef, iconsRef } = useAnimateElements();
   const codeLanguage = useSelector(
     (state: { header: { codeLanguage: "id" | "en" } }) => state.header.codeLanguage
   );
+
+  useEffect(() => {
+    dispatch(changeTabActive('aboutTab'));
+  }, [dispatch]);
 
   return (
     <div className="flex justify-center items-center min-h-screen">

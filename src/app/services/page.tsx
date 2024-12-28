@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import NextJs from "../icons/nextJs.svg";
 import ReactJs from "../icons/reactJs.svg";
 import Typescript from "../icons/typescript.svg";
@@ -13,12 +13,18 @@ import Golang from "../icons/golang.svg";
 import Postgresql from "../icons/Postgresql.svg"
 import Image from "next/image";
 import useAnimateElements from "../components/useAnimateElements";
+import { changeTabActive } from "../redux/header";
 
 const DashboardServices = () => {
+  const dispatch = useDispatch();
   const { containerRef, iconsRef } = useAnimateElements();
   const codeLanguage = useSelector(
     (state: { header: { codeLanguage: "id" | "en" } }) => state.header.codeLanguage
   );
+
+  useEffect(() => {
+    dispatch(changeTabActive('servicesTab'));
+  }, [dispatch]);
 
   return (
     <div className="flex justify-center items-center min-h-screen">
@@ -124,14 +130,7 @@ const DashboardServices = () => {
                 </p>
               </div>
             </div>
-
           </div>
-          <p className="text-[1.5vh] text-justify sm:text-[2vh] xl:text-[2.5vh] text-white indent-5 sm:indent-10">
-            {codeLanguage === "id"
-              ? "Bersama AGTA, mari wujudkan ide-ide kreatif Anda menjadi sistem digital yang nyata dan berdampak besar."
-              : "With AGTA, let’s turn your creative ideas into impactful and tangible digital systems."
-            }
-          </p>
         </div>
       </div>
     </div>

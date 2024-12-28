@@ -1,15 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Email from "../icons/email.svg";
 import Instagram from "../icons/instagram.svg";
 import Linkedin from "../icons/linkedin.svg";
 import Pinlocation from "../icons/pinLocation.svg";
 import Image from "next/image";
 import useAnimateElements from "../components/useAnimateElements";
+import { changeTabActive } from "../redux/header";
 
 const DashboardContact = () => {
+  const dispatch = useDispatch();
   const { containerRef, iconsRef } = useAnimateElements();
   const codeLanguage = useSelector(
     (state: { header: { codeLanguage: "id" | "en" } }) => state.header.codeLanguage
@@ -20,6 +22,10 @@ const DashboardContact = () => {
     email: "",
     message: "",
   });
+
+  useEffect(() => {
+    dispatch(changeTabActive('contactTab'));
+  }, [dispatch]);
 
   return (
     <div className="flex justify-center items-center min-h-screen">

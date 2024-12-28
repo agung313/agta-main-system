@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { store } from '@/app/redux/store';
 import { changeTabActive } from '@/app/redux/admin';
 import DashboardIcont from '../icons/DashboardIcont';
+import SloganIcont from '../icons/SloganIcont';
 import AboutIcont from '../icons/AboutIcont';
 import ServiceIcont from '../icons/ServiceIcont';
 import ContactIcont from '../icons/ContactIcont';
@@ -20,7 +21,7 @@ const SideBar = () => {
   };
 
   return (
-    <div className='w-full h-[100vh] bg-neutral-800 bg-opacity-40 border-r border-neutral-800 flex flex-col'>
+    <div className='w-full h-[100vh] bg-neutral-800 bg-opacity-50 border-r border-neutral-800 flex flex-col'>
       <Link href='/admin' onClick={() => changeTab('homeTab')} className='flex justify-center items-center text-white mx-4 py-5 border-b-2 border-neutral-800'>
         <p className="font-bold text-[1vh] sm:text-[3vh] text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">AGTA Widget</p>
       </Link>
@@ -30,6 +31,12 @@ const SideBar = () => {
           <DashboardIcont size={35} color={idTabActive === 'homeTab' ? '#fff' : '#4A4E56'} />
           <p className={`font-medium text-[2vh] ml-2 ${idTabActive === 'homeTab' ? 'text-white' : 'text-neutral-600'}`}>
             Dashboard
+          </p>
+        </button>
+        <button className="flex items-center mt-8 pl-1" onClick={() => changeTab('sloganTab')}>
+          <SloganIcont size={25} color={idTabActive === 'sloganTab' ? '#fff' : '#4A4E56'} />
+          <p className={`font-medium text-[2vh] ml-3 ${idTabActive === 'sloganTab' ? 'text-white' : 'text-neutral-600'}`}>
+            Slogan
           </p>
         </button>
         <button className="flex items-center mt-8 pl-1" onClick={() => changeTab('aboutTab')}>

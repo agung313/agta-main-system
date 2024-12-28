@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeActiveFromHeader, changeTabActive } from '../redux/header';
+import { changeTabActive } from '../redux/header';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -21,11 +21,9 @@ const NavigationButtom = () => {
   const clickTab = (index: number) => {
     setTabActive(() => {
       const newTab = tabs[codeLanguage][index];
-      dispatch(changeActiveFromHeader(true));
       dispatch(changeTabActive(newTab.id));
       return newTab;
     });
-    dispatch(changeActiveFromHeader(false));
   };
 
   useEffect(() => {

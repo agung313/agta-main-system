@@ -23,7 +23,7 @@ const Header = () => {
   }, []);
 
   return (
-    <div className='p-4 w-full h-full bg-neutral-800 bg-opacity-40 flex items-center justify-between'>
+    <div className='p-4 w-full h-full bg-neutral-800 bg-opacity-50 flex items-center justify-between'>
       <p className="font-bold text-[1vh] sm:text-[3vh] ml-4">
         {idTabActive === 'homeTab' ? 'Dashboard' : idTabActive === 'aboutTab' ? 'Abouts' : idTabActive === 'serviceTab' ? 'Services' : 'Contacts'}
       </p>

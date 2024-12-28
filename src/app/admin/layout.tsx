@@ -37,17 +37,20 @@ export default function RootLayout({
       <div
         className={`${montserrat.variable} ${geistSans.variable} ${geistMono.variable} antialiased bg-black w-[100vw] h-[100vh] overflow-hidden`}
       >
-        <div className="flex h-[100vh]">
-          <div className="w-[20vw] hidden sm:flex">
+        <div className="flex h-full">
+          <div className="hidden xl:flex w-[20vw]">
             <SideBar />
           </div>
-          <div className="w-full sm:w-[80vw] h-[100vh]">
-            <div className="w-full h-[10vh]">
+          <div className="w-full xl:w-[80vw] h-full flex flex-col">
+            <div className="h-[10vh]">
               <Header />
             </div>
-            <div className="w-full overflow-auto">
+            <div className="flex-1 overflow-auto">
               {children}
             </div>
+          </div>
+          <div className="xl:hidden w-full h-full flex items-center justify-center">
+            <p className='font-extrabold text-neutral-300 text-[5vh] my-5 text-center'>Desktop Only</p>
           </div>
         </div>
       </div>

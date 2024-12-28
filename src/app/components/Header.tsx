@@ -21,7 +21,7 @@ const Header = () => {
   );
 
   useEffect(() => {
-    if (pathname === '/' || pathname === '/login') {
+    if (pathname !== '/login') {
       dispatch(fetchLocation());
     }
   }, [dispatch, pathname]);
