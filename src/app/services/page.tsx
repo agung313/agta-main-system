@@ -14,6 +14,7 @@ import Postgresql from "../icons/Postgresql.svg"
 import Image from "next/image";
 import useAnimateElements from "../components/useAnimateElements";
 import { changeTabActive } from "../redux/header";
+import DivTechnologies from "../components/DivTechnologies";
 
 const DashboardServices = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,69 @@ const DashboardServices = () => {
   const codeLanguage = useSelector(
     (state: { header: { codeLanguage: "id" | "en" } }) => state.header.codeLanguage
   );
+
+  const lisTechnologies = [
+    {
+      image: NextJs,
+      title: "Next.js",
+      id: "Framework modern untuk membangun aplikasi web yang cepat, responsif, dan SEO-friendly.",
+      en: "A modern framework for building fast, responsive, and SEO-friendly web applications."
+    },
+    {
+      image: ReactJs,
+      title: "React.js",
+      id: "Library JavaScript yang fleksibel untuk menciptakan antarmuka pengguna yang interaktif dan dinamis.",
+      en: "A flexible JavaScript library for creating interactive and dynamic user interfaces."
+    },
+    {
+      image: Javascript,
+      title: "Javascript",
+      id: "Bahasa pemrograman serbaguna yang digunakan untuk membangun aplikasi web yang dinamis dan interaktif.",
+      en: "A versatile programming language used to build dynamic and interactive web applications."
+    },
+    {
+      image: ReactJs,
+      title: "React Native",
+      id: "Solusi lintas platform untuk membangun aplikasi mobile berkinerja tinggi pada Android dan iOS.",
+      en: "A cross-platform solution for building high-performance mobile applications on both Android and iOS."
+    },
+    {
+      image: Typescript,
+      title: "Typescript",
+      id: "Superset JavaScript dengan tipe data yang kuat untuk meningkatkan kualitas, keterbacaan, dan skalabilitas kode.",
+      en: "A flexible JavaScript library for creating interactive and dynamic user interfaces."
+    },
+    {
+      image: Redux,
+      title: "Redux",
+      id: "Alat untuk pengelolaan data dan state secara efisien pada aplikasi web dan mobile.",
+      en: "A tool for efficient data and state management in web and mobile applications."
+    },
+    {
+      image: Tailwind,
+      title: "Tailwind CSS",
+      id: "Framework CSS yang ringan dan fleksibel untuk membuat desain yang unik dan estetis dengan efisiensi tinggi.",
+      en: "A lightweight and flexible CSS framework for creating unique and aesthetically pleasing designs with high efficiency."
+    },
+    {
+      image: Mui,
+      title: "Material UI",
+      id: "Library komponen desain modern untuk membangun antarmuka pengguna yang responsif dengan cepat.",
+      en: "A modern design component library for building responsive user interfaces quickly."
+    },
+    {
+      image: Golang,
+      title: "Golang",
+      id: "Bahasa pemrograman yang andal dan cepat untuk membangun sistem backend dan API.",
+      en: "A reliable and fast programming language for building backend systems and APIs."
+    },
+    {
+      image: Postgresql,
+      title: "PostgreSQL",
+      id: "Sistem manajemen basis data yang stabil, aman, dan cocok untuk kebutuhan skala kecil hingga besar.",
+      en: "A stable and secure database management system suitable for small to large-scale needs."
+    },
+  ];
 
   useEffect(() => {
     dispatch(changeTabActive('servicesTab'));
@@ -40,96 +104,16 @@ const DashboardServices = () => {
             }
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 my-[4vh]">
-            
-            <div className="border rounded-xl p-4 flex items-center">
-              <Image src={NextJs} alt="Logo" className="w-[4vh] md:w-[5vh] lg:w-[6vh] h-auto" />
-              <div className="ml-4">
-                <p className="text-[1.5vh] text-justify sm:text-[2vh] xl:text-[2.5vh] text-white">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">Next.js</span> {codeLanguage === "id" ? "Framework modern untuk membangun aplikasi web yang cepat, responsif, dan SEO-friendly." : "A modern framework for building fast, responsive, and SEO-friendly web applications."}
-                </p>
-              </div>
-            </div>
-
-            <div className="border rounded-xl p-4 flex items-center">
-              <Image src={ReactJs} alt="Logo" className="w-[4vh] md:w-[5vh] lg:w-[6vh] h-auto" />
-              <div className="ml-4">
-                <p className="text-[1.5vh] text-justify sm:text-[2vh] xl:text-[2.5vh] text-white">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">React.js</span> {codeLanguage === "id" ? "Library JavaScript yang fleksibel untuk menciptakan antarmuka pengguna yang interaktif dan dinamis." : "A flexible JavaScript library for creating interactive and dynamic user interfaces."}
-                </p>
-              </div>
-            </div>
-
-            <div className="border rounded-xl p-4 flex items-center">
-              <Image src={Javascript} alt="Logo" className="w-[4vh] md:w-[5vh] lg:w-[6vh] h-auto" />
-              <div className="ml-4">
-                <p className="text-[1.5vh] text-justify sm:text-[2vh] xl:text-[2.5vh] text-white">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">JavaScript</span> {codeLanguage === "id" ? "Bahasa pemrograman serbaguna yang digunakan untuk membangun aplikasi web yang dinamis dan interaktif." : "A versatile programming language used to build dynamic and interactive web applications."}
-                </p>
-              </div>
-            </div>
-
-            <div className="border rounded-xl p-4 flex items-center">
-              <Image src={ReactJs} alt="Logo" className="w-[4vh] md:w-[5vh] lg:w-[6vh] h-auto" />
-              <div className="ml-4">
-                <p className="text-[1.5vh] text-justify sm:text-[2vh] xl:text-[2.5vh] text-white">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">React Native</span> {codeLanguage === "id" ? "Solusi lintas platform untuk membangun aplikasi mobile berkinerja tinggi pada Android dan iOS." : "A cross-platform solution for building high-performance mobile applications on both Android and iOS."}
-                </p>
-              </div>
-            </div>
-
-            <div className="border rounded-xl p-4 flex items-center">
-              <Image src={Typescript} alt="Logo" className="w-[4vh] md:w-[5vh] lg:w-[6vh] h-auto" />
-              <div className="ml-4">
-                <p className="text-[1.5vh] text-justify sm:text-[2vh] xl:text-[2.5vh] text-white">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">TypeScript</span> {codeLanguage === "id" ? "Superset JavaScript dengan tipe data yang kuat untuk meningkatkan kualitas, keterbacaan, dan skalabilitas kode." : "A strongly-typed superset of JavaScript that improves code quality, readability, and scalability."}
-                </p>
-              </div>
-            </div>
-
-            <div className="border rounded-xl p-4 flex items-center">
-              <Image src={Redux} alt="Logo" className="w-[4vh] md:w-[5vh] lg:w-[6vh] h-auto" />
-              <div className="ml-4">
-                <p className="text-[1.5vh] text-justify sm:text-[2vh] xl:text-[2.5vh] text-white">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">Redux</span> {codeLanguage === "id" ? "Alat untuk pengelolaan data dan state secara efisien pada aplikasi web dan mobile." : "A tool for efficient data and state management in web and mobile applications."}
-                </p>
-              </div>
-            </div>
-
-            <div className="border rounded-xl p-4 flex items-center">
-              <Image src={Tailwind} alt="Logo" className="w-[4vh] md:w-[5vh] lg:w-[6vh] h-auto" />
-              <div className="ml-4">
-                <p className="text-[1.5vh] text-justify sm:text-[2vh] xl:text-[2.5vh] text-white">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">Tailwind CSS</span> {codeLanguage === "id" ? "Framework CSS yang ringan dan fleksibel untuk membuat desain yang unik dan estetis dengan efisiensi tinggi." : "A lightweight and flexible CSS framework for creating unique and aesthetically pleasing designs with high efficiency."}
-                </p>
-              </div>
-            </div>
-
-            <div className="border rounded-xl p-4 flex items-center">
-              <Image src={Mui} alt="Logo" className="w-[4vh] md:w-[5vh] lg:w-[6vh] h-auto" />
-              <div className="ml-4">
-                <p className="text-[1.5vh] text-justify sm:text-[2vh] xl:text-[2.5vh] text-white">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">Material UI</span> {codeLanguage === "id" ? "Library komponen desain modern untuk membangun antarmuka pengguna yang responsif dengan cepat." : "A modern design component library for building responsive user interfaces quickly."}
-                </p>
-              </div>
-            </div>
-
-            <div className="border rounded-xl p-4 flex items-center">
-              <Image src={Golang} alt="Logo" className="w-[4vh] md:w-[5vh] lg:w-[6vh] h-auto" />
-              <div className="ml-4">
-                <p className="text-[1.5vh] text-justify sm:text-[2vh] xl:text-[2.5vh] text-white">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">Golang</span> {codeLanguage === "id" ? "Bahasa pemrograman yang andal dan cepat untuk membangun sistem backend dan API." : "A reliable and fast programming language for building backend systems and APIs."}
-                </p>
-              </div>
-            </div>
-
-            <div className="border rounded-xl p-4 flex items-center">
-              <Image src={Postgresql} alt="Logo" className="w-[4vh] md:w-[5vh] lg:w-[6vh] h-auto" />
-              <div className="ml-4">
-                <p className="text-[1.5vh] text-justify sm:text-[2vh] xl:text-[2.5vh] text-white">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">PostgreSQL</span> {codeLanguage === "id" ? "Sistem manajemen basis data yang stabil, aman, dan cocok untuk kebutuhan skala kecil hingga besar." : "A stable and secure database management system suitable for small to large-scale needs."}
-                </p>
-              </div>
-            </div>
+            {lisTechnologies.map((tech, index) => (
+              <DivTechnologies
+                key={index}
+                codeLanguage={codeLanguage}
+                imageFile={tech.image}
+                titleText={tech.title}
+                idText={tech.id}
+                enText={tech.en}
+              />
+            ))}
           </div>
         </div>
       </div>
