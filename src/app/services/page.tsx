@@ -11,7 +11,6 @@ import Mui from "../icons/mui.svg";
 import Tailwind from "../icons/tailwind.svg";
 import Golang from "../icons/golang.svg";
 import Postgresql from "../icons/Postgresql.svg"
-import Image from "next/image";
 import useAnimateElements from "../components/useAnimateElements";
 import { changeTabActive } from "../redux/header";
 import DivTechnologies from "../components/DivTechnologies";
