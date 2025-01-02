@@ -27,7 +27,7 @@ export const header = createSlice({
   initialState: {
     codeLanguage: 'en', // default language
     idTabActive: 'homeTab',
-    isFromHeader: false,
+    isChangeLanguage: false,
     location: {},
     loading: false,
     error: '' as string | null,
@@ -36,7 +36,7 @@ export const header = createSlice({
     resetState: (state) => {
       state.codeLanguage = 'en';
       state.idTabActive = 'homeTab';
-      state.isFromHeader = false;
+      state.isChangeLanguage = false;
       state.location = {};
       state.loading = false;
       state.error = null;
@@ -47,8 +47,8 @@ export const header = createSlice({
     changeTabActive: (state, action) => {
       state.idTabActive = action.payload;
     },
-    changeActiveFromHeader: (state, action) => {
-      state.isFromHeader = action.payload;
+    changeIsChangeLanguage: (state, action) => {
+      state.isChangeLanguage = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -67,6 +67,6 @@ export const header = createSlice({
   },
 });
 
-export const { changeLanguage, changeTabActive, changeActiveFromHeader, resetState } = header.actions;
+export const { changeLanguage, changeTabActive, changeIsChangeLanguage, resetState } = header.actions;
 
 export default header.reducer;

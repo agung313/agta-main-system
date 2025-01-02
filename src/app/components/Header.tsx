@@ -8,7 +8,7 @@ import Image, { StaticImageData } from 'next/image';
 import IDFlag from '../icons/indonesiaFlag.svg';
 import ENFlag from '../icons/englishFlag.svg';
 import Globe from '../icons/globe.svg';
-import { changeLanguage, changeTabActive, fetchLocation } from '../redux/header';
+import { changeIsChangeLanguage, changeLanguage, changeTabActive, fetchLocation } from '../redux/header';
 import { store } from '../redux/store'; // Adjust the path as necessary
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
@@ -19,12 +19,15 @@ const Header = () => {
   const codeLanguage = useSelector(
     (state: { header: { codeLanguage: "id" | "en" } }) => state.header.codeLanguage
   );
+  const isChangeLanguage = useSelector(
+    (state: { header: { isChangeLanguage: boolean } }) => state.header.isChangeLanguage
+  );
 
   useEffect(() => {
-    if (pathname !== '/login') {
+    if (isChangeLanguage !== true) {
       dispatch(fetchLocation());
     }
-  }, [dispatch, pathname]);
+  }, [dispatch, isChangeLanguage]);
 
   type languageType = {
     name: string;
@@ -58,6 +61,11 @@ const Header = () => {
     return null;
   }
 
+  const handleSelectedLanguage = (value: string) => {
+    selectedLanguage(value);
+    dispatch(changeIsChangeLanguage(true));
+  };
+
   return (
     <div className='w-full flex justify-center items-center fixed z-50 p-5'>
       <header className="text-black top-0 w-full">
@@ -73,7 +81,7 @@ const Header = () => {
               <select
                 className="p-2 focus:outline-none font-bold bg-transparent text-white cursor-pointer"
                 value={languageActive.code}
-                onChange={(e) => selectedLanguage(e.target.value)}
+                onChange={(e) => handleSelectedLanguage(e.target.value)}
               >
                 {languages.map((language) => (
                   <option key={language.code} value={language.code}>
