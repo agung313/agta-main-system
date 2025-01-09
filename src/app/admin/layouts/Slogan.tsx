@@ -44,12 +44,6 @@ const Slogan = () => {
               value={sloganText.thirdText}
               setValue={value => setSloganText({ ...sloganText, thirdText: value })}
             />
-            <InputContent
-              id='thirdText'
-              label='Third Text'
-              value={sloganText.thirdText}
-              setValue={value => setSloganText({ ...sloganText, thirdText: value })}
-            />
           </div>
           <div className="flex flex-col justify-center items-center w-[70%]">
             <p className="text-[3vh] xl:text-[4vh] text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-300 -mb-3 xl:-mb-8 neon-glow">

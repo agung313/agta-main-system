@@ -93,7 +93,7 @@ const About = () => {
             <div key={index} className='pl-4'>
               <div className='flex items-center w-full'>
                 <div className='w-[2%]'>
-                  <p className="text-[2.5vh] font-bold">{index + 1}.</p>
+                  <p className="text-[2.5vh] font-bold mb-5">{index + 1}.</p>
                 </div>
                 <div className='w-[98%]'>
                   <InputContent
@@ -104,7 +104,7 @@ const About = () => {
                       newCommitmentList[index].title = { ...commitment.title, [codeLanguage]: value };
                       setCommitmentList(newCommitmentList);
                     }}
-                    classNameInput='text-justify text-[2.5vh] border-none mb-0'
+                    classNameInput='text-justify text-[2.5vh] border-none'
                   />
                 </div>
               </div>
@@ -116,7 +116,7 @@ const About = () => {
                   newCommitmentList[index].desc = { ...commitment.desc, [codeLanguage]: value };
                   setCommitmentList(newCommitmentList);
                 }}
-                classNameInput='text-justify text-[2.5vh] border-none mb-0 ml-5'
+                classNameInput='text-justify text-[2.5vh] border-none -mt-5 ml-5'
                 rows={3}
               />
             </div>

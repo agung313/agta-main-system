@@ -30,6 +30,7 @@ export const header = createSlice({
     isChangeLanguage: false,
     location: {},
     loading: false,
+    isLoading: false,
     error: '' as string | null,
   },
   reducers: {
@@ -40,6 +41,7 @@ export const header = createSlice({
       state.location = {};
       state.loading = false;
       state.error = null;
+      state.isLoading = false;
     },
     changeLanguage: (state, action) => {
       state.codeLanguage = action.payload;
@@ -49,6 +51,12 @@ export const header = createSlice({
     },
     changeIsChangeLanguage: (state, action) => {
       state.isChangeLanguage = action.payload;
+    },
+    showLoading: (state) => {
+      state.isLoading = true;
+    },
+    hideLoading: (state) => {
+      state.isLoading = false;
     },
   },
   extraReducers: (builder) => {

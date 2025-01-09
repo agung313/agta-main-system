@@ -7,6 +7,7 @@ import Slogan from './layouts/Slogan';
 import About from './layouts/About';
 import Service from './layouts/Service';
 import Contact from './layouts/Contact';
+import Messages from './layouts/Messages';
 
 const DashboardHome = () => {
   const idTabActive = useSelector((state: { admin: { idTabActive: string } }) => state.admin.idTabActive);
@@ -17,6 +18,7 @@ const DashboardHome = () => {
       {idTabActive === 'aboutTab' && <About />}
       {idTabActive === 'serviceTab' && <Service />}
       {idTabActive === 'contactTab' && <Contact />}
+      {idTabActive === 'messagesTab' && <Messages />}
     </div>
   );
 };

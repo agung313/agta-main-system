@@ -10,6 +10,7 @@ import SloganIcont from '../icons/SloganIcont';
 import AboutIcont from '../icons/AboutIcont';
 import ServiceIcont from '../icons/ServiceIcont';
 import ContactIcont from '../icons/ContactIcont';
+import MessagesIcont from '../icons/MessagesIcont';
 import LogoutIcont from '../icons/LogoutIcont';
 
 const SideBar = () => {
@@ -55,6 +56,12 @@ const SideBar = () => {
           <ContactIcont size={25} color={idTabActive === 'contactTab' ? '#fff' : '#4A4E56'} />
           <p className={`font-medium text-[2vh] ml-3 ${idTabActive === 'contactTab' ? 'text-white' : 'text-neutral-600'}`}>
             Contacts
+          </p>
+        </button>
+        <button className="flex items-center mt-8 pl-1" onClick={() => changeTab('messagesTab')}>
+          <MessagesIcont size={25} color={idTabActive === 'messagesTab' ? '#fff' : '#4A4E56'} />
+          <p className={`font-medium text-[2vh] ml-3 ${idTabActive === 'messagesTab' ? 'text-white' : 'text-neutral-600'}`}>
+            Messagaes
           </p>
         </button>
       </div>

@@ -143,7 +143,7 @@ const Service = () => {
                   id={`title-${index}`}
                   value={item.title}
                   setValue={value => setLisTechnologies(lisTechnologies.map((tech, i) => i === index ? { ...tech, title: value } : tech))}
-                  classNameInput='text-purple-400 text-[2.5vh] border-none p-0 mb-0'
+                  classNameInput='text-purple-500 text-[2.5vh] border-none p-0 mb-0'
                 />
                 <a href={item.linkTech} target="_blank" rel="noreferrer" className='bg-clip-border bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 font-bold text-white px-2 py-1 rounded-md hover:bg-gradient-to-r hover:from-purple-600 hover:via-pink-700 hover:to-red-700'>
                   Check Link
@@ -153,7 +153,7 @@ const Service = () => {
                 id={`linkTech-${index}`}
                 value={item.linkTech}
                 setValue={value => setLisTechnologies(lisTechnologies.map((tech, i) => i === index ? { ...tech, linkTech: value } : tech))}
-                classNameInput='text-pink-400 text-[2.5vh] border-none p-0'
+                classNameInput='text-pink-500 text-[2.5vh] border-none p-0'
               />
               <InputContent
                 id={`idText-${index}`}
