@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Image, { StaticImageData } from 'next/image';
 // import Link from 'next/link';
@@ -12,6 +12,7 @@ import { changeIsChangeLanguage, changeLanguage, changeTabActive, fetchLocation 
 import { store } from '../redux/store'; // Adjust the path as necessary
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import NotificationPage from './NotificationPage';
 
 const Header = () => {
   const dispatch = useDispatch<typeof store.dispatch>();
@@ -23,10 +24,17 @@ const Header = () => {
     (state: { header: { isChangeLanguage: boolean } }) => state.header.isChangeLanguage
   );
 
+  const isMounted = useRef(true);
+  
   useEffect(() => {
-    if (isChangeLanguage !== true) {
-      dispatch(fetchLocation());
+    if (isMounted.current) {
+      if (isChangeLanguage !== true) {
+        dispatch(fetchLocation());
+      }
     }
+    return () => {
+      isMounted.current = false;
+    };
   }, [dispatch, isChangeLanguage]);
 
   type languageType = {
@@ -72,7 +80,7 @@ const Header = () => {
         <nav className="container mx-auto flex justify-between items-center">
           <Link href='/' className="flex items-center" onClick={() => handleHome()}>
             <div className="items-center">
-              <p className="font-extrabold text-[3vh] sm:text-[5vh] text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">AGTA</p>
+              <p className="font-montserrat font-extrabold text-[3vh] sm:text-[5vh] text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-700 to-red-700">AGTA</p>
             </div>
           </Link>
           <div className="flex items-center">
@@ -93,6 +101,7 @@ const Header = () => {
           </div>
         </nav>
       </header>
+      <NotificationPage />
     </div>
   );
 };

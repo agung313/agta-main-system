@@ -3,16 +3,32 @@ import { HashLoader } from 'react-spinners';
 
 interface LoadingPageProps {
   isLoading: boolean;
+  color?: string;
+  size?: number;
+  flex?: boolean;
+  className?: string;
+  classNameText?: string;
+  textLoading?: string;
 }
 
-const LoadingPage: React.FC<LoadingPageProps> = ({ isLoading }) => {
+// fixed inset-0
+
+const LoadingPage: React.FC<LoadingPageProps> = ({
+  isLoading,
+  size = 100,
+  flex = false,
+  color = '#be185d',
+  className,
+  classNameText,
+  textLoading = 'Loading...',
+}) => {
   if (!isLoading) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-90 z-50">
-      <div>
-        <HashLoader color='#ec4899' size={100} />
-        <p className="text-center font-bold text-white mt-10 text-[2vh]">Loading...</p>
+    <div className={`${className} flex items-center justify-center`}>
+      <div className={flex ? 'flex items-center justify-center' : ''}>
+        <HashLoader color={color} size={size} />
+        <p className={`${classNameText} text-center font-bold text-white mt-10 text-[2vh]`}>{textLoading}</p>
       </div>
     </div>
   );

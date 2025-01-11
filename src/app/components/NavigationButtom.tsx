@@ -38,14 +38,14 @@ const NavigationButtom = () => {
   }
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 p-2 z-50 flex justify-center">
+    <div className="fixed bottom-0 left-0 right-0 p-2 z-30 flex justify-center">
       <div className='flex justify-center items-center bg-gray-900 rounded-2xl py-2 px-4 mb-[5vh] w-[90vw] sm:w-auto'>
         <ul className="flex flex-wrap justify-center space-x-2 sm:space-x-4">
           {tabs[codeLanguage].map((tab: { name: string; id: string; link: string }, index: number) => (
             <li key={index} className="flex-1">
               <Link
                 className={`block text-center ${
-                  tabActive.name === tab.name ? 'text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 border border-transparent bg-clip-border bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 font-bold text-[1.5vh] sm:text-[2vh] xl:text-[2.5vh] py-2 px-2 rounded-xl' : 'py-2 px-2 text-neutral-400 font-bold text-[1.5vh] sm:text-[2vh] xl:text-[2.5vh]'
+                  tabActive.name === tab.name ? 'text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-700 to-red-700 border border-transparent bg-clip-border bg-gradient-to-r from-purple-600 via-pink-700 to-red-700 font-bold text-[1.5vh] sm:text-[2vh] xl:text-[2.5vh] py-2 px-2 rounded-xl' : 'py-2 px-2 text-neutral-400 font-bold text-[1.5vh] sm:text-[2vh] xl:text-[2.5vh]'
                 }`}
                 href={`${tab.link}`}
                 onClick={() => clickTab(index)}

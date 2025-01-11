@@ -24,7 +24,7 @@ const SideBar = () => {
   return (
     <div className='w-full h-[100vh] bg-neutral-800 bg-opacity-50 border-r border-neutral-800 flex flex-col'>
       <Link href='/admin' onClick={() => changeTab('homeTab')} className='flex justify-center items-center text-white mx-4 py-5 border-b-2 border-neutral-800'>
-        <p className="font-bold text-[1vh] sm:text-[3vh] text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">AGTA Widget</p>
+        <p className="font-bold text-[1vh] sm:text-[3vh] text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-700 to-red-700">AGTA Widget</p>
       </Link>
       <div className='px-5 pt-10 flex-grow'>
         <p className='font-medium text-neutral-300 text-[2vh] mb-5'>Menu</p>

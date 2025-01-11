@@ -29,10 +29,10 @@ const Header = () => {
       <p className="font-bold text-[1vh] sm:text-[3vh] ml-4">
         {idTabActive === 'homeTab' ? 'Dashboard' : idTabActive === 'aboutTab' ? 'Abouts' : idTabActive === 'serviceTab' ? 'Services' : idTabActive === 'contactTab' ? 'Contacts' : 'All Messages'}
       </p>
-      <div className="font-bold text-[1vh] sm:text-[2.5vh] mr-4 bg-clip-border bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 py-2 px-5 rounded-lg">
+      <div className="font-bold text-[1vh] sm:text-[2.5vh] mr-4 bg-clip-border bg-gradient-to-r from-purple-600 via-pink-700 to-red-700 py-2 px-5 rounded-lg">
         {currentTime}
       </div>
-      <LoadingPage isLoading={isLoading} />
+      <LoadingPage className='bg-black bg-opacity-90 z-50 fixed inset-0' isLoading={isLoading} />
     </div>
   );
 };

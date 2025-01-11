@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import header from './header';
 import admin from './admin';
+import components from './components';
 
 export const store = configureStore({
   reducer: {
     header: header,
     admin: admin,
+    components: components,
   },
 });
 
