@@ -52,7 +52,7 @@ const NotificationPage = () =>{
       return () => clearTimeout(timer);
     }
     dispatch(hideNotification());
-  }, [isOpened]);
+  }, [isOpened, dispatch]);
 
   if (!isOpened) return null;
 
