@@ -12,9 +12,9 @@ const agentAdmin = axios.create({
 agentAdmin.interceptors.request.use(
   (config) => {
     // Misalnya, tambahkan token jika dibutuhkan
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('lastToken');
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers['Authorization'] = `Bearer ${token}`;
     }
     return config;
   },

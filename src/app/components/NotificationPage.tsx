@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SuccessIcont from '../icons/success.svg';
 import AlertIcont from '../icons/alert.svg';
 import Image from 'next/image';
-import { hideNotification } from '../redux/components';
 import useAnimateElements from './useAnimateElements';
 
 const NotificationPage = () =>{
@@ -11,8 +10,13 @@ const NotificationPage = () =>{
 
   const { containerRef } = useAnimateElements();
 
+  const [isOpened, setIsOpened] = useState(false);
+
   const openNotification = useSelector(
     (state: { components: { openNotification: boolean } }) => state.components.openNotification
+  );
+  const delayNotification = useSelector(
+    (state: { components: { delayNotification: number } }) => state.components.delayNotification
   );
   const notificationType = useSelector(
     (state: { components: { notificationType: string } }) => state.components.notificationType
@@ -26,14 +30,29 @@ const NotificationPage = () =>{
 
   useEffect(() => {
     if (openNotification) {
+      if (delayNotification > 0) {
+        const timer = setTimeout(() => {
+          setIsOpened(openNotification);
+        }, delayNotification);
+        return () => clearTimeout(timer);
+      } else {
+        setIsOpened(openNotification);
+      }
+    } else {
+      setIsOpened(false);
+    }
+  }, [openNotification, delayNotification]);
+
+  useEffect(() => {
+    if (isOpened) {
       const timer = setTimeout(() => {
-        dispacth(hideNotification());
+        setIsOpened(false);
       }, 5000);
       return () => clearTimeout(timer);
     }
-  }, [openNotification, dispacth]);
+  }, [isOpened, dispacth]);
 
-  if (!openNotification) return null;
+  if (!isOpened) return null;
 
   const styles: { [key: string]: string } = {
     success: 'bg-gradient-to-r from-green-600 via-green-700 to-green-800',
@@ -46,14 +65,14 @@ const NotificationPage = () =>{
   }
 
   return (
-    <div className="fixed top-24 z-50 pointer-events-none">
+    <div className="fixed top-24 z-50 pointer-events-none flex justify-center w-full">
       <div
         ref={containerRef}
-        className={`${styles[notificationType]} shadow-md rounded-md p-2`}
+        className={`${styles[notificationType]} shadow-md rounded-md p-2 px-4 max-w-[80%]`}
       >
         <div className="flex items-center">
           <Image src={icont[notificationType]} alt="Success Icon" className="w-6 h-6" />
-          <p className="text-white font-bold mx-2">
+          <p className="text-white font-bold mx-2 text-[1.5vh] text-justify sm:text-[2vh] xl:text-[2.5vh">
             {notificationMessage[codeLanguage]}
           </p>
         </div>

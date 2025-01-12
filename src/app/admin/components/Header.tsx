@@ -1,12 +1,10 @@
 "use client";
 
-import LoadingPage from '@/app/components/LoadingPage';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 const Header = () => {
   const idTabActive = useSelector((state: { admin: { idTabActive: string } }) => state.admin.idTabActive);
-  const isLoading = useSelector((state: { admin: { isLoading: boolean } } ) => state.admin.isLoading)
   const [currentTime, setCurrentTime] = useState('');
 
   useEffect(() => {
@@ -32,7 +30,6 @@ const Header = () => {
       <div className="font-bold text-[1vh] sm:text-[2.5vh] mr-4 bg-clip-border bg-gradient-to-r from-purple-600 via-pink-700 to-red-700 py-2 px-5 rounded-lg">
         {currentTime}
       </div>
-      <LoadingPage className='bg-black bg-opacity-90 z-50 fixed inset-0' isLoading={isLoading} />
     </div>
   );
 };

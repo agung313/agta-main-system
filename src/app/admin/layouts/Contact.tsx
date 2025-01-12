@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Email from '../../icons/email.svg';
 import Instagram from '../../icons/instagram.svg';
 import Linkedin from '../../icons/linkedin.svg';
-import Pinlocation from '../../icons/pinLocation.svg';
+import Maps from '../../icons/maps.svg';
 import InputContent from '../components/InputContent';
 
 const Contact = () => {
@@ -25,7 +25,7 @@ const Contact = () => {
       text: 'muhammad agung sholihhudin',
     },
     {
-      img: Pinlocation,
+      img: Maps,
       title: 'Address',
       text: 'Jl. Daru - Daru VII, Pekanbaru, Riau, Indonesia',
     },

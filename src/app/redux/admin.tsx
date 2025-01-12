@@ -14,15 +14,15 @@ export const admin = createSlice({
     changeTabActive: (state, action) => {
       state.idTabActive = action.payload;
     },
-    showLoading: (state) => {
+    showLoadingAdmin: (state) => {
       state.isLoading = true;
     },
-    hideLoading: (state) => {
+    hideLoadingAdmin: (state) => {
       state.isLoading = false;
     },
   },
 });
 
-export const { changeTabActive, resetState } = admin.actions;
+export const { changeTabActive, resetState, showLoadingAdmin, hideLoadingAdmin } = admin.actions;
 
 export default admin.reducer;

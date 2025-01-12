@@ -5,6 +5,7 @@ export const components = createSlice({
   initialState: {
     isLoading: false,
     openNotification: false,
+    delayNotification: 0,
     notificationMessage: { id: '', en: '' },
     notificationType: 'success',
   },
@@ -25,11 +26,7 @@ export const components = createSlice({
       state.openNotification = true;
       state.notificationMessage = action.payload.message;
       state.notificationType = action.payload.type;
-    },
-    hideNotification: (state) => {
-      state.openNotification = false;
-      state.notificationMessage = { id: '', en: '' };
-      state.notificationType = 'success';
+      state.delayNotification = action.payload.delay ? action.payload.delay : 0;
     },
   },
 });
@@ -38,7 +35,6 @@ export const {
     showLoading,
     hideLoading,
     showNotification,
-    hideNotification,
 } = components.actions;
 
 export default components.reducer;
