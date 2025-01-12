@@ -11,11 +11,19 @@ import Contact from './layouts/Contact';
 import Messages from './layouts/Messages';
 import Header from './components/Header';
 import NotificationPage from '../components/NotificationPage';
+import LoadingPage from '../components/LoadingPage';
 
 const AdminLayout = () => {
   const idTabActive = useSelector((state: { admin: { idTabActive: string } }) => state.admin.idTabActive);
+  const isLoadingSubmit = useSelector((state: { admin: { isLoadingSubmit: boolean } }) => state.admin.isLoadingSubmit);
   return (
     <div className="w-[100vw] h-[100vh] flex">
+      <LoadingPage
+        className='bg-black bg-opacity-60 fixed inset-0 z-50'
+        color='#00B300'
+        isLoading={isLoadingSubmit}
+        textLoading='Loading Submit...'
+      />
       <div className="hidden xl:flex w-[20vw]">
         <SideBar />
       </div>

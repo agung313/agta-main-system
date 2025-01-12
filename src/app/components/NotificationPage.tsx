@@ -4,9 +4,10 @@ import SuccessIcont from '../icons/success.svg';
 import AlertIcont from '../icons/alert.svg';
 import Image from 'next/image';
 import useAnimateElements from './useAnimateElements';
+import { hideNotification } from '../redux/components';
 
 const NotificationPage = () =>{
-  const dispacth = useDispatch();
+  const dispatch = useDispatch();
 
   const { containerRef } = useAnimateElements();
 
@@ -32,11 +33,11 @@ const NotificationPage = () =>{
     if (openNotification) {
       if (delayNotification > 0) {
         const timer = setTimeout(() => {
-          setIsOpened(openNotification);
+          setIsOpened(true);
         }, delayNotification);
         return () => clearTimeout(timer);
       } else {
-        setIsOpened(openNotification);
+        setIsOpened(true);
       }
     } else {
       setIsOpened(false);
@@ -50,7 +51,8 @@ const NotificationPage = () =>{
       }, 5000);
       return () => clearTimeout(timer);
     }
-  }, [isOpened, dispacth]);
+    dispatch(hideNotification());
+  }, [isOpened]);
 
   if (!isOpened) return null;
 

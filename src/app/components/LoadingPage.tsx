@@ -26,7 +26,7 @@ const LoadingPage: React.FC<LoadingPageProps> = ({
 
   return (
     <div className={`${className} flex items-center justify-center`}>
-      <div className={flex ? 'flex items-center justify-center' : ''}>
+      <div className={flex ? 'flex items-center justify-center' : 'flex flex-col items-center'}>
         <HashLoader color={color} size={size} />
         <p className={`${classNameText} text-center font-bold text-white ${flex ? "mt-0 ml-2" : "mt-10 ml-0"} text-[2vh]`}>{textLoading}</p>
       </div>

@@ -28,6 +28,9 @@ export const components = createSlice({
       state.notificationType = action.payload.type;
       state.delayNotification = action.payload.delay ? action.payload.delay : 0;
     },
+    hideNotification: (state) => {
+      state.openNotification = false;
+    },
   },
 });
 
@@ -35,6 +38,7 @@ export const {
     showLoading,
     hideLoading,
     showNotification,
+    hideNotification,
 } = components.actions;
 
 export default components.reducer;
