@@ -5,6 +5,7 @@ interface InputContentProps {
   id?: string;
   type?: string;
   label?: string;
+  placeholder?: string;
   value?: any; // eslint-disable-line
   setValue?: (value: any) => void; // eslint-disable-line
   classNameLabel?: string;
@@ -17,7 +18,7 @@ interface InputContentProps {
   heightImage?: number;
 }
 
-const InputContent: React.FC<InputContentProps> = ({ id, type = 'text', label = '', value, setValue, classNameLabel, classNameInput, classNameImage, rows, disabled, accept, widthImage, heightImage}) => {
+const InputContent: React.FC<InputContentProps> = ({ id, type = 'text', label = '', value, setValue, classNameLabel, classNameInput, classNameImage, rows, disabled, accept, widthImage, heightImage, placeholder = 'Type here...'}) => {
   const previewUrl = value instanceof File ? URL.createObjectURL(value) : value;
   return (
     <div className='flex flex-col justify-center'>
@@ -47,10 +48,11 @@ const InputContent: React.FC<InputContentProps> = ({ id, type = 'text', label = 
           name={id}
           id={id}
           value={value}
+          placeholder={placeholder}
           onChange={e => setValue && setValue(e.target.value)}
           rows={rows}
           disabled={disabled}
-          className={`${classNameInput} mb-5 bg-transparent border border-white text-white rounded-lg p-2 focus:outline-none`}
+          className={`${classNameInput} mb-5 bg-transparent text-white rounded-lg p-2 focus:outline-none`}
         />
       ) : (
         <input
@@ -58,9 +60,10 @@ const InputContent: React.FC<InputContentProps> = ({ id, type = 'text', label = 
           name={id}
           id={id}
           value={value}
+          placeholder={placeholder}
           onChange={e => setValue && setValue(e.target.value)}
           disabled={disabled}
-          className={`${classNameInput} mb-5 bg-transparent border border-white text-white rounded-lg p-2 focus:outline-none`}
+          className={`${classNameInput} mb-5 bg-transparent text-white rounded-lg p-2 focus:outline-none`}
         />
       )}
     </div>

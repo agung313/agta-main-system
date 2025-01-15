@@ -84,7 +84,7 @@ const Slogan = () => {
                     label='First Text'
                     value={sloganData.firstText}
                     setValue={value => setSloganData({ ...sloganData, firstText: value })}
-                    classNameInput='w-full'
+                    classNameInput='w-full border border-white'
                     disabled={isLoadingSubmit}
                   />
                   <InputContent
@@ -92,6 +92,7 @@ const Slogan = () => {
                     label='Second Text'
                     value={sloganData.secondText}
                     setValue={value => setSloganData({ ...sloganData, secondText: value })}
+                    classNameInput='w-full border border-white'
                     disabled={isLoadingSubmit}
                   />
                   <InputContent
@@ -99,6 +100,7 @@ const Slogan = () => {
                     label='Third Text'
                     value={sloganData.thirdText}
                     setValue={value => setSloganData({ ...sloganData, thirdText: value })}
+                    classNameInput='w-full border border-white'
                     disabled={isLoadingSubmit}
                   />
                 </div>

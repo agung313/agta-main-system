@@ -11,3 +11,11 @@ export function getSlogan() {
 export function updateSlogan(payload: object) {
     return agentAdmin.put('/slogan', payload);
 }
+
+export function getAbouts() {
+    return agentAdmin.get('/abouts');
+}
+
+export function updateAbouts(payload: object) {
+    return agentAdmin.put('/abouts', payload);
+}

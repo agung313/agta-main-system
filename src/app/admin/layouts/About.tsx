@@ -1,141 +1,221 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import DivContent from '../components/DivContent';
 import SelectContent from '../components/SelectContent';
 import InputContent from '../components/InputContent';
+import { hideLoadingSubmit, showLoadingSubmit } from '@/app/redux/admin';
+import { showNotification } from '@/app/redux/components';
+import { getAbouts, updateAbouts } from '@/app/api/admin';
+import LoadingPage from '@/app/components/LoadingPage';
 
 const About = () => {
+  const dispatch = useDispatch();
+  const isLoadingSubmit = useSelector((state: { admin: { isLoadingSubmit: boolean } }) => state.admin.isLoadingSubmit);
+  const isMounted = useRef(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [codeLanguage, setCodeLanguage] = useState("id");
   const languangeList = [{ id: "id", name: "Indonesia" }, { id: "en", name: "English" }];
 
   const [aboutText, setAboutText] = useState<{
-    topText: { [key: string]: string };
-    bottomText: { [key: string]: string };
+    openingText: { [key: string]: string };
+    closingText: { [key: string]: string };
   }>({
-    topText: {
-      id: "AGTA adalah perusahaan yang bergerak di bidang pengembangan perangkat lunak. Kami memiliki tujuan utama untuk membantu bisnis dan individu menciptakan solusi digital yang inovatif, efektif, dan berdampak. Dengan memanfaatkan teknologi terkini dan tim yang berpengalaman, kami berkomitmen untuk:",
-      en: "AGTA is a software development company. Our primary goal is to help businesses and individuals create innovative, effective, and impactful digital solutions. Leveraging cutting-edge technology and an experienced team, we are committed to:",
+    openingText: {
+      id: "",
+      en: "",
     },
-    bottomText: {
-      id: "Dengan visi untuk menjadi pemimpin di industri teknologi, AGTA hadir sebagai solusi lengkap untuk setiap kebutuhan teknologi Anda mulai dari perencanaan, pengembangan, hingga implementasi. Bersama kami, setiap ide akan diwujudkan menjadi kenyataan.",
-      en: "With a vision to become a leader in the technology industry, AGTA is here as a complete solution for all your technology needs from planning, development, to implementation. With us, every idea will be realized into reality.",
+    closingText: {
+      id: "",
+      en: "",
     },
   });
 
   const [commitmentList, setCommitmentList] = useState<Array<{
-    title: { [key: string]: string };
-    desc: { [key: string]: string };
+    titleText: { [key: string]: string };
+    descriptionText: { [key: string]: string };
   }>>([
     {
-      title: {
-        id: "Mewujudkan Ide Kreatif",
-        en: "Bringing Creative Ideas to Life",
+      titleText: {
+        id: "",
+        en: "",
       },
-      desc: {
-        id: "Kami mengubah ide-ide kreatif Anda menjadi aplikasi, website, dan sistem digital yang nyata, memberikan solusi yang sesuai dengan kebutuhan Anda.",
-        en: "We transform your creative ideas into real applications, websites, and digital systems, providing solutions that fit your needs.",
-      },
-    },
-    {
-      title: {
-        id: "Mendorong Transformasi Digital",
-        en: "Driving Digital Transformation",
-      },
-      desc: {
-        id: "Membantu bisnis dari berbagai skala beradaptasi dengan era digital melalui layanan teknologi yang inovatif dan relevan, meningkatkan efisiensi dan daya saing di pasar.",
-        en: "Helping businesses of all sizes adapt to the digital era through innovative and relevant technology services, and increasing efficiency and competitiveness in the market.",
-      },
-    },
-    {
-      title: {
-        id: "Memberikan Dampak Nyata",
-        en: "Delivering Real Impact",
-      },
-      desc: {
-        id: "Kami berfokus pada pengembangan perangkat lunak yang tidak hanya memenuhi kebutuhan teknis, tetapi juga memberikan dampak positif terhadap pertumbuhan bisnis, pengalaman pengguna, dan keberlanjutan.",
-        en: "We focus on developing software that not only meets technical requirements but also creates a positive impact on business growth, user experience, and sustainability.",
-      },
-    },
-    {
-      title: {
-        id: "Menjadi Mitra Teknologi Terpercaya",
-        en: "Becoming a Trusted Technology Partner",
-      },
-      desc: {
-        id: "AGTA percaya pada hubungan jangka panjang dengan klien. Kami bekerja sebagai mitra strategis yang mendukung perjalanan digitalisasi dan pertumbuhan bisnis Anda dengan solusi yang dapat diandalkan.",
-        en: "At AGTA, we value long-term relationships with our clients. We work as a strategic partner to support your journey of digital transformation and business growth with reliable solutions.",
+      descriptionText: {
+        id: "",
+        en: "",
       },
     },
   ]);
 
-  return (
-    <div className='w-full p-5 flex flex-col'>
-      <DivContent>
-        <div className='flex justify-between items-center mb-10'>
-          <p className='font-extrabold text-neutral-300 text-[3vh]'>About Text</p>
-          <div className='bg-white rounded-lg'>
-            <SelectContent
-              valueList={languangeList}
-              valueSelected={codeLanguage}
-              setValueSelected={setCodeLanguage}
-            />
-          </div>
-        </div>
-        <div>
-          <InputContent
-            id='topText'
-            value={aboutText.topText[codeLanguage]}
-            setValue={value => setAboutText({ ...aboutText, topText: { ...aboutText.topText, [codeLanguage]: value } })}
-            classNameInput='text-justify indent-5 text-[2.5vh] p-4 border-none'
-            rows={3}
-          />
+  const getAboutData = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const res = await getAbouts();
+      setAboutText({
+        openingText: { ...res.data.data.openingText },
+        closingText: { ...res.data.data.closingText },
+      });
+      setCommitmentList([...res.data.data.comitmentLists]);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+    } catch (error) {
+      console.log('cek error', error); // eslint-disable-line
+      setIsLoading(false);
+    }
+  }, [setIsLoading]);
 
-          {commitmentList.map((commitment, index) => (
-            <div key={index} className='pl-4'>
-              <div className='flex items-center w-full'>
-                <div className='w-[2%]'>
-                  <p className="text-[2.5vh] font-bold mb-5">{index + 1}.</p>
-                </div>
-                <div className='w-[98%]'>
-                  <InputContent
-                    id={`title-${index}`}
-                    value={commitment.title[codeLanguage]}
-                    setValue={value => {
-                      const newCommitmentList = [...commitmentList];
-                      newCommitmentList[index].title = { ...commitment.title, [codeLanguage]: value };
-                      setCommitmentList(newCommitmentList);
-                    }}
-                    classNameInput='text-justify text-[2.5vh] border-none'
+  useEffect(() => {
+    if (isMounted.current) {
+      getAboutData();
+    }
+    return () => {
+      isMounted.current = false
+    }
+  }, [getAboutData]);
+
+  const handleUpdateAbout = async () => {
+    dispatch(showLoadingSubmit());
+    try {
+      await updateAbouts({ ...aboutText, comitmentLists: commitmentList });
+      setTimeout(() => {
+        dispatch(showNotification({ message: { id: 'Selamat, About berhasil diperbarui', en: 'Congratulations, About data successfully updated' }, type: 'success' }));
+        dispatch(hideLoadingSubmit());
+      }, 1000);
+    } catch (error) {
+      console.log('cek error', error); // eslint-disable-line
+      dispatch(showNotification({ message: { id: 'Maaf, About data gagal diperbarui', en: 'Sorry, About data failed to update' }, type: 'failed' }));
+      dispatch(hideLoadingSubmit());
+    }
+  };
+
+  const handleAddCommitment = () => {
+    setCommitmentList([
+      ...commitmentList,
+      {
+        titleText: {
+          id: "",
+          en: "",
+        },
+        descriptionText: {
+          id: "",
+          en: "",
+        },
+      },
+    ]);
+  };
+
+  const handleDeleteCommitment = (index: number) => {
+    const newCommitmentList = [...commitmentList];
+    newCommitmentList.splice(index, 1);
+    setCommitmentList(newCommitmentList);
+  };
+
+  return (
+    <div>
+      {isLoading
+        ?
+          <div className='flex w-full h-[90vh] justify-center items-center'>
+            <LoadingPage color='#fff' size={70} isLoading={isLoading} />
+          </div>
+        :
+          <div className='w-full p-5 flex flex-col'>
+            <DivContent>
+              <div className='flex justify-between items-center mb-10'>
+                <p className='font-extrabold text-neutral-300 text-[3vh]'>About Text</p>
+                <div className='bg-white rounded-lg'>
+                  <SelectContent
+                    valueList={languangeList}
+                    valueSelected={codeLanguage}
+                    setValueSelected={setCodeLanguage}
                   />
                 </div>
               </div>
-              <InputContent
-                id={`desc-${index}`}
-                value={commitment.desc[codeLanguage]}
-                setValue={value => {
-                  const newCommitmentList = [...commitmentList];
-                  newCommitmentList[index].desc = { ...commitment.desc, [codeLanguage]: value };
-                  setCommitmentList(newCommitmentList);
-                }}
-                classNameInput='text-justify text-[2.5vh] border-none -mt-5 ml-5'
-                rows={3}
-              />
-            </div>
-          ))}
-          <InputContent
-            id='bottomText'
-            value={aboutText.bottomText[codeLanguage]}
-            setValue={value => setAboutText({ ...aboutText, bottomText: { ...aboutText.bottomText, [codeLanguage]: value } })}
-            classNameInput='text-justify indent-5 text-[2.5vh] border-none'
-            rows={3}
-          />
-        </div>
-      </DivContent>
-      <button
-        type="submit"
-        className="my-10 text-[2vh] w-full font-extrabold p-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white rounded-md hover:bg-gradient-to-r hover:from-purple-600 hover:via-pink-700 hover:to-red-700"
-      >
-        Save Changes
-      </button>
+              <div>
+                <InputContent
+                  id='openingText'
+                  label='Opening Text'
+                  value={aboutText.openingText[codeLanguage]}
+                  setValue={value => setAboutText({ ...aboutText, openingText: { ...aboutText.openingText, [codeLanguage]: value } })}
+                  classNameInput='text-justify indent-5 text-[2.5vh] p-4 border mb-16'
+                  rows={4}
+                  disabled={isLoadingSubmit}
+                />
+
+                <p className='mb-2'>Commitment List</p>
+                {commitmentList.map((commitment, index) => (
+                  <div key={index} className='pl-4 border rounded-lg mb-8'>
+                    <div className='flex items-center w-full'>
+                      <div className='w-[2%]'>
+                        <p className="text-[2.5vh] font-bold mb-5">{index + 1}.</p>
+                      </div>
+                      <div className='w-[98%]'>
+                        <InputContent
+                          id={`titleText-${index}`}
+                          placeholder='Title here...'
+                          value={commitment.titleText[codeLanguage]}
+                          setValue={value => {
+                            const newCommitmentList = [...commitmentList];
+                            newCommitmentList[index].titleText = { ...commitment.titleText, [codeLanguage]: value };
+                            setCommitmentList(newCommitmentList);
+                          }}
+                          classNameInput='text-justify text-[2.5vh]'
+                          disabled={isLoadingSubmit}
+                        />
+                      </div>
+                    </div>
+                    <InputContent
+                      id={`descriptionText-${index}`}
+                      placeholder='Description here...'
+                      value={commitment.descriptionText[codeLanguage]}
+                      setValue={value => {
+                        const newCommitmentList = [...commitmentList];
+                        newCommitmentList[index].descriptionText = { ...commitment.descriptionText, [codeLanguage]: value };
+                        setCommitmentList(newCommitmentList);
+                      }}
+                      classNameInput='text-justify text-[2.5vh] border-none -mt-5 ml-5'
+                      rows={index !== 0 ? 3 : 5}
+                      disabled={isLoadingSubmit}
+                    />
+                    {index !== 0 &&
+                      <div className='flex items-center justify-end'>
+                        <button
+                          type="submit"
+                          className='text-[2vh] font-extrabold py-2 px-8 bg-redCustom-700 rounded-md m-3'
+                          onClick={() => handleDeleteCommitment(index)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    }
+                  </div>
+                ))}
+                <button
+                  onClick={handleAddCommitment}
+                  className='text-[2vh] w-full font-bold p-2 bg-white text-black rounded-md hover:bg-gray-200'
+                >
+                  Add Commitment
+                </button>
+                <InputContent
+                  id='closingText'
+                  label='Closing Text'
+                  value={aboutText.closingText[codeLanguage]}
+                  setValue={value => setAboutText({ ...aboutText, closingText: { ...aboutText.closingText, [codeLanguage]: value } })}
+                  classNameInput='text-justify indent-5 text-[2.5vh] border'
+                  classNameLabel='mt-8'
+                  rows={4}
+                  disabled={isLoadingSubmit}
+                />
+              </div>
+            </DivContent>
+            <button
+              type="submit"
+              className="my-10 text-[2vh] w-full font-extrabold p-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white rounded-md hover:bg-gradient-to-r hover:from-purple-600 hover:via-pink-700 hover:to-red-700"
+              onClick={handleUpdateAbout}
+            >
+              Save Changes
+            </button>
+          </div>
+      }
     </div>
   );
 };
