@@ -10,10 +10,10 @@ import { showNotification } from '../redux/components';
 const DashboardHome = () => {
   const dispatch = useDispatch();
   const route = useRouter();
-  const [loadToken, setLoadToken] = useState(false); // eslint-disable-line
+  const [loadToken, setLoadToken] = useState(true); // eslint-disable-line
 
   const checkToken = useCallback(async () => {
-    setLoadToken(true);
+    // setLoadToken(true);
     const lastToken = localStorage.getItem('lastToken');
     const lastTokenAt = localStorage.getItem('lastTokenAt');
     const now = new Date();
@@ -26,13 +26,13 @@ const DashboardHome = () => {
       if (timeDifference < oneHour) {
         setTimeout(() => {
           setLoadToken(false);
-          dispatch(showNotification({ message: { id: 'Selamat menggunakan sistem kami', en: 'Enjoy using our system' }, type: 'success', delay: 200 }));
+          dispatch(showNotification({ message: { id: 'Selamat menggunakan sistem kami', en: 'Enjoy using our system' }, type: 'success', delay: 200, delayReset: 1000 }));
         }, 1000);
       } else if (timeDifference >= oneHour) {
         setTimeout(() => {
           localStorage.removeItem('lastToken');
           localStorage.removeItem('lastTokenAt');
-          dispatch(showNotification({ message: { id: 'Sesi anda telah berakhir, silakan login ulang', en: 'Your session has expired, please re-login' }, type: 'failed', delay: 100 }));
+          dispatch(showNotification({ message: { id: 'Sesi anda telah berakhir, silakan login ulang', en: 'Your session has expired, please re-login' }, type: 'failed', delay: 100, delayReset: 1000 }));
           route.push('/login');
         }, 1000);
       }
@@ -40,7 +40,7 @@ const DashboardHome = () => {
       setTimeout(() => {
         localStorage.removeItem('lastToken');
         localStorage.removeItem('lastTokenAt');
-        dispatch(showNotification({ message: { id: 'Sesi anda telah berakhir, silakan login ulang', en: 'Your session has expired, please re-login' }, type: 'failed', delay: 100 }));
+        dispatch(showNotification({ message: { id: 'Sesi anda telah berakhir, silakan login ulang', en: 'Your session has expired, please re-login' }, type: 'failed', delay: 100, delayReset: 1000 }));
         route.push('/login');
       }, 1000);
     }

@@ -19,6 +19,9 @@ const NotificationPage = () =>{
   const delayNotification = useSelector(
     (state: { components: { delayNotification: number } }) => state.components.delayNotification
   );
+  const delayResetNotification = useSelector(
+    (state: { components: { delayResetNotification: number } }) => state.components.delayResetNotification
+  );
   const notificationType = useSelector(
     (state: { components: { notificationType: string } }) => state.components.notificationType
   );
@@ -51,8 +54,11 @@ const NotificationPage = () =>{
       }, 5000);
       return () => clearTimeout(timer);
     }
-    dispatch(hideNotification());
-  }, [isOpened, dispatch]);
+    const timer = setTimeout(() => {
+      dispatch(hideNotification());
+    }, delayResetNotification);
+    return () => clearTimeout(timer);
+  }, [isOpened, dispatch, delayResetNotification]);
 
   if (!isOpened) return null;
 
