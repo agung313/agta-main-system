@@ -119,9 +119,8 @@ const About = () => {
           </div>
         :
           <div className='w-full p-5 flex flex-col'>
-
-            <DivContent className='mb-10'>
-              <div className='flex justify-between items-center'>
+            <DivContent>
+              <div className='flex justify-between items-center mb-10'>
                 <p className='font-extrabold text-neutral-300 text-[3vh]'>About Text</p>
                 <div className='bg-white rounded-lg'>
                   <SelectContent
@@ -131,88 +130,82 @@ const About = () => {
                   />
                 </div>
               </div>
-            </DivContent>
+              <div>
+                <InputContent
+                  id='openingText'
+                  label='Opening Text'
+                  value={aboutText.openingText[codeLanguage]}
+                  setValue={value => setAboutText({ ...aboutText, openingText: { ...aboutText.openingText, [codeLanguage]: value } })}
+                  classNameInput='text-justify indent-5 text-[2.5vh] p-4 border mb-16'
+                  rows={4}
+                  disabled={isLoadingSubmit}
+                />
 
-            <DivContent className='mb-10'>
-              <p className='font-extrabold text-neutral-300 text-[2.5vh] mb-4'>Opening Text</p>
-              <InputContent
-                id='openingText'
-                value={aboutText.openingText[codeLanguage]}
-                setValue={value => setAboutText({ ...aboutText, openingText: { ...aboutText.openingText, [codeLanguage]: value } })}
-                classNameInput='text-justify indent-5 text-[2.5vh] p-4'
-                rows={4}
-                disabled={isLoadingSubmit}
-              />
-            </DivContent>
-
-            <DivContent className='mb-10'>
-              <p className='font-extrabold text-neutral-300 text-[2.5vh] mb-4'>Commitment List</p>
-              {commitmentList.map((commitment, index) => (
-                <div key={index} className='pb-4 border-b rounded-lg mb-10'>
-                  <div className='flex items-center w-full'>
-                    <div className='w-[2%]'>
-                      <p className="text-[2.5vh] font-bold mb-5">{index + 1}.</p>
+                <p className='mb-2'>Commitment List</p>
+                {commitmentList.map((commitment, index) => (
+                  <div key={index} className='pl-4 border rounded-lg mb-8'>
+                    <div className='flex items-center w-full'>
+                      <div className='w-[2%]'>
+                        <p className="text-[2.5vh] font-bold mb-5">{index + 1}.</p>
+                      </div>
+                      <div className='w-[98%]'>
+                        <InputContent
+                          id={`titleText-${index}`}
+                          placeholder='Title here...'
+                          value={commitment.titleText[codeLanguage]}
+                          setValue={value => {
+                            const newCommitmentList = [...commitmentList];
+                            newCommitmentList[index].titleText = { ...commitment.titleText, [codeLanguage]: value };
+                            setCommitmentList(newCommitmentList);
+                          }}
+                          classNameInput='text-justify text-[2.5vh]'
+                          disabled={isLoadingSubmit}
+                        />
+                      </div>
                     </div>
-                    <div className='w-[98%]'>
-                      <InputContent
-                        id={`titleText-${index}`}
-                        placeholder='Title here...'
-                        value={commitment.titleText[codeLanguage]}
-                        setValue={value => {
-                          const newCommitmentList = [...commitmentList];
-                          newCommitmentList[index].titleText = { ...commitment.titleText, [codeLanguage]: value };
-                          setCommitmentList(newCommitmentList);
-                        }}
-                        classNameInput='text-justify text-[2.5vh]'
-                        disabled={isLoadingSubmit}
-                      />
-                    </div>
+                    <InputContent
+                      id={`descriptionText-${index}`}
+                      placeholder='Description here...'
+                      value={commitment.descriptionText[codeLanguage]}
+                      setValue={value => {
+                        const newCommitmentList = [...commitmentList];
+                        newCommitmentList[index].descriptionText = { ...commitment.descriptionText, [codeLanguage]: value };
+                        setCommitmentList(newCommitmentList);
+                      }}
+                      classNameInput='text-justify text-[2.5vh] border-none -mt-5 ml-5'
+                      rows={index !== 0 ? 3 : 5}
+                      disabled={isLoadingSubmit}
+                    />
+                    {index !== 0 &&
+                      <div className='flex items-center justify-end'>
+                        <button
+                          type="submit"
+                          className='text-[2vh] font-extrabold py-2 px-8 bg-redCustom-700 rounded-md m-3'
+                          onClick={() => handleDeleteCommitment(index)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    }
                   </div>
-                  <InputContent
-                    id={`descriptionText-${index}`}
-                    placeholder='Description here...'
-                    value={commitment.descriptionText[codeLanguage]}
-                    setValue={value => {
-                      const newCommitmentList = [...commitmentList];
-                      newCommitmentList[index].descriptionText = { ...commitment.descriptionText, [codeLanguage]: value };
-                      setCommitmentList(newCommitmentList);
-                    }}
-                    classNameInput='text-justify text-[2.5vh] border-none -mt-5 ml-5'
-                    rows={index !== 0 ? 3 : 5}
-                    disabled={isLoadingSubmit}
-                  />
-                  {index !== 0 &&
-                    <div className='flex items-center justify-end'>
-                      <button
-                        type="submit"
-                        className='text-[2vh] font-extrabold py-2 px-8 bg-redCustom-700 rounded-md m-3'
-                        onClick={() => handleDeleteCommitment(index)}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  }
-                </div>
-              ))}
-              <button
-                onClick={handleAddCommitment}
-                className='text-[2vh] w-full font-bold p-2 bg-white text-black rounded-md hover:bg-gray-200'
-              >
-                Add Commitment
-              </button>
-            </DivContent>
-
-            <DivContent className='mb-10'>
-              <p className='font-extrabold text-neutral-300 text-[2.5vh] mb-4'>Closing Text</p>
-              <InputContent
-                id='closingText'
-                value={aboutText.closingText[codeLanguage]}
-                setValue={value => setAboutText({ ...aboutText, closingText: { ...aboutText.closingText, [codeLanguage]: value } })}
-                classNameInput='text-justify indent-5 text-[2.5vh]'
-                classNameLabel='mt-8'
-                rows={4}
-                disabled={isLoadingSubmit}
-              />
+                ))}
+                <button
+                  onClick={handleAddCommitment}
+                  className='text-[2vh] w-full font-bold p-2 bg-white text-black rounded-md hover:bg-gray-200'
+                >
+                  Add Commitment
+                </button>
+                <InputContent
+                  id='closingText'
+                  label='Closing Text'
+                  value={aboutText.closingText[codeLanguage]}
+                  setValue={value => setAboutText({ ...aboutText, closingText: { ...aboutText.closingText, [codeLanguage]: value } })}
+                  classNameInput='text-justify indent-5 text-[2.5vh] border'
+                  classNameLabel='mt-8'
+                  rows={4}
+                  disabled={isLoadingSubmit}
+                />
+              </div>
             </DivContent>
             <button
               type="submit"
