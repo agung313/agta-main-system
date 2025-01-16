@@ -1,177 +1,249 @@
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import DivContent from '../components/DivContent';
 import SelectContent from '../components/SelectContent';
-import NextJs from "../../icons/nextJs.svg";
-import ReactJS from '../../icons/reactJs.svg';
-import Typescript from "../../icons/typescript.svg";
-import Javascript from "../../icons/javascript.svg";
-import Redux from "../../icons/redux.svg";
-import Mui from "../../icons/mui.svg";
-import Tailwind from "../../icons/tailwind.svg";
-import Golang from "../../icons/golang.svg";
-import Postgresql from "../../icons/Postgresql.svg"
 import InputContent from '../components/InputContent';
+import DefaultImage from '../../icons/defaultImage.svg';
+import { delImageData, getServices, updateServices, uploadImage } from '@/app/api/admin';
+import LoadingPage from '@/app/components/LoadingPage';
+import { showNotification } from '@/app/redux/components';
+import { hideLoadingSubmit, showLoadingSubmit } from '@/app/redux/admin';
 
 const Service = () => {
+  const dispatch = useDispatch();
+  const isLoadingSubmit = useSelector((state: { admin: { isLoadingSubmit: boolean } }) => state.admin.isLoadingSubmit);
+  const isMounted = useRef(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [codeLanguage, setCodeLanguage] = useState("id");
-  const [codeLanguageList, setCodeLanguageList] = useState("id");
+  const [listDeleteImage, setListDeleteImage] = useState<string[]>([]);
   const languangeList = [{ id: "id", name: "Indonesia" }, { id: "en", name: "English" }];
   
   const [descriptionText, setDescriptionText] = useState<{ [key: string]: string }>({
-    id: "AGTA hadir untuk menyediakan solusi pengembangan perangkat lunak yang andal dan inovatif. Kami membantu Anda membangun aplikasi web, mobile, dan sistem backend yang terintegrasi dengan pendekatan berbasis teknologi modern. Kami menggunakan teknologi berikut untuk memastikan setiap solusi yang kami bangun berkinerja tinggi, efisien, dan sesuai kebutuhan:",
-    en: "AGTA is here to provide reliable and innovative software development solutions. We help you build web applications, mobile apps, and integrated backend systems with a modern technology-driven approach. We utilize the following technologies to ensure that every solution we deliver is high-performing, efficient, and tailored to your needs:"
+    id: "",
+    en: ""
   });
   const [lisTechnologies, setLisTechnologies] = useState([
     {
-      image: NextJs,
-      title: "Next.js",
-      linkTech: "https://nextjs.org/",
-      id: "Framework modern untuk membangun aplikasi web yang cepat, responsif, dan SEO-friendly.",
-      en: "A modern framework for building fast, responsive, and SEO-friendly web applications."
-    },
-    {
-      image: ReactJS,
-      title: "React.js",
-      linkTech: "https://react.dev/",
-      id: "Library JavaScript yang fleksibel untuk menciptakan antarmuka pengguna yang interaktif dan dinamis.",
-      en: "A flexible JavaScript library for creating interactive and dynamic user interfaces."
-    },
-    {
-      image: Javascript,
-      title: "Javascript",
-      linkTech: "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
-      id: "Bahasa pemrograman serbaguna yang digunakan untuk membangun aplikasi web yang dinamis dan interaktif.",
-      en: "A versatile programming language used to build dynamic and interactive web applications."
-    },
-    {
-      image: ReactJS,
-      title: "React Native",
-      linkTech: "https://reactnative.dev/",
-      id: "Solusi lintas platform untuk membangun aplikasi mobile berkinerja tinggi pada Android dan iOS.",
-      en: "A cross-platform solution for building high-performance mobile applications on both Android and iOS."
-    },
-    {
-      image: Typescript,
-      title: "Typescript",
-      linkTech: "https://www.typescriptlang.org/",
-      id: "Superset JavaScript dengan tipe data yang kuat untuk meningkatkan kualitas, keterbacaan, dan skalabilitas kode.",
-      en: "A flexible JavaScript library for creating interactive and dynamic user interfaces."
-    },
-    {
-      image: Redux,
-      title: "Redux",
-      linkTech: "https://redux.js.org/",
-      id: "Alat untuk pengelolaan data dan state secara efisien pada aplikasi web dan mobile.",
-      en: "A tool for efficient data and state management in web and mobile applications."
-    },
-    {
-      image: Tailwind,
-      title: "Tailwind CSS",
-      linkTech: "https://tailwindcss.com/",
-      id: "Framework CSS yang ringan dan fleksibel untuk membuat desain yang unik dan estetis dengan efisiensi tinggi.",
-      en: "A lightweight and flexible CSS framework for creating unique and aesthetically pleasing designs with high efficiency."
-    },
-    {
-      image: Mui,
-      title: "Material UI",
-      linkTech: "https://mui.com/",
-      id: "Library komponen desain modern untuk membangun antarmuka pengguna yang responsif dengan cepat.",
-      en: "A modern design component library for building responsive user interfaces quickly."
-    },
-    {
-      image: Golang,
-      title: "Golang",
-      linkTech: "https://go.dev/",
-      id: "Bahasa pemrograman yang andal dan cepat untuk membangun sistem backend dan API.",
-      en: "A reliable and fast programming language for building backend systems and APIs."
-    },
-    {
-      image: Postgresql,
-      title: "PostgreSQL",
-      linkTech: "https://www.postgresql.org/",
-      id: "Sistem manajemen basis data yang stabil, aman, dan cocok untuk kebutuhan skala kecil hingga besar.",
-      en: "A stable and secure database management system suitable for small to large-scale needs."
+      idActive: "id",
+      icont: DefaultImage,
+      title: "",
+      link: "",
+      descriptionText: { id: "", en: "" },
     },
   ]);
 
+  const handleAddTechnologies = () => {
+    setLisTechnologies([
+      ...lisTechnologies,
+      {
+        idActive: "id",
+        icont: "",
+        title: "",
+        link: "",
+        descriptionText: { id: "", en: "" },
+      },
+    ]);
+  };
+
+  const handleDeleteTechnologies = (index: number) => {
+    const technologyToDelete = lisTechnologies[index];
+    if (typeof technologyToDelete.icont === 'string' && technologyToDelete.icont.includes('agtaimage')) {
+      setListDeleteImage([...listDeleteImage, technologyToDelete.icont]);
+    }
+    setLisTechnologies(lisTechnologies.filter((_, i) => i !== index));
+  };
+
+  const getServiceData = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const res = await getServices();
+      setDescriptionText({ ...res.data.data.description });
+      setLisTechnologies(res.data.data.technologyLists.map((tech: object) => ({ ...tech, idActive: "id" })));
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+    } catch (error) {
+      console.log('cek error', error); // eslint-disable-line
+      setIsLoading(false);
+    }
+  }, [setIsLoading]);
+
+  useEffect(() => {
+    if (isMounted.current) {
+      getServiceData();
+    }
+    return () => {
+      isMounted.current = false
+    }
+  }, [getServiceData]);
+
+  const handleUpdateService = async () => {
+    dispatch(showLoadingSubmit());
+  
+    try {
+      if (listDeleteImage.length > 0) {
+        await Promise.all(
+          listDeleteImage.map(async (filename) => {
+            try {
+              await delImageData({ filename });
+            } catch (error) {
+              console.error(`Failed to delete image ${filename}:`, error); // eslint-disable-line
+            }
+          })
+        );
+      }
+
+      const updatedTechnologies = await Promise.all(
+        lisTechnologies.map(async (tech) => {
+          if (tech.icont && tech.icont !== "" && tech.icont instanceof File) {
+            const response = await uploadImage(tech.icont);
+            return { ...tech, icont: response };
+          }
+          return tech;
+        })
+      );
+  
+      await updateServices({
+        description: descriptionText,
+        technologiesList: updatedTechnologies.map(tech => ({
+          icont: tech.icont,
+          title: tech.title,
+          link: tech.link,
+          description: {
+            id: tech.descriptionText?.id || '-',
+            en: tech.descriptionText?.en || '-'
+          }
+        }))
+      });
+
+      setTimeout(() => {
+        dispatch(showNotification({ message: { id: 'Selamat, Service berhasil diperbarui', en: 'Congratulations, Service data successfully updated' }, type: 'success' }));
+        dispatch(hideLoadingSubmit());
+      }, 1000);
+    } catch (error) {
+      console.error("Update service error:", error); // eslint-disable-line
+      dispatch(showNotification({ message: { id: "Maaf, Service data gagal diperbarui", en: "Sorry, Service data failed to update" }, type: "failed" }));
+    }
+  };
+
   return (
-    <div className='w-full p-5 flex flex-col'>
-      <DivContent className='mb-10'>
-        <div className='flex justify-between items-center mb-10'>
-          <p className='font-extrabold text-neutral-300 text-[3vh]'>Description</p>
-          <div className='bg-white rounded-lg'>
-            <SelectContent
-              valueList={languangeList}
-              valueSelected={codeLanguage}
-              setValueSelected={setCodeLanguage}
-            />
+    <div>
+      {isLoading
+        ?
+          <div className='flex w-full h-[90vh] justify-center items-center'>
+            <LoadingPage color='#fff' size={70} isLoading={isLoading} />
           </div>
-        </div>
-        <InputContent
-          id='description'
-          value={descriptionText[codeLanguage]}
-          setValue={value => setDescriptionText({ ...descriptionText, [codeLanguage]: value })}
-          classNameInput='text-justify indent-5 text-[2.5vh] border-none'
-          rows={5}
-        />
-      </DivContent>
-      <DivContent>
-        <div className='flex justify-between items-center mb-10'>
-          <p className='font-extrabold text-neutral-300 text-[3vh]'>List of Technologies Used</p>
-          <div className='bg-white rounded-lg'>
-            <SelectContent
-              valueList={languangeList}
-              valueSelected={codeLanguageList}
-              setValueSelected={setCodeLanguageList}
-            />
-          </div>
-        </div>
-        {lisTechnologies.map((item, index) => (
-          <div key={index} className='w-full border rounded-xl p-4 flex items-center mb-8'>
-            <InputContent
-              id={`file-${index}`}
-              type='fileImage'
-              value={item.image}
-              accept="image/*"
-              widthImage={70}
-              heightImage={70}
-              setValue={value => setLisTechnologies(lisTechnologies.map((tech, i) => i === index ? { ...tech, image: value } : tech))}
-            />
-            <div className="w-full ml-8">
-              <div className="flex items-center justify-between mb-2">
-                <InputContent
-                  id={`title-${index}`}
-                  value={item.title}
-                  setValue={value => setLisTechnologies(lisTechnologies.map((tech, i) => i === index ? { ...tech, title: value } : tech))}
-                  classNameInput='text-purple-500 text-[2.5vh] border-none p-0 mb-0'
-                />
-                <a href={item.linkTech} target="_blank" rel="noreferrer" className='bg-clip-border bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 font-bold text-white px-2 py-1 rounded-md hover:bg-gradient-to-r hover:from-purple-600 hover:via-pink-700 hover:to-red-700'>
-                  Check Link
-                </a>
+        :
+          <div className='w-full p-5 flex flex-col'>
+            <DivContent className='mb-10'>
+              <div className='flex justify-between items-center mb-10'>
+                <p className='font-extrabold text-neutral-300 text-[3vh]'>Description</p>
+                <div className='bg-white rounded-lg'>
+                  <SelectContent
+                    valueList={languangeList}
+                    valueSelected={codeLanguage}
+                    setValueSelected={setCodeLanguage}
+                  />
+                </div>
               </div>
               <InputContent
-                id={`linkTech-${index}`}
-                value={item.linkTech}
-                setValue={value => setLisTechnologies(lisTechnologies.map((tech, i) => i === index ? { ...tech, linkTech: value } : tech))}
-                classNameInput='text-pink-500 text-[2.5vh] border-none p-0'
+                id='description'
+                value={descriptionText[codeLanguage]}
+                setValue={value => setDescriptionText({ ...descriptionText, [codeLanguage]: value })}
+                classNameInput='text-justify indent-5 text-[2.5vh] border-none'
+                rows={5}
+                disabled={isLoadingSubmit}
               />
-              <InputContent
-                id={`idText-${index}`}
-                value={codeLanguageList === "id" ? item.id : item.en}
-                setValue={value => setLisTechnologies(lisTechnologies.map((tech, i) => i === index ? { ...tech, [codeLanguageList]: value } : tech))}
-                classNameInput='text-[2.5vh] text-white border-none p-0 mb-0'
-                rows={2}
-              />
-            </div>
+            </DivContent>
+            <DivContent>
+              <p className='font-extrabold text-neutral-300 text-[3vh] mb-10'>List of Technologies Used</p>
+              {lisTechnologies.map((item, index) => (
+                <div key={index} className='w-full border-b rounded-xl p-4 mb-10'>
+                  <div className='w-full flex items-center'>
+                    <InputContent
+                      id={`file-${index}`}
+                      type='fileImage'
+                      value={typeof item.icont === 'string' && item.icont.includes('agtaimage') ? `${process.env.NEXT_PUBLIC_BASE_URL_IMAGE}${item.icont}` : (item.icont && item.icont !== "" ? item.icont : DefaultImage)}
+                      accept="image/*"
+                      widthImage={70}
+                      heightImage={70}
+                      setValue={value => setLisTechnologies(lisTechnologies.map((tech, i) => i === index ? { ...tech, icont: value } : tech))}
+                      disabled={isLoadingSubmit}
+                    />
+                    <div className="w-full ml-8">
+                      <div className="flex items-center justify-between mb-2">
+                        <InputContent
+                          id={`title-${index}`}
+                          value={item.title}
+                          placeholder='Type title here...'
+                          setValue={value => setLisTechnologies(lisTechnologies.map((tech, i) => i === index ? { ...tech, title: value } : tech))}
+                          classNameInput='text-purple-500 text-[2.5vh] border-none p-0 mb-0'
+                          disabled={isLoadingSubmit}
+                        />
+                        <div className="flex items-center space-x-2">
+                          <a href={item.link} target="_blank" rel="noreferrer" className='bg-clip-border bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 font-bold text-white p-3 rounded-lg hover:bg-gradient-to-r hover:from-purple-600 hover:via-pink-700 hover:to-red-700'>
+                            Check Link
+                          </a>
+                          <div className='bg-white rounded-lg'>
+                            <SelectContent
+                              valueList={languangeList}
+                              valueSelected={item.idActive}
+                              setValueSelected={value => setLisTechnologies(lisTechnologies.map((tech, i) => i === index ? { ...tech, idActive: value } : tech))}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <InputContent
+                        id={`link-${index}`}
+                        value={item.link}
+                        placeholder='Type link here...'
+                        setValue={value => setLisTechnologies(lisTechnologies.map((tech, i) => i === index ? { ...tech, link: value } : tech))}
+                        classNameInput='text-pink-500 text-[2.5vh] border-none p-0'
+                        disabled={isLoadingSubmit}
+                      />
+                      <InputContent
+                        id={`idText-${index}`}
+                        placeholder={`Type description ${item.idActive === "id" ? "Indonesia" : "English"} here...`}
+                        value={item.idActive === "id" ? item.descriptionText?.id || "" : item.descriptionText?.en || ""}
+                        setValue={value => setLisTechnologies(lisTechnologies.map((tech, i) => i === index ? { ...tech, descriptionText: { ...tech.descriptionText, [item.idActive]: value } } : tech))}
+                        classNameInput='text-[2.5vh] text-white border-none p-0 mb-0'
+                        rows={2}
+                        disabled={isLoadingSubmit}
+                      />
+                    </div>
+                  </div>
+                  {index !== 0 &&
+                    <div className='flex items-center justify-end'>
+                      <button
+                        type="submit"
+                        className='text-[2vh] font-extrabold py-2 px-8 bg-redCustom-700 rounded-md m-3 mt-4'
+                        onClick={() => handleDeleteTechnologies(index)}
+                        disabled={isLoadingSubmit}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  }
+                </div>
+              ))}
+              <button
+                onClick={handleAddTechnologies}
+                className='text-[2vh] w-full font-bold p-2 bg-white text-black rounded-md hover:bg-gray-200'
+                disabled={isLoadingSubmit}
+              >
+                Add Technologies
+              </button>
+            </DivContent>
+            <button
+              type="submit"
+              className="my-10 text-[2vh] w-full font-extrabold p-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white rounded-md hover:bg-gradient-to-r hover:from-purple-600 hover:via-pink-700 hover:to-red-700"
+              disabled={isLoadingSubmit}
+              onClick={handleUpdateService}
+            >
+              Save Changes
+            </button>
           </div>
-        ))}
-      </DivContent>
-      <button
-        type="submit"
-        className="my-10 text-[2vh] w-full font-extrabold p-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white rounded-md hover:bg-gradient-to-r hover:from-purple-600 hover:via-pink-700 hover:to-red-700"
-      >
-        Save Changes
-      </button>
+      }
     </div>
   );
 };

@@ -4,6 +4,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import useAnimateElements from "../components/useAnimateElements";
 import DivTechnologies from "../components/DivTechnologies";
+import DefaultImage from "../icons/defaultImage.svg";
 
 interface ServicesProps {
   servicesData: {
@@ -34,10 +35,10 @@ const ServicesPage: React.FC<ServicesProps> = ({ servicesData }) => {
               <DivTechnologies
                 key={index}
                 codeLanguage={codeLanguage}
-                imageFile={`${process.env.NEXT_PUBLIC_BASE_URL_IMAGE}${item.icont}`}
+                imageFile={item.icont && item.icont !== "" ? `${process.env.NEXT_PUBLIC_BASE_URL_IMAGE}${item.icont}` : DefaultImage}
                 titleText={item.title}
-                idText={item.descriptionText.id}
-                enText={item.descriptionText.en}
+                idText={item.descriptionText?.id || ""}
+                enText={item.descriptionText?.en || ""}
               />
             ))}
           </div>

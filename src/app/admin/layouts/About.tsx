@@ -13,7 +13,7 @@ const About = () => {
   const isLoadingSubmit = useSelector((state: { admin: { isLoadingSubmit: boolean } }) => state.admin.isLoadingSubmit);
   const isMounted = useRef(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [codeLanguage, setCodeLanguage] = useState("id");
+  const [codeLanguage, setCodeLanguage] = useState({ openingText: "id", closingText: "id" });
   const languangeList = [{ id: "id", name: "Indonesia" }, { id: "en", name: "English" }];
 
   const [aboutText, setAboutText] = useState<{
@@ -31,10 +31,12 @@ const About = () => {
   });
 
   const [commitmentList, setCommitmentList] = useState<Array<{
+    idActive: string;
     titleText: { [key: string]: string };
     descriptionText: { [key: string]: string };
   }>>([
     {
+      idActive: "id",
       titleText: {
         id: "",
         en: "",
@@ -54,7 +56,7 @@ const About = () => {
         openingText: { ...res.data.data.openingText },
         closingText: { ...res.data.data.closingText },
       });
-      setCommitmentList([...res.data.data.comitmentLists]);
+      setCommitmentList(res.data.data.comitmentLists.map((tech: object) => ({ ...tech, idActive: "id" })));
       setTimeout(() => {
         setIsLoading(false);
       }, 1000);
@@ -92,6 +94,7 @@ const About = () => {
     setCommitmentList([
       ...commitmentList,
       {
+        idActive: "id",
         titleText: {
           id: "",
           en: "",
@@ -121,24 +124,20 @@ const About = () => {
           <div className='w-full p-5 flex flex-col'>
 
             <DivContent className='mb-10'>
-              <div className='flex justify-between items-center'>
-                <p className='font-extrabold text-neutral-300 text-[3vh]'>About Text</p>
+              <div className='flex justify-between items-center mb-4'>
+                <p className='font-extrabold text-neutral-300 text-[3vh]'>Opening Text</p>
                 <div className='bg-white rounded-lg'>
                   <SelectContent
                     valueList={languangeList}
-                    valueSelected={codeLanguage}
-                    setValueSelected={setCodeLanguage}
+                    valueSelected={codeLanguage.openingText}
+                    setValueSelected={(value) => setCodeLanguage({ ...codeLanguage, openingText: value })}
                   />
                 </div>
               </div>
-            </DivContent>
-
-            <DivContent className='mb-10'>
-              <p className='font-extrabold text-neutral-300 text-[2.5vh] mb-4'>Opening Text</p>
               <InputContent
                 id='openingText'
-                value={aboutText.openingText[codeLanguage]}
-                setValue={value => setAboutText({ ...aboutText, openingText: { ...aboutText.openingText, [codeLanguage]: value } })}
+                value={aboutText.openingText[codeLanguage.openingText]}
+                setValue={value => setAboutText({ ...aboutText, openingText: { ...aboutText.openingText, [codeLanguage.openingText]: value } })}
                 classNameInput='text-justify indent-5 text-[2.5vh] p-4'
                 rows={4}
                 disabled={isLoadingSubmit}
@@ -153,28 +152,44 @@ const About = () => {
                     <div className='w-[2%]'>
                       <p className="text-[2.5vh] font-bold mb-5">{index + 1}.</p>
                     </div>
-                    <div className='w-[98%]'>
-                      <InputContent
-                        id={`titleText-${index}`}
-                        placeholder='Title here...'
-                        value={commitment.titleText[codeLanguage]}
-                        setValue={value => {
-                          const newCommitmentList = [...commitmentList];
-                          newCommitmentList[index].titleText = { ...commitment.titleText, [codeLanguage]: value };
-                          setCommitmentList(newCommitmentList);
-                        }}
-                        classNameInput='text-justify text-[2.5vh]'
-                        disabled={isLoadingSubmit}
-                      />
+                    <div className='w-[98%] flex items-center justify-between'>
+                      <div className='w-[80%]'>
+                        <InputContent
+                          id={`titleText-${index}`}
+                          placeholder='Title here...'
+                          value={commitment.titleText[commitment.idActive]}
+                          setValue={value => {
+                            const newCommitmentList = [...commitmentList];
+                            newCommitmentList[index].titleText = { 
+                              ...commitment.titleText, 
+                              [commitment.idActive]: value 
+                            };
+                            setCommitmentList(newCommitmentList);
+                          }}
+                          classNameInput='text-justify text-[2.5vh]'
+                          disabled={isLoadingSubmit}
+                        />
+                      </div>
+                      <div className='bg-white rounded-lg mb-5'>
+                        <SelectContent
+                          valueList={languangeList}
+                          valueSelected={commitment.idActive}
+                          setValueSelected={(value) => {
+                            const newCommitmentList = [...commitmentList];
+                            newCommitmentList[index].idActive = value;
+                            setCommitmentList(newCommitmentList);
+                          }}
+                        />
+                      </div>
                     </div>
                   </div>
                   <InputContent
                     id={`descriptionText-${index}`}
                     placeholder='Description here...'
-                    value={commitment.descriptionText[codeLanguage]}
+                    value={commitment.descriptionText[commitment.idActive]}
                     setValue={value => {
                       const newCommitmentList = [...commitmentList];
-                      newCommitmentList[index].descriptionText = { ...commitment.descriptionText, [codeLanguage]: value };
+                      newCommitmentList[index].descriptionText = { ...commitment.descriptionText, [commitment.idActive]: value };
                       setCommitmentList(newCommitmentList);
                     }}
                     classNameInput='text-justify text-[2.5vh] border-none -mt-5 ml-5'
@@ -203,11 +218,20 @@ const About = () => {
             </DivContent>
 
             <DivContent className='mb-10'>
-              <p className='font-extrabold text-neutral-300 text-[2.5vh] mb-4'>Closing Text</p>
+              <div className='flex justify-between items-center mb-4'>
+                <p className='font-extrabold text-neutral-300 text-[3vh]'>Closing Text</p>
+                <div className='bg-white rounded-lg'>
+                  <SelectContent
+                    valueList={languangeList}
+                    valueSelected={codeLanguage.closingText}
+                    setValueSelected={(value) => setCodeLanguage({ ...codeLanguage, closingText: value })}
+                  />
+                </div>
+              </div>
               <InputContent
                 id='closingText'
-                value={aboutText.closingText[codeLanguage]}
-                setValue={value => setAboutText({ ...aboutText, closingText: { ...aboutText.closingText, [codeLanguage]: value } })}
+                value={aboutText.closingText[codeLanguage.closingText]}
+                setValue={value => setAboutText({ ...aboutText, closingText: { ...aboutText.closingText, [codeLanguage.closingText]: value } })}
                 classNameInput='text-justify indent-5 text-[2.5vh]'
                 classNameLabel='mt-8'
                 rows={4}
