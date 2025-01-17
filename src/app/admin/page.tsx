@@ -31,6 +31,7 @@ const DashboardHome = () => {
       } else if (timeDifference >= oneHour) {
         setTimeout(() => {
           localStorage.removeItem('lastToken');
+          localStorage.removeItem('userData');
           localStorage.removeItem('lastTokenAt');
           dispatch(showNotification({ message: { id: 'Sesi anda telah berakhir, silakan login ulang', en: 'Your session has expired, please re-login' }, type: 'failed', delay: 100, delayReset: 1000 }));
           route.push('/login');
@@ -39,6 +40,7 @@ const DashboardHome = () => {
     } else {
       setTimeout(() => {
         localStorage.removeItem('lastToken');
+        localStorage.removeItem('userData');
         localStorage.removeItem('lastTokenAt');
         dispatch(showNotification({ message: { id: 'Sesi anda telah berakhir, silakan login ulang', en: 'Your session has expired, please re-login' }, type: 'failed', delay: 100, delayReset: 1000 }));
         route.push('/login');

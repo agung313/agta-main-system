@@ -33,6 +33,7 @@ const LoginForm: React.FC<LoginProps> = ({ setTypeForm }) => {
     setIsLoading(true);
     try {
       const res = await login(inputData)
+      localStorage.setItem('userData', res.data.userData);
       localStorage.setItem('lastToken', res.data.token);
       localStorage.setItem('lastTokenAt', now.toISOString());
       setTimeout(() => {
@@ -41,6 +42,7 @@ const LoginForm: React.FC<LoginProps> = ({ setTypeForm }) => {
       }, 1000);
     } catch (err) {
       console.log('cek err', err); // eslint-disable-line
+      localStorage.removeItem('userData');
       localStorage.removeItem('lastToken');
       localStorage.removeItem('lastTokenAt');
       setIsLoading(false);

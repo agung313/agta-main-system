@@ -42,6 +42,14 @@ export function delImageData(payload: { filename: string }) {
   });
 }
 
+export function getMessages() {
+  return agentAdmin.get('/messages');
+}
+
+export function deleteMessage(idMessage: string) {
+  return agentAdmin.delete(`/message/${idMessage}`);
+}
+
 interface UploadImageResponse {
   // Define the structure of the response data here
   url: string;
