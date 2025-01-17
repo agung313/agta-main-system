@@ -28,14 +28,6 @@ export function updateServices(payload: object) {
   return agentAdmin.put('/services', payload);
 }
 
-export function getContact() {
-  return agentAdmin.get('/contacts');
-}
-
-export function updateContact(payload: object) {
-  return agentAdmin.put('/contacts', payload);
-}
-
 export function delImageData(payload: { filename: string }) {
   return agentAdmin.delete(`/deleteImage`, {
     params: payload, // Mengirimkan filename sebagai query parameter
