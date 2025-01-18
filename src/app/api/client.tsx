@@ -31,3 +31,7 @@ export function sentMessage(payload: object) {
 export function visitor(payload: object) {
     return agent.post('/visitor', payload);
 }
+
+export function signUp(payload: object) {
+    return agent.post('/signup', payload);
+  }

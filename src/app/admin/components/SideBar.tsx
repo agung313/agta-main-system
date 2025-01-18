@@ -12,13 +12,22 @@ import ServiceIcont from '../icons/ServiceIcont';
 import ContactIcont from '../icons/ContactIcont';
 import MessagesIcont from '../icons/MessagesIcont';
 import LogoutIcont from '../icons/LogoutIcont';
+import { useRouter } from 'next/navigation';
 
 const SideBar = () => {
+  const route = useRouter();
   const dispatch = useDispatch<typeof store.dispatch>();
   const idTabActive = useSelector((state: { admin: { idTabActive: string } }) => state.admin.idTabActive);
 
   const changeTab = (tab: string) => {
     dispatch(changeTabActive(tab));
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('userData');
+    localStorage.removeItem('lastToken');
+    localStorage.removeItem('lastTokenAt');
+    route.push('/');
   };
 
   return (
@@ -70,10 +79,10 @@ const SideBar = () => {
           <p className='font-medium text-neutral-700 text-[2vh] mb-2'>SIGNED AS</p>
           <p className='font-medium text-neutral-300 text-[2vh]'>sholihhudinagung@gmail.com</p>
         </div>
-        <Link href='/' className='flex items-center mt-8'>
+        <button onClick={handleLogout} className='flex items-center mt-8'>
           <p className='font-bold text-neutral-700 text-[2vh] mr-3'>Log out</p>
           <LogoutIcont color='#4A4E56' />
-        </Link>
+        </button>
       </div>
     </div>
   );
