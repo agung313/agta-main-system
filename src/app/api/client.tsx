@@ -33,5 +33,9 @@ export function visitor(payload: object) {
 }
 
 export function signUp(payload: object) {
-    return agent.post('/signup', payload);
-  }
+  return agent.post('/signup', payload);
+}
+
+export function resetPassword(payload: object) {
+  return agent.post('/resetPassword', payload);
+}
