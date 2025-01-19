@@ -59,12 +59,20 @@ const SignupForm: React.FC<LoginProps> = ({ setTypeForm }) => {
     return false;
   };
 
+  const now = new Date();
+
   const handleSignUp =  async () => {
     setIsLoading(true);
     const isErros = await validateInput();
     if (isErros) return;
     try {
-      await signUp(inputData);
+      const res = await signUp(inputData);
+      localStorage.setItem('userDataName', res.data.userData.name);
+      localStorage.setItem('userDataUserName', res.data.userData.username);
+      localStorage.setItem('userDataEmail', res.data.userData.email);
+      localStorage.setItem('userDataRole', res.data.userData?.role);
+      localStorage.setItem('lastToken', res.data.token);
+      localStorage.setItem('lastTokenAt', now.toISOString());
       setTimeout(() => {
         setIsLoading(false);
         route.push('/admin');
