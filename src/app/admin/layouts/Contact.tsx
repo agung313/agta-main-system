@@ -13,7 +13,20 @@ import { getContact, updateContact } from '@/app/api/admin';
 import { hideLoadingSubmit, showLoadingSubmit } from '@/app/redux/admin';
 import { showNotification } from '@/app/redux/components';
 
-const Contact = () => {
+interface SloganProps {
+  setConfirmDialogData: React.Dispatch<React.SetStateAction<{
+    handleConfirm: () => void;
+    ConfirmDialogHeader: { id: string; en: string };
+    ConfirmDialogMessage: { id: string; en: string };
+    ConfirmDialogWarning: { id: string; en: string };
+    TextCancel: { id: string; en: string };
+    TextConfirm: { id: string; en: string };
+  }>>,
+  openConfirmDialog: () => void,
+  disableConfirmDialog: () => void,
+}
+
+const Contact: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog, disableConfirmDialog }) => {
   const dispatch = useDispatch();
   const isLoadingSubmit = useSelector((state: { admin: { isLoadingSubmit: boolean } }) => state.admin.isLoadingSubmit);
   const isMounted = useRef(true);
@@ -51,7 +64,20 @@ const Contact = () => {
     }
   }, [getServiceData]);
 
+  const confirm = () => {
+    openConfirmDialog();
+    setConfirmDialogData({
+      ConfirmDialogMessage: { id: 'Apakah anda ingin merubah data ini?', en: 'Do you want to change this data?' },
+      ConfirmDialogHeader: { id: 'Konfirmasi Perubahan', en: 'Confirmation Updated' },
+      ConfirmDialogWarning: { id: 'Data yang diubah tidak dapat dikembalikan, apakah anda yakin mengupdate data ini ?', en: 'Changed data cannot be restored, are you sure you want to update this data?' },
+      handleConfirm: handleUpdateContact,
+      TextConfirm: { id: 'Ya, Simpan', en: 'Yes, Update' },
+      TextCancel: { id: 'Batal Simpan', en: 'Cancel Update' }
+    });
+  }
+
   const handleUpdateContact = async () => {
+    disableConfirmDialog();
     dispatch(showLoadingSubmit());
     try {
       await updateContact(contactData);
@@ -192,7 +218,7 @@ const Contact = () => {
           <button
             type="submit"
             className="my-10 text-[2vh] w-full font-extrabold p-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white rounded-md hover:bg-gradient-to-r hover:from-purple-600 hover:via-pink-700 hover:to-red-700"
-            onClick={handleUpdateContact}
+            onClick={confirm}
           >
             Save Changes
           </button>

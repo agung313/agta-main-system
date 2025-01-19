@@ -16,7 +16,20 @@ import AcountIcont from '../icons/AcountIcont';
 import { useRouter } from 'next/navigation';
 import { logout } from '@/app/api/admin';
 
-const SideBar = () => {
+interface SidebarProps {
+  setConfirmDialogData: React.Dispatch<React.SetStateAction<{
+    handleConfirm: () => void;
+    ConfirmDialogHeader: { id: string; en: string };
+    ConfirmDialogMessage: { id: string; en: string };
+    ConfirmDialogWarning: { id: string; en: string };
+    TextCancel: { id: string; en: string };
+    TextConfirm: { id: string; en: string };
+  }>>,
+  openConfirmDialog: () => void,
+  disableConfirmDialog: () => void,
+}
+
+const SideBar: React.FC<SidebarProps> = ({ setConfirmDialogData, openConfirmDialog, disableConfirmDialog }) => {
   const route = useRouter();
   const dispatch = useDispatch<typeof store.dispatch>();
   const idTabActive = useSelector((state: { admin: { idTabActive: string } }) => state.admin.idTabActive);
@@ -25,7 +38,20 @@ const SideBar = () => {
     dispatch(changeTabActive(tab));
   };
 
+  const confirm = () => {
+    openConfirmDialog();
+    setConfirmDialogData({
+      ConfirmDialogMessage: { id: 'Apakah anda yakin untuk logout?', en: 'Are you sure you want to logout?' },
+      ConfirmDialogHeader: { id: 'Konfirmasi Log ut', en: 'Confirmation Logout' },
+      ConfirmDialogWarning: { id: 'Seluruh data akan direset, apakah anda yakin untuk logout ?', en: 'All data will be reset, are you sure you want to logout?' },
+      handleConfirm: handleLogout,
+      TextConfirm: { id: 'Logout', en: 'Logout' },
+      TextCancel: { id: 'Batal', en: 'Cancel' }
+    });
+  }
+
   const handleLogout = async () => {
+    disableConfirmDialog();
     try {
       await logout();
     } catch (error) {
@@ -98,7 +124,7 @@ const SideBar = () => {
           <p className='font-medium text-neutral-700 text-[2vh] mb-2'>SIGNED AS</p>
           <p className='font-medium text-neutral-300 text-[2vh]'>{emailSigned}</p>
         </div>
-        <button onClick={handleLogout} className='flex items-center mt-8'>
+        <button onClick={confirm} className='flex items-center mt-8'>
           <p className='font-bold text-neutral-700 text-[2vh] mr-3'>Log out</p>
           <LogoutIcont color='#4A4E56' />
         </button>

@@ -2,8 +2,6 @@
 
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import Image from 'next/image'
-import Google from '../icons/googleColor.svg'
 import { showNotification } from '../redux/components';
 import { login } from '../api/client';
 import { useRouter } from 'next/navigation';
@@ -59,23 +57,8 @@ const LoginForm: React.FC<LoginProps> = ({ setTypeForm }) => {
   return (
     <div className='bg-white w-full rounded-xl w-[90%] sm:w-[60%] md:w-[70%] lg:w-[80%] xl:w-[35%] p-6 max-h-[65vh] lg:max-h-[100vh] overflow-auto'>
       <p className="font-montserrat text-[1.5vh] xl:text-[2.5vh] font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-700 to-red-700 mb-2">
-        {codeLanguage === 'id' ? "Masuk ke dalam" : "Sign in to"} AGTA
+        {codeLanguage === 'id' ? "Masuk ke" : "Sign in to"} AGTA
       </p>
-        
-      <button
-        type="submit"
-        disabled={isLoading}
-        className={`w-full font-bold p-2 bg-white text-gray-400 text-[1.5vh] rounded-md border border-gray-300 shadow-md ${isLoading ? "" : "hover:shadow-lg mt-[3vh]"} flex items-center`}
-      >
-        <Image src={Google} alt="Logo" className="w-[2vh] sm:w-[3vh] h-auto" />
-        <p className='mx-auto'>{codeLanguage === "id" ? "Masuk dengan" : "Sign In with"} Google</p>
-      </button>
-
-      <div className="flex items-center my-4">
-        <div className="flex-grow border-t border-gray-300" />
-          <p className="flex-shrink my-[1vh] sm:[3vh] text-[1.5vh] sm:text-[2vh] mx-4 text-gray-500">{codeLanguage === "id" ? "atau masuk dengan" : "or sign in with"} email</p>
-        <div className="flex-grow border-t border-gray-300" />
-      </div>
 
       <p className="text-black font-bold mb-2 text-[1.5vh] sm:text-[2vh] mt-[0.8vh] lg:mt-[4vh]">Email</p>
       <input

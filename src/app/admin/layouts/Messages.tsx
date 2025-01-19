@@ -6,7 +6,20 @@ import LoadingPage from '@/app/components/LoadingPage';
 import { hideLoadingSubmit, showLoadingSubmit } from '@/app/redux/admin';
 import { showNotification } from '@/app/redux/components';
 
-const Messages = () => {
+interface SloganProps {
+  setConfirmDialogData: React.Dispatch<React.SetStateAction<{
+    handleConfirm: () => void;
+    ConfirmDialogHeader: { id: string; en: string };
+    ConfirmDialogMessage: { id: string; en: string };
+    ConfirmDialogWarning: { id: string; en: string };
+    TextCancel: { id: string; en: string };
+    TextConfirm: { id: string; en: string };
+  }>>,
+  openConfirmDialog: () => void,
+  disableConfirmDialog: () => void,
+}
+
+const Messages: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog, disableConfirmDialog }) => {
   const dispatch = useDispatch();
   const isMounted = useRef(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -55,7 +68,20 @@ const Messages = () => {
     return `${diffDays} days ago`;
   };
 
+  const confirmDelete = (id: string) => {
+    openConfirmDialog();
+    setConfirmDialogData({
+      ConfirmDialogMessage: { id: 'Apakah anda yakin menghapus data ini?', en: 'Are you sure you want to delete this data??' },
+      ConfirmDialogHeader: { id: 'Konfirmasi Hapus', en: 'Confirmation Delete' },
+      ConfirmDialogWarning: { id: 'Data yang dihapus tidak dapat dikembalikan, apakah anda yakin menghapus data ini ?', en: 'Deleted data cannot be recovered, are you sure you want to deleting this data?' },
+      handleConfirm: () => handleDelete(id),
+      TextConfirm: { id: 'Ya, Hapus', en: 'Yes, Delete' },
+      TextCancel: { id: 'Batal Hapus', en: 'Cancel Delete' }
+    });
+  }
+
   const handleDelete = async (idMessage: string) => {
+    disableConfirmDialog();
     dispatch(showLoadingSubmit());
     try {
       await deleteMessage(idMessage);
@@ -101,7 +127,7 @@ const Messages = () => {
                   <button
                     type="submit"
                     className='text-[2vh] font-extrabold p-2 bg-redCustom-700 rounded-md mr-5'
-                    onClick={() => handleDelete(message.ID)}
+                    onClick={() => confirmDelete(message.ID)}
                   >
                     Delete
                   </button>

@@ -8,7 +8,20 @@ import { showNotification } from '@/app/redux/components';
 import { getAbouts, updateAbouts } from '@/app/api/admin';
 import LoadingPage from '@/app/components/LoadingPage';
 
-const About = () => {
+interface SloganProps {
+  setConfirmDialogData: React.Dispatch<React.SetStateAction<{
+    handleConfirm: () => void;
+    ConfirmDialogHeader: { id: string; en: string };
+    ConfirmDialogMessage: { id: string; en: string };
+    ConfirmDialogWarning: { id: string; en: string };
+    TextCancel: { id: string; en: string };
+    TextConfirm: { id: string; en: string };
+  }>>,
+  openConfirmDialog: () => void,
+  disableConfirmDialog: () => void,
+}
+
+const About: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog, disableConfirmDialog }) => {
   const dispatch = useDispatch();
   const isLoadingSubmit = useSelector((state: { admin: { isLoadingSubmit: boolean } }) => state.admin.isLoadingSubmit);
   const isMounted = useRef(true);
@@ -75,7 +88,20 @@ const About = () => {
     }
   }, [getAboutData]);
 
+  const confirm = () => {
+    openConfirmDialog();
+    setConfirmDialogData({
+      ConfirmDialogMessage: { id: 'Apakah anda ingin merubah data ini?', en: 'Do you want to change this data?' },
+      ConfirmDialogHeader: { id: 'Konfirmasi Perubahan', en: 'Confirmation Updated' },
+      ConfirmDialogWarning: { id: 'Data yang diubah tidak dapat dikembalikan, apakah anda yakin mengupdate data ini ?', en: 'Changed data cannot be restored, are you sure you want to update this data?' },
+      handleConfirm: handleUpdateAbout,
+      TextConfirm: { id: 'Ya, Simpan', en: 'Yes, Update' },
+      TextCancel: { id: 'Batal Simpan', en: 'Cancel Update' }
+    });
+  }
+
   const handleUpdateAbout = async () => {
+    disableConfirmDialog();
     dispatch(showLoadingSubmit());
     try {
       await updateAbouts({ ...aboutText, comitmentLists: commitmentList });
@@ -107,7 +133,20 @@ const About = () => {
     ]);
   };
 
+  const confirmDelete = (index: number) => {
+    openConfirmDialog();
+    setConfirmDialogData({
+      ConfirmDialogMessage: { id: 'Apakah anda yakin menghapus data ini?', en: 'Are you sure you want to delete this data?' },
+      ConfirmDialogHeader: { id: 'Konfirmasi Hapus', en: 'Confirmation Delete' },
+      ConfirmDialogWarning: { id: 'Data yang dihapus tidak dapat dikembalikan, apakah anda yakin menghapus data ini ?', en: 'Deleted data cannot be recovered, are you sure you want to delete this data?' },
+      handleConfirm: () => handleDeleteCommitment(index),
+      TextConfirm: { id: 'Ya, Hapus', en: 'Yes, Delete' },
+      TextCancel: { id: 'Batal Hapus', en: 'Cancel Delete' }
+    });
+  }
+
   const handleDeleteCommitment = (index: number) => {
+    disableConfirmDialog();
     const newCommitmentList = [...commitmentList];
     newCommitmentList.splice(index, 1);
     setCommitmentList(newCommitmentList);
@@ -201,7 +240,7 @@ const About = () => {
                       <button
                         type="submit"
                         className='text-[2vh] font-extrabold py-2 px-8 bg-redCustom-700 rounded-md m-3'
-                        onClick={() => handleDeleteCommitment(index)}
+                        onClick={() => confirmDelete(index)}
                       >
                         Delete
                       </button>
@@ -241,7 +280,7 @@ const About = () => {
             <button
               type="submit"
               className="my-10 text-[2vh] w-full font-extrabold p-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white rounded-md hover:bg-gradient-to-r hover:from-purple-600 hover:via-pink-700 hover:to-red-700"
-              onClick={handleUpdateAbout}
+              onClick={confirm}
             >
               Save Changes
             </button>

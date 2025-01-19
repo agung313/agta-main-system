@@ -11,7 +11,20 @@ import { updateProfile } from '@/app/api/admin';
 import { hideLoadingSubmit, showLoadingSubmit } from '@/app/redux/admin';
 import { showNotification } from '@/app/redux/components';
 
-const Profile = () => {
+interface ProfileProps {
+  setConfirmDialogData: React.Dispatch<React.SetStateAction<{
+    handleConfirm: () => void;
+    ConfirmDialogHeader: { id: string; en: string };
+    ConfirmDialogMessage: { id: string; en: string };
+    ConfirmDialogWarning: { id: string; en: string };
+    TextCancel: { id: string; en: string };
+    TextConfirm: { id: string; en: string };
+  }>>,
+  openConfirmDialog: () => void,
+  disableConfirmDialog: () => void,
+}
+
+const Profile: React.FC<ProfileProps> = ({ setConfirmDialogData, openConfirmDialog, disableConfirmDialog }) => {
   const dispatch = useDispatch();
   const isLoadingSubmit = useSelector((state: { admin: { isLoadingSubmit: boolean } }) => state.admin.isLoadingSubmit);
   const [isLoading, setIsLoading] = useState(true);
@@ -21,6 +34,7 @@ const Profile = () => {
     username: localStorage.getItem('userDataUserName') || '',
     email: localStorage.getItem('userDataEmail') ||'',
     password: '********',
+    role: localStorage.getItem('userDataRole') || '',
   });
 
   useEffect(() => {
@@ -30,10 +44,23 @@ const Profile = () => {
     }, 1000);
   }, []);
 
+  const confirm = () => {
+    openConfirmDialog();
+    setConfirmDialogData({
+      ConfirmDialogMessage: { id: 'Apakah anda ingin merubah data ini?', en: 'Do you want to change this data?' },
+      ConfirmDialogHeader: { id: 'Konfirmasi Perubahan', en: 'Confirmation Updated' },
+      ConfirmDialogWarning: { id: 'Data yang diubah tidak dapat dikembalikan, apakah anda yakin mengupdate data ini ?', en: 'Changed data cannot be restored, are you sure you want to update this data?' },
+      handleConfirm: handleUpdateProfile,
+      TextConfirm: { id: 'Ya, Simpan', en: 'Yes, Update' },
+      TextCancel: { id: 'Batal Simpan', en: 'Cancel Update' }
+    });
+  }
+
   const handleUpdateProfile = async () => {
+    disableConfirmDialog();
     dispatch(showLoadingSubmit());
     try {
-      const res = await updateProfile(contactData.email, contactData);
+      const res = await updateProfile(contactData.email, {...contactData, password: contactData.password !== '********' ? contactData.password : ''});
       localStorage.setItem('userDataName', res.data.userData.name);
       localStorage.setItem('userDataUserName', res.data.userData.username);
       localStorage.setItem('userDataEmail', res.data.userData.email);
@@ -142,7 +169,7 @@ const Profile = () => {
           <button
             type="submit"
             className="my-10 text-[2vh] w-full font-extrabold p-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white rounded-md hover:bg-gradient-to-r hover:from-purple-600 hover:via-pink-700 hover:to-red-700"
-            onClick={handleUpdateProfile}
+            onClick={confirm}
           >
             Save Changes
           </button>

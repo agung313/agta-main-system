@@ -8,7 +8,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { showNotification } from '@/app/redux/components';
 import { hideLoadingSubmit, showLoadingSubmit } from '@/app/redux/admin';
 
-const Slogan = () => {
+interface SloganProps {
+  setConfirmDialogData: React.Dispatch<React.SetStateAction<{
+    handleConfirm: () => void;
+    ConfirmDialogHeader: { id: string; en: string };
+    ConfirmDialogMessage: { id: string; en: string };
+    ConfirmDialogWarning: { id: string; en: string };
+    TextCancel: { id: string; en: string };
+    TextConfirm: { id: string; en: string };
+  }>>,
+  openConfirmDialog: () => void,
+  disableConfirmDialog: () => void,
+}
+
+const Slogan: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog, disableConfirmDialog }) => {
   const dispatch = useDispatch();
   const isLoadingSubmit = useSelector((state: { admin: { isLoadingSubmit: boolean } }) => state.admin.isLoadingSubmit);
   const isMounted = useRef(true);
@@ -51,7 +64,20 @@ const Slogan = () => {
     }
   }, [getSloganData]);
 
+  const confirm = async () => {
+    openConfirmDialog();
+    setConfirmDialogData({
+      ConfirmDialogMessage: { id: 'Apakah anda ingin merubah data ini?', en: 'Do you want to change this data?' },
+      ConfirmDialogHeader: { id: 'Konfirmasi Perubahan', en: 'Confirmation Updated' },
+      ConfirmDialogWarning: { id: 'Data yang diubah tidak dapat dikembalikan, apakah anda yakin mengupdate data ini ?', en: 'Changed data cannot be restored, are you sure you want to update this data?' },
+      handleConfirm: handleUpdateSlogan,
+      TextConfirm: { id: 'Ya, Simpan', en: 'Yes, Update' },
+      TextCancel: { id: 'Batal Simpan', en: 'Cancel Update' }
+    });
+  }
+
   const handleUpdateSlogan = async () => {
+    disableConfirmDialog();
     dispatch(showLoadingSubmit());
     try {
       await updateSlogan(sloganData);
@@ -140,7 +166,7 @@ const Slogan = () => {
             <button
               type="submit"
               className="text-[2vh] w-full font-extrabold p-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white rounded-md hover:bg-gradient-to-r hover:from-purple-600 hover:via-pink-700 hover:to-red-700"
-              onClick={handleUpdateSlogan}
+              onClick={confirm}
             >
               Save Changes
             </button>

@@ -41,7 +41,9 @@ export default function RootLayout({
         <body
           className={`${montserrat.variable} ${geistSans.variable} ${geistMono.variable} antialiased bg-black`}
         >
-          <Image src={BackgroundImage} alt="Logo" layout="fill" objectFit="cover" className="z-0" style={{ opacity: 0.5 }} />
+          <div className="relative h-screen">
+            <Image src={BackgroundImage} alt="Logo" fill className="z-0" style={{ objectFit: "cover", opacity: 0.5 }} />
+          </div>
           <div className="absolute inset-0 z-10">
             <Header />
             {children}

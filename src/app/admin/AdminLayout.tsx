@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import SideBar from './components/SideBar';
 import Dashboard from './layouts/Dashboard';
@@ -13,10 +13,20 @@ import Header from './components/Header';
 import NotificationPage from '../components/NotificationPage';
 import LoadingPage from '../components/LoadingPage';
 import Profile from './layouts/Profile';
+import ConfirmDialog from '../components/ConfirmDialog';
 
 const AdminLayout = () => {
   const idTabActive = useSelector((state: { admin: { idTabActive: string } }) => state.admin.idTabActive);
   const isLoadingSubmit = useSelector((state: { admin: { isLoadingSubmit: boolean } }) => state.admin.isLoadingSubmit);
+  const [isOpenConfirmDialog, setIsOpenConfirmDialog] = useState(false);
+  const [dialogConfirmData, setConfirmDialogData] = useState({
+    handleConfirm: () => { },
+    ConfirmDialogHeader: { id: '', en: '' },
+    ConfirmDialogMessage: { id: '', en: '' },
+    ConfirmDialogWarning: { id: '', en: '' },
+    TextCancel: { id: '', en: '' },
+    TextConfirm: { id: '', en: '' },
+  });
   return (
     <div className="w-[100vw] h-[100vh] flex">
       <LoadingPage
@@ -26,7 +36,7 @@ const AdminLayout = () => {
         textLoading='Loading Submit...'
       />
       <div className="hidden xl:flex w-[20vw]">
-        <SideBar />
+        <SideBar setConfirmDialogData={setConfirmDialogData} openConfirmDialog={() => setIsOpenConfirmDialog(true)} disableConfirmDialog={() => setIsOpenConfirmDialog(false)} />
       </div>
       <div className="w-full xl:w-[80vw] h-full flex flex-col">
         <div className="h-[10vh]">
@@ -34,15 +44,20 @@ const AdminLayout = () => {
         </div>
         <div className="flex-1 overflow-auto">
           {idTabActive === 'homeTab' && <Dashboard />}
-          {idTabActive === 'sloganTab' && <Slogan />}
-          {idTabActive === 'aboutTab' && <About />}
-          {idTabActive === 'serviceTab' && <Service />}
-          {idTabActive === 'contactTab' && <Contact />}
-          {idTabActive === 'messagesTab' && <Messages />}
-          {idTabActive === 'profileTab' && <Profile />}
+          {idTabActive === 'sloganTab' && <Slogan setConfirmDialogData={setConfirmDialogData} openConfirmDialog={() => setIsOpenConfirmDialog(true)} disableConfirmDialog={() => setIsOpenConfirmDialog(false)} />}
+          {idTabActive === 'aboutTab' && <About setConfirmDialogData={setConfirmDialogData} openConfirmDialog={() => setIsOpenConfirmDialog(true)} disableConfirmDialog={() => setIsOpenConfirmDialog(false)} />}
+          {idTabActive === 'serviceTab' && <Service setConfirmDialogData={setConfirmDialogData} openConfirmDialog={() => setIsOpenConfirmDialog(true)} disableConfirmDialog={() => setIsOpenConfirmDialog(false)} />}
+          {idTabActive === 'contactTab' && <Contact setConfirmDialogData={setConfirmDialogData} openConfirmDialog={() => setIsOpenConfirmDialog(true)} disableConfirmDialog={() => setIsOpenConfirmDialog(false)} />}
+          {idTabActive === 'messagesTab' && <Messages setConfirmDialogData={setConfirmDialogData} openConfirmDialog={() => setIsOpenConfirmDialog(true)} disableConfirmDialog={() => setIsOpenConfirmDialog(false)} />}
+          {idTabActive === 'profileTab' && <Profile setConfirmDialogData={setConfirmDialogData} openConfirmDialog={() => setIsOpenConfirmDialog(true)} disableConfirmDialog={() => setIsOpenConfirmDialog(false)} />}
         </div>
         <div className='flex justify-center'>
           <NotificationPage />
+          <ConfirmDialog
+            dialogConfirmData={dialogConfirmData}
+            isOpen={isOpenConfirmDialog}
+            handleCancel={() => setIsOpenConfirmDialog(false)}
+          />
         </div>
       </div>
       <div className="xl:hidden w-full h-full flex items-center justify-center">
