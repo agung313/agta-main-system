@@ -54,6 +54,10 @@ export function logout() {
   return agentAdmin.post('/logout');
 }
 
+export function updateProfile(email: string, payload: object) {
+  return agentAdmin.put(`/user/${email}`, payload);
+}
+
 interface UploadImageResponse {
   // Define the structure of the response data here
   url: string;

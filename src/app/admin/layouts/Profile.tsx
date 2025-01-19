@@ -7,7 +7,7 @@ import ProfileCircle from '../../icons/profileCircle.svg';
 import Password from '../../icons/password.svg';
 import InputContent from '../components/InputContent';
 import LoadingPage from '@/app/components/LoadingPage';
-import { updateContact } from '@/app/api/admin';
+import { updateProfile } from '@/app/api/admin';
 import { hideLoadingSubmit, showLoadingSubmit } from '@/app/redux/admin';
 import { showNotification } from '@/app/redux/components';
 
@@ -30,17 +30,21 @@ const Profile = () => {
     }, 1000);
   }, []);
 
-  const handleUpdateContact = async () => {
+  const handleUpdateProfile = async () => {
     dispatch(showLoadingSubmit());
     try {
-      await updateContact(contactData);
+      const res = await updateProfile(contactData.email, contactData);
+      localStorage.setItem('userDataName', res.data.userData.name);
+      localStorage.setItem('userDataUserName', res.data.userData.username);
+      localStorage.setItem('userDataEmail', res.data.userData.email);
+      localStorage.setItem('userDataRole', res.data.userData?.role);
       setTimeout(() => {
-        dispatch(showNotification({ message: { id: 'Selamat, Contact berhasil diperbarui', en: 'Congratulations, Contact successfully updated' }, type: 'success' }));
+        dispatch(showNotification({ message: { id: 'Selamat, Profile berhasil diperbarui', en: 'Congratulations, Profile successfully updated' }, type: 'success' }));
         dispatch(hideLoadingSubmit());
       }, 1000);
     } catch (error) {
       console.log('cek error', error); // eslint-disable-line
-      dispatch(showNotification({ message: { id: 'Maaf, Contact gagal diperbarui', en: 'Sorry, Contact failed to update' }, type: 'failed' }));
+      dispatch(showNotification({ message: { id: 'Maaf, Profile gagal diperbarui', en: 'Sorry, Profile failed to update' }, type: 'failed' }));
       dispatch(hideLoadingSubmit());
     }
   };
@@ -138,7 +142,7 @@ const Profile = () => {
           <button
             type="submit"
             className="my-10 text-[2vh] w-full font-extrabold p-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white rounded-md hover:bg-gradient-to-r hover:from-purple-600 hover:via-pink-700 hover:to-red-700"
-            onClick={handleUpdateContact}
+            onClick={handleUpdateProfile}
           >
             Save Changes
           </button>
