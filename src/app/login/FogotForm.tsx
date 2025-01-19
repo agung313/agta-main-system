@@ -88,7 +88,7 @@ const ForgotForm: React.FC<LoginProps> = ({ setTypeForm }) => {
           <div className='flex flex-col items-center mb-[2vh] lg:mb-[4vh] mt-[4vh]'>
             <Image src={Bigsuccess} alt="Success Icon" width={100} height={100} />
             <p className="text-black font-bold mb-2 text-[1.5vh] sm:text-[2vh] text-center mt-[0.5vh]">
-              Selamat! Password baru <br /> telah dikirim ke email Anda
+              Selamat! Password anda telah direset <br /> silakan masukan password default 12345678
             </p>
           </div>
         :
@@ -104,15 +104,14 @@ const ForgotForm: React.FC<LoginProps> = ({ setTypeForm }) => {
           </div>
         }
 
-      <div className='flex items-center'>
+      <div className={`flex items-center ${isSuccess && 'hidden'}`}>
         <button
           type="submit"
           onClick={() => handleForgotPassword()}
           className="w-full text-[1.5vh] sm:text-[2vh] font-bold p-2 bg-gradient-to-r from-purple-500 via-pink-600 to-red-600 text-white rounded-md hover:bg-gradient-to-r hover:from-purple-700 hover:via-pink-800 hover:to-red-800"
           disabled={isLoading || isSuccess}
         >
-          {!isSuccess && (isLoading ? <LoadingPage size={20} color="#fff" flex isLoading={isLoading} /> : codeLanguage === "id" ? "Lupa Password" : "Forgot Password")}
-          {isSuccess && (codeLanguage === "id" ? "Tunggu hingga satu menit" : "Wait for a minute")}
+          {isLoading ? <LoadingPage size={20} color="#fff" flex isLoading={isLoading} /> : codeLanguage === "id" ? "Lupa Password" : "Forgot Password"}
         </button>
       </div>
 

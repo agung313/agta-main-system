@@ -50,6 +50,10 @@ export function deleteMessage(idMessage: string) {
   return agentAdmin.delete(`/message/${idMessage}`);
 }
 
+export function logout() {
+  return agentAdmin.post('/logout');
+}
+
 interface UploadImageResponse {
   // Define the structure of the response data here
   url: string;

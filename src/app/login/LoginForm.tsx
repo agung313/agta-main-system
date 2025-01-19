@@ -33,7 +33,10 @@ const LoginForm: React.FC<LoginProps> = ({ setTypeForm }) => {
     setIsLoading(true);
     try {
       const res = await login(inputData)
-      localStorage.setItem('userData', res.data.userData);
+      localStorage.setItem('userDataName', res.data.userData.name);
+      localStorage.setItem('userDataUserName', res.data.userData.username);
+      localStorage.setItem('userDataEmail', res.data.userData.email);
+      localStorage.setItem('userDataRole', res.data.userData?.role);
       localStorage.setItem('lastToken', res.data.token);
       localStorage.setItem('lastTokenAt', now.toISOString());
       setTimeout(() => {
@@ -42,7 +45,10 @@ const LoginForm: React.FC<LoginProps> = ({ setTypeForm }) => {
       }, 1000);
     } catch (err) {
       console.log('cek err', err); // eslint-disable-line
-      localStorage.removeItem('userData');
+      localStorage.removeItem('userDataName');
+      localStorage.removeItem('userDataUserName');
+      localStorage.removeItem('userDataEmail');
+      localStorage.removeItem('userDataRole');
       localStorage.removeItem('lastToken');
       localStorage.removeItem('lastTokenAt');
       setIsLoading(false);

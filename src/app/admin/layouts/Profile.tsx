@@ -1,0 +1,151 @@
+import React, { useEffect, useState } from 'react'
+import Image from 'next/image';
+import { useDispatch, useSelector } from 'react-redux';
+import DivContent from '../components/DivContent';
+import Email from '../../icons/email.svg';
+import ProfileCircle from '../../icons/profileCircle.svg';
+import Password from '../../icons/password.svg';
+import InputContent from '../components/InputContent';
+import LoadingPage from '@/app/components/LoadingPage';
+import { updateContact } from '@/app/api/admin';
+import { hideLoadingSubmit, showLoadingSubmit } from '@/app/redux/admin';
+import { showNotification } from '@/app/redux/components';
+
+const Profile = () => {
+  const dispatch = useDispatch();
+  const isLoadingSubmit = useSelector((state: { admin: { isLoadingSubmit: boolean } }) => state.admin.isLoadingSubmit);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [contactData, setContactData] = useState({
+    name: localStorage.getItem('userDataName') || '',
+    username: localStorage.getItem('userDataUserName') || '',
+    email: localStorage.getItem('userDataEmail') ||'',
+    password: '********',
+  });
+
+  useEffect(() => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
+
+  const handleUpdateContact = async () => {
+    dispatch(showLoadingSubmit());
+    try {
+      await updateContact(contactData);
+      setTimeout(() => {
+        dispatch(showNotification({ message: { id: 'Selamat, Contact berhasil diperbarui', en: 'Congratulations, Contact successfully updated' }, type: 'success' }));
+        dispatch(hideLoadingSubmit());
+      }, 1000);
+    } catch (error) {
+      console.log('cek error', error); // eslint-disable-line
+      dispatch(showNotification({ message: { id: 'Maaf, Contact gagal diperbarui', en: 'Sorry, Contact failed to update' }, type: 'failed' }));
+      dispatch(hideLoadingSubmit());
+    }
+  };
+
+  return (
+    <div>
+      {isLoading
+        ?
+          <div className='flex w-full h-[90vh] justify-center items-center'>
+            <LoadingPage color='#fff' size={70} isLoading={isLoading} />
+          </div>
+        :
+        <div className='w-full p-5 flex flex-col'>
+          <DivContent>
+            <p className='font-extrabold text-neutral-300 text-[3vh] mb-10'>Profile Settings</p>
+            <div className='grid grid-cols-2 gap-5'>
+
+              <div className='flex items-center'>
+                <div className='w-[10%]'>
+                  <Image src={ProfileCircle} alt="Logo" className="w-[5vh] h-auto" />
+                </div>
+                <div className="ml-4 w-[90%]">
+                  <p className="text-purple-400 text-[2.5vh] mb-2">Name</p>
+                  <InputContent
+                    disabled={isLoadingSubmit}
+                    id='contact-name'
+                    type='text'
+                    placeholder='Type name here...'
+                    value={contactData.name}
+                    setValue={value => setContactData({ ...contactData, name: value })}
+                    classNameInput='text-[2.5vh] text-white border-none mb-0 w-full p-0'
+                  />
+                </div>
+              </div>
+
+              <div className='flex items-center'>
+                <div className='w-[10%]'>
+                  <Image src={ProfileCircle} alt="Logo" className="w-[5vh] h-auto" />
+                </div>
+                <div className="ml-4 w-[90%]">
+                  <p className="text-purple-400 text-[2.5vh] mb-2">Username</p>
+                  <InputContent
+                    disabled={isLoadingSubmit}
+                    id='contact-username'
+                    type='text'
+                    placeholder='Type username here...'
+                    value={contactData.username}
+                    setValue={value => setContactData({ ...contactData, username: value })}
+                    classNameInput='text-[2.5vh] text-white border-none mb-0 w-full p-0'
+                  />
+                </div>
+              </div>
+
+              <div className='flex items-center'>
+                <div className='w-[10%]'>
+                  <Image src={Email} alt="Logo" className="w-[5vh] h-auto" />
+                </div>
+                <div className="ml-4 w-[90%]">
+                  <p className="text-purple-400 text-[2.5vh] mb-2">Email</p>
+                  <InputContent
+                    disabled
+                    id='contact-email'
+                    type='text'
+                    placeholder='Type email here...'
+                    value={contactData.email}
+                    setValue={value => setContactData({ ...contactData, email: value })}
+                    classNameInput='text-[2.5vh] text-neutral-500 border-none mb-0 w-full p-0'
+                  />
+                  <p className="text-redCustom-300 text-[1.5vh] text-left -mt-5 ml-2">
+                    Email tidak dapat diubah
+                  </p>
+                </div>
+              </div>
+
+              <div className='flex items-center'>
+                <div className='w-[10%]'>
+                  <Image src={Password} alt="Logo" className="w-[5vh] h-auto" />
+                </div>
+                <div className="ml-4 w-[90%]">
+                  <p className="text-purple-400 text-[2.5vh] mb-2">Password</p>
+                  <InputContent
+                    disabled={isLoadingSubmit}
+                    id='contact-password'
+                    type='password'
+                    placeholder='Type password here...'
+                    value={contactData.password}
+                    setValue={value => setContactData({ ...contactData, password: value })}
+                    classNameInput='text-[2.5vh] text-white border-none mb-0 w-full p-0'
+                  />
+                </div>
+              </div>
+
+            </div>
+          </DivContent>
+          <button
+            type="submit"
+            className="my-10 text-[2vh] w-full font-extrabold p-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white rounded-md hover:bg-gradient-to-r hover:from-purple-600 hover:via-pink-700 hover:to-red-700"
+            onClick={handleUpdateContact}
+          >
+            Save Changes
+          </button>
+        </div>
+      }
+    </div>
+  );
+};
+
+export default Profile;

@@ -25,7 +25,7 @@ const Header = () => {
   return (
     <div className='p-4 w-full h-full bg-neutral-800 bg-opacity-50 flex items-center justify-between'>
       <p className="font-bold text-[1vh] sm:text-[3vh] ml-4">
-        {idTabActive === 'homeTab' ? 'Dashboard' : idTabActive === 'aboutTab' ? 'Abouts' : idTabActive === 'serviceTab' ? 'Services' : idTabActive === 'contactTab' ? 'Contacts' : 'All Messages'}
+        {idTabActive === 'homeTab' ? 'Dashboard' : idTabActive === 'aboutTab' ? 'Abouts' : idTabActive === 'serviceTab' ? 'Services' : idTabActive === 'contactTab' ? 'Contacts' : idTabActive === 'messagesTab' ? 'All Messages' : 'Profile Data'}
       </p>
       <div className="font-bold text-[1vh] sm:text-[2.5vh] mr-4 bg-clip-border bg-gradient-to-r from-purple-600 via-pink-700 to-red-700 py-2 px-5 rounded-lg">
         {currentTime}

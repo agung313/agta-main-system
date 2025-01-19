@@ -12,7 +12,9 @@ import ServiceIcont from '../icons/ServiceIcont';
 import ContactIcont from '../icons/ContactIcont';
 import MessagesIcont from '../icons/MessagesIcont';
 import LogoutIcont from '../icons/LogoutIcont';
+import AcountIcont from '../icons/AcountIcont';
 import { useRouter } from 'next/navigation';
+import { logout } from '@/app/api/admin';
 
 const SideBar = () => {
   const route = useRouter();
@@ -23,12 +25,23 @@ const SideBar = () => {
     dispatch(changeTabActive(tab));
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('userData');
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error('error logout', error); // eslint-disable-line
+    }
+    localStorage.removeItem('userDataName');
+    localStorage.removeItem('userDataUserName');
+    localStorage.removeItem('userDataEmail');
+    localStorage.removeItem('userDataRole');
     localStorage.removeItem('lastToken');
     localStorage.removeItem('lastTokenAt');
     route.push('/');
   };
+
+  const email = localStorage.getItem('userDataEmail');
+  const emailSigned = email ? email.length > 30 ? email.substring(0, 30) + '...' : email : '';
 
   return (
     <div className='w-full h-[100vh] bg-neutral-800 bg-opacity-50 border-r border-neutral-800 flex flex-col'>
@@ -73,11 +86,17 @@ const SideBar = () => {
             Messagaes
           </p>
         </button>
+        <button className="flex items-center mt-8" onClick={() => changeTab('profileTab')}>
+          <AcountIcont size={35} color={idTabActive === 'profileTab' ? '#fff' : '#4A4E56'} />
+          <p className={`font-medium text-[2vh] ml-2 ${idTabActive === 'profileTab' ? 'text-white' : 'text-neutral-600'}`}>
+            Profile
+          </p>
+        </button>
       </div>
       <div className='px-5 py-10 mt-auto'>
         <div className='mb-5 pb-4 border-b-2 border-neutral-800'>
           <p className='font-medium text-neutral-700 text-[2vh] mb-2'>SIGNED AS</p>
-          <p className='font-medium text-neutral-300 text-[2vh]'>sholihhudinagung@gmail.com</p>
+          <p className='font-medium text-neutral-300 text-[2vh]'>{emailSigned}</p>
         </div>
         <button onClick={handleLogout} className='flex items-center mt-8'>
           <p className='font-bold text-neutral-700 text-[2vh] mr-3'>Log out</p>

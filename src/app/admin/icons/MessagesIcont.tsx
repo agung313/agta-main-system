@@ -5,7 +5,7 @@ interface AboutIconProps extends React.SVGProps<SVGSVGElement> {
   size?: number;
 }
 
-const AboutIcont: React.FC<AboutIconProps> = ({ color = '#ffffff', size = 24, ...props }) => (
+const MessagesIcont: React.FC<AboutIconProps> = ({ color = '#ffffff', size = 24, ...props }) => (
   <svg
     fill={color}
     version="1.1"
@@ -75,4 +75,4 @@ const AboutIcont: React.FC<AboutIconProps> = ({ color = '#ffffff', size = 24, ..
   </svg>
 );
 
-export default AboutIcont;
+export default MessagesIcont;

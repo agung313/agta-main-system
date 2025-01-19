@@ -12,6 +12,7 @@ import Messages from './layouts/Messages';
 import Header from './components/Header';
 import NotificationPage from '../components/NotificationPage';
 import LoadingPage from '../components/LoadingPage';
+import Profile from './layouts/Profile';
 
 const AdminLayout = () => {
   const idTabActive = useSelector((state: { admin: { idTabActive: string } }) => state.admin.idTabActive);
@@ -38,6 +39,7 @@ const AdminLayout = () => {
           {idTabActive === 'serviceTab' && <Service />}
           {idTabActive === 'contactTab' && <Contact />}
           {idTabActive === 'messagesTab' && <Messages />}
+          {idTabActive === 'profileTab' && <Profile />}
         </div>
         <div className='flex justify-center'>
           <NotificationPage />
