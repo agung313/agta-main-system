@@ -4,9 +4,13 @@ import DivContent from '../components/DivContent';
 import SelectContent from '../components/SelectContent';
 import { getDashboard } from '@/app/api/admin';
 import LoadingPage from '@/app/components/LoadingPage';
+import { useSelector } from 'react-redux';
 /* eslint-disable */
 const Dashboard = () => {
   const isMounted = useRef(true);
+  const codeLanguage = useSelector(
+    (state: { header: { codeLanguage: "id" | "en" } }) => state.header.codeLanguage
+  );
   const currentYear = new Date().getFullYear();
   const [isLoading, setIsLoading] = useState(false);
   const [dataVisits, setDataVisits] = useState({ Visits: 0, Messages: 0, Countries: 0 });
@@ -90,21 +94,24 @@ const Dashboard = () => {
           <div className='w-full p-5'>
             <div className="grid grid-cols-3 gap-6">
               <DivContent className="border-t-4 border-green-500">
-                <p className='font-medium text-neutral-300 text-[3vh]'>Visits</p>
+                <p className='font-medium text-neutral-300 text-[3vh]'>{codeLanguage === 'id' ? 'Kunjungan' : 'Visits'}</p>
                 <p className='font-extrabold text-neutral-300 text-[8vh] my-3 text-center'>{dataVisits.Visits}</p>
-                <p className='text-neutral-300 text-[2vh]'>The entire number of visits from start to present
+                <p className='text-neutral-300 text-[2vh]'>
+                  {codeLanguage === 'id' ? 'Jumlah keseluruhan kunjungan dari awal hingga sekarang' : 'The entire number of visits from start to present'}
                 </p>
               </DivContent>
               <DivContent className="border-t-4 border-blue-500">
-                <p className='font-medium text-neutral-300 text-[3vh]'>Messages</p>
+                <p className='font-medium text-neutral-300 text-[3vh]'>{codeLanguage === 'id' ? 'Pesan' : 'Messages'}</p>
                 <p className='font-extrabold text-neutral-300 text-[8vh] my-3 text-center'>{dataVisits.Messages}</p>
-                <p className='text-neutral-300 text-[2vh]'>The entire number of messages from start to present
+                <p className='text-neutral-300 text-[2vh]'>
+                  {codeLanguage === 'id' ? 'Seluruh jumlah pesan dari awal hingga sekarang' : 'The entire number of messages from start to present'}
                 </p>
               </DivContent>
               <DivContent className="border-t-4 border-yellow-500">
-                <p className='font-medium text-neutral-300 text-[3vh]'>Countries</p>
+                <p className='font-medium text-neutral-300 text-[3vh]'>{codeLanguage === 'id' ? 'Negara' : 'Countries'}</p>
                 <p className='font-extrabold text-neutral-300 text-[8vh] my-3 text-center'>{dataVisits.Countries}</p>
-                <p className='text-neutral-300 text-[2vh]'>The entire number of countries that visited the system from the beginning until now
+                <p className='text-neutral-300 text-[2vh]'>
+                  {codeLanguage === 'id' ? 'Jumlah seluruh negara yang mengunjungi sistem dari awal hingga sekarang' : 'The entire number of countries that visited the system from the beginning until now'}
                 </p>
               </DivContent>
             </div>

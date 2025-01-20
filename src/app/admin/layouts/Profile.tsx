@@ -28,6 +28,14 @@ const Profile: React.FC<ProfileProps> = ({ setConfirmDialogData, openConfirmDial
   const dispatch = useDispatch();
   const isLoadingSubmit = useSelector((state: { admin: { isLoadingSubmit: boolean } }) => state.admin.isLoadingSubmit);
   const [isLoading, setIsLoading] = useState(true);
+  const [codeLanguage, setCodeLanguage] = useState("id");
+
+  const codeLanguageHeader = useSelector(
+    (state: { header: { codeLanguage: "id" | "en" } }) => state.header.codeLanguage
+  );
+  useEffect(() => {
+    setCodeLanguage(codeLanguageHeader);
+  }, [codeLanguageHeader]);
 
   const [contactData, setContactData] = useState({
     name: localStorage.getItem('userDataName') || '',
@@ -141,7 +149,7 @@ const Profile: React.FC<ProfileProps> = ({ setConfirmDialogData, openConfirmDial
                     classNameInput='text-[2.5vh] text-neutral-500 border-none mb-0 w-full p-0'
                   />
                   <p className="text-redCustom-300 text-[1.5vh] text-left -mt-5 ml-2">
-                    Email tidak dapat diubah
+                    {codeLanguage === 'id' ? 'Email tidak dapat diubah' : 'Email cannot be changed'}
                   </p>
                 </div>
               </div>

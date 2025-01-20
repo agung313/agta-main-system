@@ -29,6 +29,10 @@ const About: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog,
   const [codeLanguage, setCodeLanguage] = useState({ openingText: "id", closingText: "id" });
   const languangeList = [{ id: "id", name: "Indonesia" }, { id: "en", name: "English" }];
 
+  const codeLanguageHeader = useSelector(
+    (state: { header: { codeLanguage: "id" | "en" } }) => state.header.codeLanguage
+  );
+
   const [aboutText, setAboutText] = useState<{
     openingText: { [key: string]: string };
     closingText: { [key: string]: string };
@@ -60,6 +64,19 @@ const About: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog,
       },
     },
   ]);
+
+  useEffect(() => {
+    setCodeLanguage({
+      openingText: codeLanguageHeader,
+      closingText: codeLanguageHeader
+    });
+    setCommitmentList(prevCommitmentList => 
+      prevCommitmentList.map(commitment => ({
+        ...commitment,
+        idActive: codeLanguageHeader
+      }))
+    );
+  }, [codeLanguageHeader]);
 
   const getAboutData = useCallback(async () => {
     setIsLoading(true);

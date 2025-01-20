@@ -28,6 +28,13 @@ const Slogan: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog
   const [isLoading, setIsLoading] = useState(false);
   const [codeLanguage, setCodeLanguage] = useState("id");
   const languangeList = [{ id: "id", name: "Indonesia" }, { id: "en", name: "English" }];
+
+  const codeLanguageHeader = useSelector(
+    (state: { header: { codeLanguage: "id" | "en" } }) => state.header.codeLanguage
+  );
+  useEffect(() => {
+    setCodeLanguage(codeLanguageHeader);
+  }, [codeLanguageHeader]);
   
   const [sloganData, setSloganData] = useState<{
     firstText: string;

@@ -25,6 +25,9 @@ interface SloganProps {
 const Service: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog, disableConfirmDialog }) => {
   const dispatch = useDispatch();
   const isLoadingSubmit = useSelector((state: { admin: { isLoadingSubmit: boolean } }) => state.admin.isLoadingSubmit);
+  const codeLanguageHeader = useSelector(
+    (state: { header: { codeLanguage: "id" | "en" } }) => state.header.codeLanguage
+  );
   const isMounted = useRef(true);
   const [isLoading, setIsLoading] = useState(false);
   const [codeLanguage, setCodeLanguage] = useState("id");
@@ -44,6 +47,16 @@ const Service: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
       descriptionText: { id: "", en: "" },
     },
   ]);
+
+  useEffect(() => {
+    setCodeLanguage(codeLanguageHeader);
+    setLisTechnologies(prevTehnologiesList => 
+      prevTehnologiesList.map(commitment => ({
+        ...commitment,
+        idActive: codeLanguageHeader
+      }))
+    );
+  }, [codeLanguageHeader]);
 
   const handleAddTechnologies = () => {
     setLisTechnologies([
