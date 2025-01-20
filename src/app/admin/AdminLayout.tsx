@@ -60,9 +60,6 @@ const AdminLayout = () => {
           />
         </div>
       </div>
-      <div className="xl:hidden w-full h-full flex items-center justify-center">
-        <p className='font-extrabold text-neutral-300 text-[5vh] my-5 text-center'>Desktop Only</p>
-      </div>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import DivContent from '../components/DivContent';
 import SelectContent from '../components/SelectContent';
 import { getDashboard } from '@/app/api/admin';
@@ -92,32 +92,32 @@ const Dashboard = () => {
           </div>
         :
           <div className='w-full p-5'>
-            <div className="grid grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               <DivContent className="border-t-4 border-green-500">
-                <p className='font-medium text-neutral-300 text-[3vh]'>{codeLanguage === 'id' ? 'Kunjungan' : 'Visits'}</p>
-                <p className='font-extrabold text-neutral-300 text-[8vh] my-3 text-center'>{dataVisits.Visits}</p>
+                <p className='font-medium text-neutral-300 text-[2vh] sm:text-[3vh]'>{codeLanguage === 'id' ? 'Kunjungan' : 'Visits'}</p>
+                <p className='font-extrabold text-neutral-300 text-[5vh] sm:text-[8vh] my-3 text-center'>{dataVisits.Visits}</p>
                 <p className='text-neutral-300 text-[2vh]'>
                   {codeLanguage === 'id' ? 'Jumlah keseluruhan kunjungan dari awal hingga sekarang' : 'The entire number of visits from start to present'}
                 </p>
               </DivContent>
               <DivContent className="border-t-4 border-blue-500">
-                <p className='font-medium text-neutral-300 text-[3vh]'>{codeLanguage === 'id' ? 'Pesan' : 'Messages'}</p>
-                <p className='font-extrabold text-neutral-300 text-[8vh] my-3 text-center'>{dataVisits.Messages}</p>
+                <p className='font-medium text-neutral-300 text-[2vh] sm:text-[3vh]'>{codeLanguage === 'id' ? 'Pesan' : 'Messages'}</p>
+                <p className='font-extrabold text-neutral-300 text-[5vh] sm:text-[8vh] my-3 text-center'>{dataVisits.Messages}</p>
                 <p className='text-neutral-300 text-[2vh]'>
                   {codeLanguage === 'id' ? 'Seluruh jumlah pesan dari awal hingga sekarang' : 'The entire number of messages from start to present'}
                 </p>
               </DivContent>
               <DivContent className="border-t-4 border-yellow-500">
-                <p className='font-medium text-neutral-300 text-[3vh]'>{codeLanguage === 'id' ? 'Negara' : 'Countries'}</p>
-                <p className='font-extrabold text-neutral-300 text-[8vh] my-3 text-center'>{dataVisits.Countries}</p>
+                <p className='font-medium text-neutral-300 text-[2vh] sm:text-[3vh]'>{codeLanguage === 'id' ? 'Negara' : 'Countries'}</p>
+                <p className='font-extrabold text-neutral-300 text-[5vh] sm:text-[8vh] my-3 text-center'>{dataVisits.Countries}</p>
                 <p className='text-neutral-300 text-[2vh]'>
                   {codeLanguage === 'id' ? 'Jumlah seluruh negara yang mengunjungi sistem dari awal hingga sekarang' : 'The entire number of countries that visited the system from the beginning until now'}
                 </p>
               </DivContent>
             </div>
-            <DivContent className='mt-10'>
+            <DivContent className='hidden sm:block mt-10'>
               <div className='flex justify-between items-center'>
-                <p className='font-extrabold text-neutral-300 text-[3vh]'>Diagram</p>
+                <p className='font-extrabold text-neutral-300 text-[2vh] sm:text-[3vh]'>Diagram</p>
                 <div className='bg-white rounded-lg'>
                   <SelectContent
                     valueList={yearList}
@@ -127,23 +127,23 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className='mt-8'>
-                <LineChart
-                  width={1050}
-                  height={300}
-                  data={dataDiagram}
-                  margin={{
-                    top: 15, left: 0, right: 15, bottom: 15,
-                  }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" stroke='#fff' />
-                  <YAxis stroke='#fff' />
-                  <Tooltip contentStyle={{ color: 'black' }} />
-                  <Legend />
-                  <Line type="monotone" dataKey="Visits" stroke="#22c55e" />
-                  <Line type="monotone" dataKey="Messages" stroke="#3b82f6" />
-                  <Line type="monotone" dataKey="Countries" stroke="#eab308" />
-                </LineChart>
+                <ResponsiveContainer width="100%" height={300}>
+                  <LineChart
+                    data={dataDiagram}
+                    margin={{
+                      top: 15, left: 0, right: 15, bottom: 15,
+                    }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" stroke='#fff' />
+                    <YAxis stroke='#fff' />
+                    <Tooltip contentStyle={{ color: 'black' }} />
+                    <Legend />
+                    <Line type="monotone" dataKey="Visits" stroke="#22c55e" />
+                    <Line type="monotone" dataKey="Messages" stroke="#3b82f6" />
+                    <Line type="monotone" dataKey="Countries" stroke="#eab308" />
+                  </LineChart>
+                </ResponsiveContainer>
               </div>
             </DivContent>
           </div>
