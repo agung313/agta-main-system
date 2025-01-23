@@ -88,7 +88,8 @@ const ForgotForm: React.FC<LoginProps> = ({ setTypeForm }) => {
           <div className='flex flex-col items-center mb-[2vh] lg:mb-[4vh] mt-[4vh]'>
             <Image src={Bigsuccess} alt="Success Icon" width={100} height={100} />
             <p className="text-black font-bold mb-2 text-[1.5vh] sm:text-[2vh] text-center mt-[0.5vh]">
-              Selamat! Password anda telah direset <br /> silakan masukan password default 12345678
+              {/* Selamat! Password anda telah direset <br /> silakan masukan password default 12345678 */}
+              {codeLanguage === 'id' ? 'Selamat! Password baru' : 'Congratulations! New password'} <br /> {codeLanguage === 'id' ? 'telah dikirim ke email anda' : 'has been sent to your email'}
             </p>
           </div>
         :

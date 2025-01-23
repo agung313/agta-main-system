@@ -95,9 +95,12 @@ const Header = () => {
           ))}
         </select>
       </div>
-      <button className='flex xl:hidden' onClick={() => setNavigationDialog(true)}>
-        <Image src={NavigationBar} alt="Language Icon" className="w-8 h-8" />
-      </button>
+      <div className='flex items-center xl:hidden'>
+        <Image src={Globe} alt="Language Icon" className="w-6 h-6 mr-6" />
+        <button onClick={() => setNavigationDialog(true)}>
+          <Image src={NavigationBar} alt="Language Icon" className="w-8 h-8" />
+        </button>
+      </div>
       <div onClick={() => setNavigationDialog(false)} className={`fixed inset-0 w-[100vw] h-[100vh] bg-black bg-opacity-50 z-50 flex items-center justify-end transition-all duration-5000 ${navigationDialog ? 'translate-x-0' : 'translate-x-full'}`}>
         {navigationDialog &&
           <div
@@ -146,20 +149,6 @@ const Header = () => {
                 Profile
               </p>
             </button>
-            <div className="flex items-center text-white rounded-xl bg-transparent cursor-pointer mt-5 ml-2">
-              <Image src={Globe} alt="Language Icon" className="w-5 h-5 mr-2" />
-              <select
-                className="p-2 focus:outline-none font-bold bg-transparent text-white cursor-pointer relative"
-                value={languageActive.code}
-                onChange={(e) => handleSelectedLanguage(e.target.value)}
-              >
-                {languages.map((language) => (
-                  <option key={language.code} value={language.code}>
-                    {language.name}
-                  </option>
-                ))}
-              </select>
-            </div>
           </div>
         }
       </div>
