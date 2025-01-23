@@ -102,15 +102,15 @@ const Contact: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
         :
         <div className='w-full p-5 flex flex-col'>
           <DivContent>
-            <p className='font-extrabold text-neutral-300 text-[3vh] mb-10'>Contacts</p>
-            <div className='grid grid-cols-2 gap-5'>
+            <p className='font-extrabold text-neutral-300 text-[2.5vh] sm:text-[3vh] mb-10'>Contacts</p>
+            <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
 
               <div className='flex items-center'>
                 <div className='w-[10%]'>
                   <Image src={Email} alt="Logo" className="w-[5vh] h-auto" />
                 </div>
                 <div className="ml-4 w-[90%]">
-                  <p className="text-purple-400 text-[2.5vh] mb-2">Email</p>
+                  <p className="text-purple-400 text-[2vh] sm:text-[2.5vh] mb-2">Email</p>
                   <InputContent
                     disabled={isLoadingSubmit}
                     id='contact-email'
@@ -118,7 +118,7 @@ const Contact: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                     placeholder='Type email here...'
                     value={contactData.email}
                     setValue={value => setContactData({ ...contactData, email: value })}
-                    classNameInput='text-[2.5vh] text-white border-none mb-0 w-full p-0'
+                    classNameInput='text-[2vh] sm:text-[2.5vh] text-white border-none mb-0 w-full p-0'
                   />
                 </div>
               </div>
@@ -128,7 +128,7 @@ const Contact: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                   <Image src={Instagram} alt="Logo" className="w-[5vh] h-auto" />
                 </div>
                 <div className="ml-4 w-[90%]">
-                  <p className="text-purple-400 text-[2.5vh] mb-2">Instagram</p>
+                  <p className="text-purple-400 text-[2vh] sm:text-[2.5vh] mb-2">Instagram</p>
                   <InputContent
                     disabled={isLoadingSubmit}
                     id='contact-instagram'
@@ -136,7 +136,7 @@ const Contact: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                     placeholder='Type instagram here...'
                     value={contactData.instagram}
                     setValue={value => setContactData({ ...contactData, instagram: value })}
-                    classNameInput='text-[2.5vh] text-white border-none mb-0 w-full p-0'
+                    classNameInput='text-[2vh] sm:text-[2.5vh] text-white border-none mb-0 w-full p-0'
                   />
                 </div>
               </div>
@@ -146,7 +146,7 @@ const Contact: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                   <Image src={Linkedin} alt="Logo" className="w-[5vh] h-auto" />
                 </div>
                 <div className="ml-4 w-[90%]">
-                  <p className="text-purple-400 text-[2.5vh] mb-2">Linkedin Link</p>
+                  <p className="text-purple-400 text-[2vh] sm:text-[2.5vh] mb-2">Linkedin Link</p>
                   <InputContent
                     disabled={isLoadingSubmit}
                     id='contact-Linkedin'
@@ -154,7 +154,7 @@ const Contact: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                     placeholder='Type linkedin link here...'
                     value={contactData.linkedinLink}
                     setValue={value => setContactData({ ...contactData, linkedinLink: value })}
-                    classNameInput='text-[2.5vh] text-white border-none mb-0 w-full p-0'
+                    classNameInput='text-[2vh] sm:text-[2.5vh] text-white border-none mb-0 w-full p-0'
                   />
                 </div>
               </div>
@@ -164,7 +164,7 @@ const Contact: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                   <Image src={Maps} alt="Logo" className="w-[5vh] h-auto" />
                 </div>
                 <div className="ml-4 w-[90%]">
-                  <p className="text-purple-400 text-[2.5vh] mb-2">Address</p>
+                  <p className="text-purple-400 text-[2vh] sm:text-[2.5vh] mb-2">Address</p>
                   <InputContent
                     disabled={isLoadingSubmit}
                     id='contact-address'
@@ -172,7 +172,7 @@ const Contact: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                     placeholder='Type address here...'
                     value={contactData.address}
                     setValue={value => setContactData({ ...contactData, address: value })}
-                    classNameInput='text-[2.5vh] text-white border-none mb-0 w-full p-0'
+                    classNameInput='text-[2vh] sm:text-[2.5vh] text-white border-none mb-0 w-full p-0'
                   />
                 </div>
               </div>
@@ -182,7 +182,7 @@ const Contact: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                   <Image src={Maps} alt="Logo" className="w-[5vh] h-auto" />
                 </div>
                 <div className="ml-4 w-[90%]">
-                  <p className="text-purple-400 text-[2.5vh] mb-2">Address Link</p>
+                  <p className="text-purple-400 text-[2vh] sm:text-[2.5vh] mb-2">Address Link</p>
                   <InputContent
                     disabled={isLoadingSubmit}
                     id='contact-addressLink'
@@ -190,7 +190,7 @@ const Contact: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                     placeholder='Type address link here...'
                     value={contactData.addressLink}
                     setValue={value => setContactData({ ...contactData, addressLink: value })}
-                    classNameInput='text-[2.5vh] text-white border-none mb-0 w-full p-0'
+                    classNameInput='text-[2vh] sm:text-[2.5vh] text-white border-none mb-0 w-full p-0'
                   />
                 </div>
               </div>
@@ -200,7 +200,7 @@ const Contact: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                   <Image src={Telephone} alt="Logo" className="w-[5vh] h-auto" />
                 </div>
                 <div className="ml-4 w-[90%]">
-                  <p className="text-purple-400 text-[2.5vh] mb-2">Telephone</p>
+                  <p className="text-purple-400 text-[2vh] sm:text-[2.5vh] mb-2">Telephone</p>
                   <InputContent
                     disabled={isLoadingSubmit}
                     id='contact-phone'
@@ -208,7 +208,7 @@ const Contact: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                     placeholder='Type telephone here...'
                     value={contactData.phone}
                     setValue={value => setContactData({ ...contactData, phone: value })}
-                    classNameInput='text-[2.5vh] text-white border-none mb-0 w-full p-0'
+                    classNameInput='text-[2vh] sm:text-[2.5vh] text-white border-none mb-0 w-full p-0'
                   />
                 </div>
               </div>

@@ -94,15 +94,15 @@ const Profile: React.FC<ProfileProps> = ({ setConfirmDialogData, openConfirmDial
         :
         <div className='w-full p-5 flex flex-col'>
           <DivContent>
-            <p className='font-extrabold text-neutral-300 text-[3vh] mb-10'>Profile Settings</p>
-            <div className='grid grid-cols-2 gap-5'>
+            <p className='font-extrabold text-neutral-300 text-[2.5vh] sm:text-[3vh] mb-10'>Profile Settings</p>
+            <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
 
               <div className='flex items-center'>
                 <div className='w-[10%]'>
                   <Image src={ProfileCircle} alt="Logo" className="w-[5vh] h-auto" />
                 </div>
                 <div className="ml-4 w-[90%]">
-                  <p className="text-purple-400 text-[2.5vh] mb-2">Name</p>
+                  <p className="text-purple-400 text-[2vh] sm:text-[2.5vh] mb-2">Name</p>
                   <InputContent
                     disabled={isLoadingSubmit}
                     id='contact-name'
@@ -110,7 +110,7 @@ const Profile: React.FC<ProfileProps> = ({ setConfirmDialogData, openConfirmDial
                     placeholder='Type name here...'
                     value={contactData.name}
                     setValue={value => setContactData({ ...contactData, name: value })}
-                    classNameInput='text-[2.5vh] text-white border-none mb-0 w-full p-0'
+                    classNameInput='text-[2vh] sm:text-[2.5vh] text-white border-none mb-0 w-full p-0'
                   />
                 </div>
               </div>
@@ -120,7 +120,7 @@ const Profile: React.FC<ProfileProps> = ({ setConfirmDialogData, openConfirmDial
                   <Image src={ProfileCircle} alt="Logo" className="w-[5vh] h-auto" />
                 </div>
                 <div className="ml-4 w-[90%]">
-                  <p className="text-purple-400 text-[2.5vh] mb-2">Username</p>
+                  <p className="text-purple-400 text-[2vh] sm:text-[2.5vh] mb-2">Username</p>
                   <InputContent
                     disabled={isLoadingSubmit}
                     id='contact-username'
@@ -128,7 +128,7 @@ const Profile: React.FC<ProfileProps> = ({ setConfirmDialogData, openConfirmDial
                     placeholder='Type username here...'
                     value={contactData.username}
                     setValue={value => setContactData({ ...contactData, username: value })}
-                    classNameInput='text-[2.5vh] text-white border-none mb-0 w-full p-0'
+                    classNameInput='text-[2vh] sm:text-[2.5vh] text-white border-none mb-0 w-full p-0'
                   />
                 </div>
               </div>
@@ -138,7 +138,7 @@ const Profile: React.FC<ProfileProps> = ({ setConfirmDialogData, openConfirmDial
                   <Image src={Email} alt="Logo" className="w-[5vh] h-auto" />
                 </div>
                 <div className="ml-4 w-[90%]">
-                  <p className="text-purple-400 text-[2.5vh] mb-2">Email</p>
+                  <p className="text-purple-400 text-[2vh] sm:text-[2.5vh] mb-2">Email</p>
                   <InputContent
                     disabled
                     id='contact-email'
@@ -146,7 +146,7 @@ const Profile: React.FC<ProfileProps> = ({ setConfirmDialogData, openConfirmDial
                     placeholder='Type email here...'
                     value={contactData.email}
                     setValue={value => setContactData({ ...contactData, email: value })}
-                    classNameInput='text-[2.5vh] text-neutral-500 border-none mb-0 w-full p-0'
+                    classNameInput='text-[2vh] sm:text-[2.5vh] text-neutral-500 border-none mb-0 w-full p-0'
                   />
                   <p className="text-redCustom-300 text-[1.5vh] text-left -mt-5 ml-2">
                     {codeLanguage === 'id' ? 'Email tidak dapat diubah' : 'Email cannot be changed'}
@@ -154,12 +154,12 @@ const Profile: React.FC<ProfileProps> = ({ setConfirmDialogData, openConfirmDial
                 </div>
               </div>
 
-              <div className='flex items-center'>
+              <div className='flex items-center mt-4 sm:mt-0'>
                 <div className='w-[10%]'>
                   <Image src={Password} alt="Logo" className="w-[5vh] h-auto" />
                 </div>
                 <div className="ml-4 w-[90%]">
-                  <p className="text-purple-400 text-[2.5vh] mb-2">Password</p>
+                  <p className="text-purple-400 text-[2vh] sm:text-[2.5vh] mb-2">Password</p>
                   <InputContent
                     disabled={isLoadingSubmit}
                     id='contact-password'
@@ -167,7 +167,7 @@ const Profile: React.FC<ProfileProps> = ({ setConfirmDialogData, openConfirmDial
                     placeholder='Type password here...'
                     value={contactData.password}
                     setValue={value => setContactData({ ...contactData, password: value })}
-                    classNameInput='text-[2.5vh] text-white border-none mb-0 w-full p-0'
+                    classNameInput='text-[2vh] sm:text-[2.5vh] text-white border-none mb-0 w-full p-0'
                   />
                 </div>
               </div>

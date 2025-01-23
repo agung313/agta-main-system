@@ -125,8 +125,8 @@ const SideBar: React.FC<SidebarProps> = ({ setConfirmDialogData, openConfirmDial
           <p className='font-medium text-neutral-300 text-[2vh]'>{emailSigned}</p>
         </div>
         <button onClick={confirm} className='flex items-center mt-8'>
-          <p className='font-bold text-neutral-700 text-[2vh] mr-3'>Log out</p>
-          <LogoutIcont color='#4A4E56' />
+          <p className='text-redCustom-400 text-[2vh] mr-3'>Log out</p>
+          <LogoutIcont color='#FF3F3F' />
         </button>
       </div>
     </div>

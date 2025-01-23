@@ -109,9 +109,9 @@ const Slogan: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog
         :
           <div className='w-full p-5 flex flex-col'>
             <DivContent>
-              <p className='font-extrabold text-neutral-300 text-[3vh] mb-10'>Slogan</p>
-              <div className='flex items-center mb-10'>
-                <div className="flex flex-col justify-center w-[30%]">
+              <p className='font-extrabold text-neutral-300 text-[2.5vh] sm:text-[3vh] mb-10'>Slogan</p>
+              <div className='block sm:flex items-center mb-10'>
+                <div className="hidden sm:flex flex-col justify-center w-[30%]">
                   <InputContent
                     id='firstText'
                     label='First Text'
@@ -137,7 +137,7 @@ const Slogan: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog
                     disabled={isLoadingSubmit}
                   />
                 </div>
-                <div className="flex flex-col justify-center items-center w-[70%]">
+                <div className="flex flex-col justify-center items-center w-[100%] sm:w-[70%]">
                   <p className="text-[3vh] xl:text-[4vh] text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-300 -mb-3 xl:-mb-8 neon-glow">
                     {sloganData.firstText}
                   </p>
@@ -148,16 +148,44 @@ const Slogan: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog
                     {sloganData.thirdText}
                   </p>
                 </div>
+                <div className="flex sm:hidden flex-col justify-center w-[100%]">
+                  <InputContent
+                    id='firstText'
+                    label='First Text'
+                    value={sloganData.firstText}
+                    setValue={value => setSloganData({ ...sloganData, firstText: value })}
+                    classNameInput='w-full border border-white'
+                    disabled={isLoadingSubmit}
+                  />
+                  <InputContent
+                    id='secondText'
+                    label='Second Text'
+                    value={sloganData.secondText}
+                    setValue={value => setSloganData({ ...sloganData, secondText: value })}
+                    classNameInput='w-full border border-white'
+                    disabled={isLoadingSubmit}
+                  />
+                  <InputContent
+                    id='thirdText'
+                    label='Third Text'
+                    value={sloganData.thirdText}
+                    setValue={value => setSloganData({ ...sloganData, thirdText: value })}
+                    classNameInput='w-full border border-white'
+                    disabled={isLoadingSubmit}
+                  />
+                </div>
               </div>
             </DivContent>
             <DivContent className='my-10'>
               <div className='flex justify-between items-center mb-10'>
-                <p className='font-extrabold text-neutral-300 text-[3vh]'>Description</p>
-                <div className='bg-white rounded-lg'>
+                <p className='font-extrabold text-neutral-300 text-[2.5vh] sm:text-[3vh]'>Description</p>
+                <div className='hidden sm:block'>
                   <SelectContent
                     valueList={languangeList}
                     valueSelected={codeLanguage}
                     setValueSelected={setCodeLanguage}
+                    className='py-2 px-3'
+                    color='#fff'
                   />
                 </div>
               </div>
@@ -165,7 +193,7 @@ const Slogan: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog
                 id='description'
                 value={sloganData.description[codeLanguage as keyof typeof sloganData.description]}
                 setValue={value => setSloganData({ ...sloganData, description: { ...sloganData.description, [codeLanguage]: value } })}
-                classNameInput='text-justify indent-5 text-[2.5vh] border-none'
+                classNameInput='text-justify indent-5 text-[2vh] sm:text-[2.5vh] border-none'
                 disabled={isLoadingSubmit}
                 rows={5}
               />

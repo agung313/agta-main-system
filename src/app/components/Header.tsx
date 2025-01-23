@@ -2,17 +2,14 @@
 
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Image, { StaticImageData } from 'next/image';
-// import Link from 'next/link';
-// import LogoUtama from '../icons/logoUtama.svg';
-import IDFlag from '../icons/indonesiaFlag.svg';
-import ENFlag from '../icons/englishFlag.svg';
+import Image from 'next/image';
 import Globe from '../icons/globe.svg';
 import { changeIsChangeLanguage, changeLanguage, changeTabActive, fetchLocation } from '../redux/header';
 import { store } from '../redux/store'; // Adjust the path as necessary
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import NotificationPage from './NotificationPage';
+import SelectContent from '../admin/components/SelectContent';
 
 const Header = () => {
   const dispatch = useDispatch<typeof store.dispatch>();
@@ -37,29 +34,26 @@ const Header = () => {
     };
   }, [dispatch, isChangeLanguage]);
 
-  type languageType = {
-    name: string;
-    code: string;
-    icont: StaticImageData;
-  };
-
-  const languages: languageType[] = useMemo(() => [
-    { name: 'Indonesia', code: 'id', icont: IDFlag },
-    { name: 'English', code: 'en', icont: ENFlag },
-  ], []);
-
-  const [languageActive, setLanguageActive] = useState<languageType>(languages[0]);
-  const selectedLanguage = useCallback((dataCode: string) => {
-    const selectedLanguage = languages.find(lang => lang.code === dataCode);
-    if (selectedLanguage) {
-      setLanguageActive(selectedLanguage);
-    }
-    dispatch(changeLanguage(dataCode));
-  }, [languages, dispatch]);
-
-  useEffect(() => {
-    selectedLanguage(codeLanguage);
-  }, [codeLanguage, selectedLanguage]);
+  const languangeList = useMemo(() => [{ id: "id", name: "Indonesia" }, { id: "en", name: "English" }], []);
+    const [languageActive, setLanguageActive] = useState("id");
+  
+    const selectedLanguage = useCallback((dataCode: string) => {
+      const selectedLanguage = languangeList.find(lang => lang.id === dataCode);
+      if (selectedLanguage) {
+        setLanguageActive(selectedLanguage.id);
+      }
+      dispatch(changeLanguage(dataCode));
+    }, [languangeList, dispatch]);
+  
+    useEffect(() => {
+      selectedLanguage(codeLanguage);
+    }, [codeLanguage, selectedLanguage]);
+  
+  
+    const handleSelectedLanguage = (value: string) => {
+      selectedLanguage(value);
+      dispatch(changeIsChangeLanguage(true));
+    };
 
   const handleHome = () => {
     dispatch(changeTabActive('homeTab'));
@@ -69,10 +63,6 @@ const Header = () => {
     return null;
   }
 
-  const handleSelectedLanguage = (value: string) => {
-    selectedLanguage(value);
-    dispatch(changeIsChangeLanguage(true));
-  };
 
   return (
     <div className='w-full flex justify-center items-center fixed z-50 p-5'>
@@ -86,7 +76,7 @@ const Header = () => {
           <div className="flex items-center">
             <div className="flex items-center ml-10 p-2 text-white rounded-xl bg-transparent cursor-pointer">
               <Image src={Globe} alt="Language Icon" className="w-6 h-6 mr-2" />
-              <select
+              {/* <select
                 className="p-2 focus:outline-none font-bold bg-transparent text-white cursor-pointer"
                 value={languageActive.code}
                 onChange={(e) => handleSelectedLanguage(e.target.value)}
@@ -96,7 +86,14 @@ const Header = () => {
                     {language.name}
                   </option>
                 ))}
-              </select>
+              </select> */}
+              <SelectContent
+                valueList={languangeList}
+                valueSelected={languageActive}
+                setValueSelected={handleSelectedLanguage}
+                className='bg-transparent text-white'
+                colorIcont='#fff'
+              />
             </div>
           </div>
         </nav>

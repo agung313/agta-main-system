@@ -33,9 +33,9 @@ const DashboardPage: React.FC<DashboardProps> = ({ dashboardData }) => {
           <p className="text-[1.5vh] text-justify indent-5 sm:indent-10 sm:text-[2vh] xl:text-[2.5vh] text-center text-white mb-[4vh]">
             {dashboardData.description[codeLanguage]}
           </p>
-          <div ref={iconsRef} className="flex justify-center items-center space-x-10 lg:flex-row flex-wrap px-4">
+          <div ref={iconsRef} className="flex justify-center items-center space-x-10 lg:flex-row flex-wrap sm:px-4">
             {dashboardData.technologyLists.length > 0 && dashboardData.technologyLists.map((item, index) => (
-              <a key={index} href={item.link} target="_blank" rel="noreferrer" className="relative group">
+              <a key={index} href={item.link} target="_blank" rel="noreferrer" className="relative group m-2 sm:m-0">
                 <Image src={`${process.env.NEXT_PUBLIC_BASE_URL_IMAGE}${item.icont}`} className="w-[4vh] md:w-[5vh] lg:w-[6vh] h-auto" alt="Logo" width={5} height={5} />
                 <span className="absolute bottom-full mb-2 hidden group-hover:block text-white bg-black p-1 rounded">{item.title}</span>
               </a>

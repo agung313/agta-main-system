@@ -180,13 +180,15 @@ const About: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog,
           <div className='w-full p-5 flex flex-col'>
 
             <DivContent className='mb-10'>
-              <div className='flex justify-between items-center mb-4'>
-                <p className='font-extrabold text-neutral-300 text-[3vh]'>Opening Text</p>
-                <div className='bg-white rounded-lg'>
+              <div className='flex justify-between items-center mb-6 sm:mb-4'>
+                <p className='font-extrabold text-neutral-300 text-[2.5vh] sm:text-[3vh]'>Opening Text</p>
+                <div className='bg-white rounded-lg hidden sm:block'>
                   <SelectContent
                     valueList={languangeList}
                     valueSelected={codeLanguage.openingText}
                     setValueSelected={(value) => setCodeLanguage({ ...codeLanguage, openingText: value })}
+                    className='py-2 px-3'
+                    color='#fff'
                   />
                 </div>
               </div>
@@ -194,19 +196,19 @@ const About: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog,
                 id='openingText'
                 value={aboutText.openingText[codeLanguage.openingText]}
                 setValue={value => setAboutText({ ...aboutText, openingText: { ...aboutText.openingText, [codeLanguage.openingText]: value } })}
-                classNameInput='text-justify indent-5 text-[2.5vh] p-4'
+                classNameInput='text-justify indent-5 text-[2vh] sm:text-[2.5vh] p-4'
                 rows={4}
                 disabled={isLoadingSubmit}
               />
             </DivContent>
 
             <DivContent className='mb-10'>
-              <p className='font-extrabold text-neutral-300 text-[2.5vh] mb-4'>Commitment List</p>
+              <p className='font-extrabold text-neutral-300 text-[2.5vh] sm:text-[3vh] mb-6 sm:mb-4'>Commitment List</p>
               {commitmentList.map((commitment, index) => (
                 <div key={index} className='pb-4 border-b rounded-lg mb-10'>
                   <div className='flex items-center w-full'>
                     <div className='w-[2%]'>
-                      <p className="text-[2.5vh] font-bold mb-5">{index + 1}.</p>
+                      <p className="text-[2vh] sm:text-[2.5vh] font-bold mb-5">{index + 1}.</p>
                     </div>
                     <div className='w-[98%] flex items-center justify-between'>
                       <div className='w-[80%]'>
@@ -222,11 +224,11 @@ const About: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog,
                             };
                             setCommitmentList(newCommitmentList);
                           }}
-                          classNameInput='text-justify text-[2.5vh]'
+                          classNameInput='text-justify text-[2vh] sm:text-[2.5vh]'
                           disabled={isLoadingSubmit}
                         />
                       </div>
-                      <div className='bg-white rounded-lg mb-5'>
+                      <div className='bg-white rounded-lg mb-5 hidden sm:block'>
                         <SelectContent
                           valueList={languangeList}
                           valueSelected={commitment.idActive}
@@ -235,6 +237,8 @@ const About: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog,
                             newCommitmentList[index].idActive = value;
                             setCommitmentList(newCommitmentList);
                           }}
+                          className='py-2 px-3'
+                          color='#fff'
                         />
                       </div>
                     </div>
@@ -248,7 +252,7 @@ const About: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog,
                       newCommitmentList[index].descriptionText = { ...commitment.descriptionText, [commitment.idActive]: value };
                       setCommitmentList(newCommitmentList);
                     }}
-                    classNameInput='text-justify text-[2.5vh] border-none -mt-5 ml-5'
+                    classNameInput='text-justify text-[2vh] sm:text-[2.5vh] border-none sm:mt-5 sm:ml-5'
                     rows={index !== 0 ? 3 : 5}
                     disabled={isLoadingSubmit}
                   />
@@ -274,13 +278,15 @@ const About: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog,
             </DivContent>
 
             <DivContent className='mb-10'>
-              <div className='flex justify-between items-center mb-4'>
-                <p className='font-extrabold text-neutral-300 text-[3vh]'>Closing Text</p>
-                <div className='bg-white rounded-lg'>
+              <div className='flex justify-between items-center mb-6 sm:mb-4'>
+                <p className='font-extrabold text-neutral-300 text-[2.5vh] sm:text-[3vh]'>Closing Text</p>
+                <div className='bg-white rounded-lg hidden sm:block'>
                   <SelectContent
                     valueList={languangeList}
                     valueSelected={codeLanguage.closingText}
                     setValueSelected={(value) => setCodeLanguage({ ...codeLanguage, closingText: value })}
+                    className='py-2 px-3'
+                    color='#fff'
                   />
                 </div>
               </div>
@@ -288,7 +294,7 @@ const About: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog,
                 id='closingText'
                 value={aboutText.closingText[codeLanguage.closingText]}
                 setValue={value => setAboutText({ ...aboutText, closingText: { ...aboutText.closingText, [codeLanguage.closingText]: value } })}
-                classNameInput='text-justify indent-5 text-[2.5vh]'
+                classNameInput='text-justify indent-5 text-[2vh] sm:text-[2.5vh]'
                 classNameLabel='mt-8'
                 rows={4}
                 disabled={isLoadingSubmit}

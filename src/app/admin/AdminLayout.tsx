@@ -40,7 +40,7 @@ const AdminLayout = () => {
       </div>
       <div className="w-full xl:w-[80vw] h-full flex flex-col">
         <div className="h-[10vh]">
-          <Header />
+          <Header setConfirmDialogData={setConfirmDialogData} openConfirmDialog={() => setIsOpenConfirmDialog(true)} disableConfirmDialog={() => setIsOpenConfirmDialog(false)} />
         </div>
         <div className="flex-1 overflow-auto">
           {idTabActive === 'homeTab' && <Dashboard />}

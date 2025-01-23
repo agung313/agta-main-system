@@ -123,6 +123,8 @@ const Dashboard = () => {
                     valueList={yearList}
                     valueSelected={yearActive}
                     setValueSelected={handleYearChange}
+                    className='py-2 px-3'
+                    color='#fff'
                   />
                 </div>
               </div>

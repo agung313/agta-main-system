@@ -106,7 +106,7 @@ const Messages: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDial
           </div>
         :
         <div className='w-full p-5 flex flex-col'>
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {messageList.length > 0 && messageList.map((message, index) => (
               <DivContent key={index}>
                 <div className='flex item-center mb-2 w-full'>

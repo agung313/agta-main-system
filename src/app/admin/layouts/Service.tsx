@@ -189,12 +189,13 @@ const Service: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
           <div className='w-full p-5 flex flex-col'>
             <DivContent className='mb-10'>
               <div className='flex justify-between items-center mb-10'>
-                <p className='font-extrabold text-neutral-300 text-[3vh]'>Description</p>
-                <div className='bg-white rounded-lg'>
+                <p className='font-extrabold text-neutral-300 text-[2.5vh] sm:text-[3vh]'>Description</p>
+                <div className='bg-white rounded-lg hidden sm:block'>
                   <SelectContent
                     valueList={languangeList}
                     valueSelected={codeLanguage}
                     setValueSelected={setCodeLanguage}
+                    color='#fff'
                   />
                 </div>
               </div>
@@ -202,38 +203,40 @@ const Service: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                 id='description'
                 value={descriptionText[codeLanguage]}
                 setValue={value => setDescriptionText({ ...descriptionText, [codeLanguage]: value })}
-                classNameInput='text-justify indent-5 text-[2.5vh] border-none'
+                classNameInput='text-justify indent-5 text-[2vh] sm:text-[2.5vh] border-none'
                 rows={5}
                 disabled={isLoadingSubmit}
               />
             </DivContent>
             <DivContent>
-              <p className='font-extrabold text-neutral-300 text-[3vh] mb-10'>List of Technologies Used</p>
+              <p className='font-extrabold text-neutral-300 text-[2.5vh] sm:text-[3vh] mb-10'>List of Technologies Used</p>
               {lisTechnologies.map((item, index) => (
                 <div key={index} className='w-full border-b rounded-xl p-4 mb-10'>
-                  <div className='w-full flex items-center'>
-                    <InputContent
-                      id={`file-${index}`}
-                      type='fileImage'
-                      value={typeof item.icont === 'string' && item.icont.includes('agtaimage') ? `${process.env.NEXT_PUBLIC_BASE_URL_IMAGE}${item.icont}` : (item.icont && item.icont !== "" ? item.icont : DefaultImage)}
-                      accept="image/*"
-                      widthImage={70}
-                      heightImage={70}
-                      setValue={value => setLisTechnologies(lisTechnologies.map((tech, i) => i === index ? { ...tech, icont: value } : tech))}
-                      disabled={isLoadingSubmit}
-                    />
-                    <div className="w-full ml-8">
+                  <div className='w-full block sm:flex items-center'>
+                    <div className='flex justify-center items-center mb-8 sm:mb-0 sm:block'>
+                      <InputContent
+                        id={`file-${index}`}
+                        type='fileImage'
+                        value={typeof item.icont === 'string' && item.icont.includes('agtaimage') ? `${process.env.NEXT_PUBLIC_BASE_URL_IMAGE}${item.icont}` : (item.icont && item.icont !== "" ? item.icont : DefaultImage)}
+                        accept="image/*"
+                        widthImage={70}
+                        heightImage={70}
+                        setValue={value => setLisTechnologies(lisTechnologies.map((tech, i) => i === index ? { ...tech, icont: value } : tech))}
+                        disabled={isLoadingSubmit}
+                      />
+                    </div>
+                    <div className="w-full sm:ml-8">
                       <div className="flex items-center justify-between mb-2">
                         <InputContent
                           id={`title-${index}`}
                           value={item.title}
                           placeholder='Type title here...'
                           setValue={value => setLisTechnologies(lisTechnologies.map((tech, i) => i === index ? { ...tech, title: value } : tech))}
-                          classNameInput='text-purple-500 text-[2.5vh] border-none p-0 mb-0'
+                          classNameInput='text-purple-500 text-[2vh] sm:text-[2.5vh] border-none p-0 mb-0'
                           disabled={isLoadingSubmit}
                         />
-                        <div className="flex items-center space-x-2">
-                          <a href={item.link} target="_blank" rel="noreferrer" className='bg-clip-border bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 font-bold text-white p-3 rounded-lg hover:bg-gradient-to-r hover:from-purple-600 hover:via-pink-700 hover:to-red-700'>
+                        <div className="flex items-center space-x-2 hidden sm:flex">
+                          <a href={item.link} target="_blank" rel="noreferrer" className='bg-clip-border bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 font-bold text-white p-2 rounded-lg hover:bg-gradient-to-r hover:from-purple-600 hover:via-pink-700 hover:to-red-700'>
                             Check Link
                           </a>
                           <div className='bg-white rounded-lg'>
@@ -241,6 +244,8 @@ const Service: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                               valueList={languangeList}
                               valueSelected={item.idActive}
                               setValueSelected={value => setLisTechnologies(lisTechnologies.map((tech, i) => i === index ? { ...tech, idActive: value } : tech))}
+                              className='py-2 px-3'
+                              color='#fff'
                             />
                           </div>
                         </div>
@@ -250,7 +255,7 @@ const Service: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                         value={item.link}
                         placeholder='Type link here...'
                         setValue={value => setLisTechnologies(lisTechnologies.map((tech, i) => i === index ? { ...tech, link: value } : tech))}
-                        classNameInput='text-pink-500 text-[2.5vh] border-none p-0'
+                        classNameInput='text-pink-500 text-[2vh] sm:text-[2.5vh] border-none p-0'
                         disabled={isLoadingSubmit}
                       />
                       <InputContent
@@ -258,8 +263,8 @@ const Service: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                         placeholder={`Type description ${item.idActive === "id" ? "Indonesia" : "English"} here...`}
                         value={item.idActive === "id" ? item.descriptionText?.id || "" : item.descriptionText?.en || ""}
                         setValue={value => setLisTechnologies(lisTechnologies.map((tech, i) => i === index ? { ...tech, descriptionText: { ...tech.descriptionText, [item.idActive]: value } } : tech))}
-                        classNameInput='text-[2.5vh] text-white border-none p-0 mb-0'
-                        rows={2}
+                        classNameInput='text-[2vh] sm:text-[2.5vh]] text-white border-none p-0 mb-0'
+                        rows={3}
                         disabled={isLoadingSubmit}
                       />
                     </div>
