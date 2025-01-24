@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "lint:watch": "chokidar 'src/**/*.{js,jsx,ts,tsx}' -c 'eslint . --ext .js,.jsx,.ts,.tsx'"
+    "lint:watch": "chokidar 'src/**/*.{js,jsx,ts,tsx}' -c 'eslint . --ext .js,.jsx,.ts,.tsx'",
+    "install-build-zip": "npm install && npm run build && zip -r my-next-app.zip .next static public"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.4.0",
