@@ -32,7 +32,8 @@ const SelectContent: React.FC<SelectContentProps> = ({ valueList, valueSelected,
   return (
     <div className="relative" ref={dropdownRef}>
       <button
-        className={`${className} text-[2vh] ${!icont && `bg-[${color}]`} rounded-lg focus:outline-none font-bold bg-transparent text-black cursor-pointer flex items-center justify-between`}
+        className={`${className} text-[2vh] rounded-lg focus:outline-none font-bold text-black cursor-pointer flex items-center justify-between`}
+        style={{ backgroundColor: color || 'transparent' }}
         onClick={() => setShowDropdown(!showDropdown)}
       >
         {icont

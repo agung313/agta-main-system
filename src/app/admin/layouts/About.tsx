@@ -24,6 +24,7 @@ interface SloganProps {
 const About: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog, disableConfirmDialog }) => {
   const dispatch = useDispatch();
   const isLoadingSubmit = useSelector((state: { admin: { isLoadingSubmit: boolean } }) => state.admin.isLoadingSubmit);
+  const isAdmin = useSelector((state: { admin: { isAdmin: boolean } }) => state.admin.isAdmin);
   const isMounted = useRef(true);
   const [isLoading, setIsLoading] = useState(false);
   const [codeLanguage, setCodeLanguage] = useState({ openingText: "id", closingText: "id" });
@@ -198,7 +199,7 @@ const About: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog,
                 setValue={value => setAboutText({ ...aboutText, openingText: { ...aboutText.openingText, [codeLanguage.openingText]: value } })}
                 classNameInput='text-justify indent-5 text-[2vh] sm:text-[2.5vh] p-4'
                 rows={4}
-                disabled={isLoadingSubmit}
+                disabled={isLoadingSubmit || isAdmin === false}
               />
             </DivContent>
 
@@ -225,7 +226,7 @@ const About: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog,
                             setCommitmentList(newCommitmentList);
                           }}
                           classNameInput='text-justify text-[2vh] sm:text-[2.5vh]'
-                          disabled={isLoadingSubmit}
+                          disabled={isLoadingSubmit || isAdmin === false}
                         />
                       </div>
                       <div className='bg-white rounded-lg mb-5 hidden sm:block'>
@@ -253,10 +254,10 @@ const About: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog,
                       setCommitmentList(newCommitmentList);
                     }}
                     classNameInput='text-justify text-[2vh] sm:text-[2.5vh] border-none sm:mt-5 sm:ml-5'
-                    rows={index !== 0 ? 3 : 5}
-                    disabled={isLoadingSubmit}
+                    rows={index !== 0 && isAdmin ? 3 : 5}
+                    disabled={isLoadingSubmit || isAdmin === false}
                   />
-                  {index !== 0 &&
+                  {index !== 0 && isAdmin &&
                     <div className='flex items-center justify-end'>
                       <button
                         type="submit"
@@ -269,12 +270,14 @@ const About: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog,
                   }
                 </div>
               ))}
-              <button
-                onClick={handleAddCommitment}
-                className='text-[2vh] w-full font-bold p-2 bg-white text-black rounded-md hover:bg-gray-200'
-              >
-                Add Commitment
-              </button>
+              {isAdmin &&
+                <button
+                  onClick={handleAddCommitment}
+                  className='text-[2vh] w-full font-bold p-2 bg-white text-black rounded-md hover:bg-gray-200'
+                >
+                  Add Commitment
+                </button>
+              }
             </DivContent>
 
             <DivContent className='mb-10'>
@@ -297,16 +300,18 @@ const About: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog,
                 classNameInput='text-justify indent-5 text-[2vh] sm:text-[2.5vh]'
                 classNameLabel='mt-8'
                 rows={4}
-                disabled={isLoadingSubmit}
+                disabled={isLoadingSubmit || isAdmin === false}
               />
             </DivContent>
-            <button
-              type="submit"
-              className="my-10 text-[2vh] w-full font-extrabold p-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white rounded-md hover:bg-gradient-to-r hover:from-purple-600 hover:via-pink-700 hover:to-red-700"
-              onClick={confirm}
-            >
-              Save Changes
-            </button>
+            {isAdmin &&
+              <button
+                type="submit"
+                className="my-10 text-[2vh] w-full font-extrabold p-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white rounded-md hover:bg-gradient-to-r hover:from-purple-600 hover:via-pink-700 hover:to-red-700"
+                onClick={confirm}
+              >
+                Save Changes
+              </button>
+            }
           </div>
       }
     </div>

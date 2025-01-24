@@ -24,6 +24,7 @@ interface SloganProps {
 const Slogan: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog, disableConfirmDialog }) => {
   const dispatch = useDispatch();
   const isLoadingSubmit = useSelector((state: { admin: { isLoadingSubmit: boolean } }) => state.admin.isLoadingSubmit);
+  const isAdmin = useSelector((state: { admin: { isAdmin: boolean } }) => state.admin.isAdmin);
   const isMounted = useRef(true);
   const [isLoading, setIsLoading] = useState(false);
   const [codeLanguage, setCodeLanguage] = useState("id");
@@ -118,7 +119,7 @@ const Slogan: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog
                     value={sloganData.firstText}
                     setValue={value => setSloganData({ ...sloganData, firstText: value })}
                     classNameInput='w-full border border-white'
-                    disabled={isLoadingSubmit}
+                    disabled={isLoadingSubmit || isAdmin === false}
                   />
                   <InputContent
                     id='secondText'
@@ -126,7 +127,7 @@ const Slogan: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog
                     value={sloganData.secondText}
                     setValue={value => setSloganData({ ...sloganData, secondText: value })}
                     classNameInput='w-full border border-white'
-                    disabled={isLoadingSubmit}
+                    disabled={isLoadingSubmit || isAdmin === false}
                   />
                   <InputContent
                     id='thirdText'
@@ -134,7 +135,7 @@ const Slogan: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog
                     value={sloganData.thirdText}
                     setValue={value => setSloganData({ ...sloganData, thirdText: value })}
                     classNameInput='w-full border border-white'
-                    disabled={isLoadingSubmit}
+                    disabled={isLoadingSubmit || isAdmin === false}
                   />
                 </div>
                 <div className="flex flex-col justify-center items-center w-[100%] sm:w-[70%]">
@@ -155,7 +156,7 @@ const Slogan: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog
                     value={sloganData.firstText}
                     setValue={value => setSloganData({ ...sloganData, firstText: value })}
                     classNameInput='w-full border border-white'
-                    disabled={isLoadingSubmit}
+                    disabled={isLoadingSubmit || isAdmin === false}
                   />
                   <InputContent
                     id='secondText'
@@ -163,7 +164,7 @@ const Slogan: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog
                     value={sloganData.secondText}
                     setValue={value => setSloganData({ ...sloganData, secondText: value })}
                     classNameInput='w-full border border-white'
-                    disabled={isLoadingSubmit}
+                    disabled={isLoadingSubmit || isAdmin === false}
                   />
                   <InputContent
                     id='thirdText'
@@ -171,7 +172,7 @@ const Slogan: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog
                     value={sloganData.thirdText}
                     setValue={value => setSloganData({ ...sloganData, thirdText: value })}
                     classNameInput='w-full border border-white'
-                    disabled={isLoadingSubmit}
+                    disabled={isLoadingSubmit || isAdmin === false}
                   />
                 </div>
               </div>
@@ -194,17 +195,19 @@ const Slogan: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog
                 value={sloganData.description[codeLanguage as keyof typeof sloganData.description]}
                 setValue={value => setSloganData({ ...sloganData, description: { ...sloganData.description, [codeLanguage]: value } })}
                 classNameInput='text-justify indent-5 text-[2vh] sm:text-[2.5vh] border-none'
-                disabled={isLoadingSubmit}
+                disabled={isLoadingSubmit || isAdmin === false}
                 rows={5}
               />
             </DivContent>
-            <button
-              type="submit"
-              className="text-[2vh] w-full font-extrabold p-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white rounded-md hover:bg-gradient-to-r hover:from-purple-600 hover:via-pink-700 hover:to-red-700"
-              onClick={confirm}
-            >
-              Save Changes
-            </button>
+            {isAdmin &&
+              <button
+                type="submit"
+                className="text-[2vh] w-full font-extrabold p-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white rounded-md hover:bg-gradient-to-r hover:from-purple-600 hover:via-pink-700 hover:to-red-700"
+                onClick={confirm}
+              >
+                Save Changes
+              </button>
+            }
           </div>
         }
     </div>

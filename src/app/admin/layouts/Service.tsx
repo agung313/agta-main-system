@@ -25,6 +25,7 @@ interface SloganProps {
 const Service: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog, disableConfirmDialog }) => {
   const dispatch = useDispatch();
   const isLoadingSubmit = useSelector((state: { admin: { isLoadingSubmit: boolean } }) => state.admin.isLoadingSubmit);
+  const isAdmin = useSelector((state: { admin: { isAdmin: boolean } }) => state.admin.isAdmin);
   const codeLanguageHeader = useSelector(
     (state: { header: { codeLanguage: "id" | "en" } }) => state.header.codeLanguage
   );
@@ -195,6 +196,7 @@ const Service: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                     valueList={languangeList}
                     valueSelected={codeLanguage}
                     setValueSelected={setCodeLanguage}
+                    className='py-2 px-3'
                     color='#fff'
                   />
                 </div>
@@ -205,7 +207,7 @@ const Service: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                 setValue={value => setDescriptionText({ ...descriptionText, [codeLanguage]: value })}
                 classNameInput='text-justify indent-5 text-[2vh] sm:text-[2.5vh] border-none'
                 rows={5}
-                disabled={isLoadingSubmit}
+                disabled={isLoadingSubmit || isAdmin === false}
               />
             </DivContent>
             <DivContent>
@@ -222,7 +224,7 @@ const Service: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                         widthImage={70}
                         heightImage={70}
                         setValue={value => setLisTechnologies(lisTechnologies.map((tech, i) => i === index ? { ...tech, icont: value } : tech))}
-                        disabled={isLoadingSubmit}
+                        disabled={isLoadingSubmit || isAdmin === false}
                       />
                     </div>
                     <div className="w-full sm:ml-8">
@@ -233,7 +235,7 @@ const Service: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                           placeholder='Type title here...'
                           setValue={value => setLisTechnologies(lisTechnologies.map((tech, i) => i === index ? { ...tech, title: value } : tech))}
                           classNameInput='text-purple-500 text-[2vh] sm:text-[2.5vh] border-none p-0 mb-0'
-                          disabled={isLoadingSubmit}
+                          disabled={isLoadingSubmit || isAdmin === false}
                         />
                         <div className="flex items-center space-x-2 hidden sm:flex">
                           <a href={item.link} target="_blank" rel="noreferrer" className='bg-clip-border bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 font-bold text-white p-2 rounded-lg hover:bg-gradient-to-r hover:from-purple-600 hover:via-pink-700 hover:to-red-700'>
@@ -256,7 +258,7 @@ const Service: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                         placeholder='Type link here...'
                         setValue={value => setLisTechnologies(lisTechnologies.map((tech, i) => i === index ? { ...tech, link: value } : tech))}
                         classNameInput='text-pink-500 text-[2vh] sm:text-[2.5vh] border-none p-0'
-                        disabled={isLoadingSubmit}
+                        disabled={isLoadingSubmit || isAdmin === false}
                       />
                       <InputContent
                         id={`idText-${index}`}
@@ -265,11 +267,11 @@ const Service: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                         setValue={value => setLisTechnologies(lisTechnologies.map((tech, i) => i === index ? { ...tech, descriptionText: { ...tech.descriptionText, [item.idActive]: value } } : tech))}
                         classNameInput='text-[2vh] sm:text-[2.5vh]] text-white border-none p-0 mb-0'
                         rows={3}
-                        disabled={isLoadingSubmit}
+                        disabled={isLoadingSubmit || isAdmin === false}
                       />
                     </div>
                   </div>
-                  {index !== 0 &&
+                  {index !== 0 && isAdmin &&
                     <div className='flex items-center justify-end'>
                       <button
                         type="submit"
@@ -283,22 +285,26 @@ const Service: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                   }
                 </div>
               ))}
-              <button
-                onClick={handleAddTechnologies}
-                className='text-[2vh] w-full font-bold p-2 bg-white text-black rounded-md hover:bg-gray-200'
-                disabled={isLoadingSubmit}
-              >
-                Add Technologies
-              </button>
+              {isAdmin &&
+                <button
+                  onClick={handleAddTechnologies}
+                  className='text-[2vh] w-full font-bold p-2 bg-white text-black rounded-md hover:bg-gray-200'
+                  disabled={isLoadingSubmit}
+                >
+                  Add Technologies
+                </button>
+              }
             </DivContent>
-            <button
-              type="submit"
-              className="my-10 text-[2vh] w-full font-extrabold p-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white rounded-md hover:bg-gradient-to-r hover:from-purple-600 hover:via-pink-700 hover:to-red-700"
-              disabled={isLoadingSubmit}
-              onClick={confirm}
-            >
-              Save Changes
-            </button>
+            {isAdmin &&
+              <button
+                type="submit"
+                className="my-10 text-[2vh] w-full font-extrabold p-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white rounded-md hover:bg-gradient-to-r hover:from-purple-600 hover:via-pink-700 hover:to-red-700"
+                disabled={isLoadingSubmit}
+                onClick={confirm}
+              >
+                Save Changes
+              </button>
+            }
           </div>
       }
     </div>

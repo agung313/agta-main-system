@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Image from 'next/image';
 import { changeIsChangeLanguage, changeLanguage, fetchLocation } from '@/app/redux/header';
 import { store } from '@/app/redux/store';
-import { changeTabActive } from '@/app/redux/admin';
+import { changeTabActive, handleSetIsAdmin } from '@/app/redux/admin';
 import Globe from '../../icons/globe.svg';
 import NavigationBar from '../../icons/navigationBar.svg';
 import DashboardIcont from '../icons/DashboardIcont';
@@ -47,19 +47,20 @@ const Header: React.FC<HeaderProps> = ({ setConfirmDialogData, openConfirmDialog
   const [navigationDialog, setNavigationDialog] = useState(false); // eslint-disable-line
 
   const isMounted = useRef(true);
+
+  const role = localStorage.getItem('userDataRole');
   
   useEffect(() => {
     if (isMounted.current) {
       if (isChangeLanguage !== true) {
         dispatch(fetchLocation());
+        dispatch(handleSetIsAdmin(role));
       }
     }
     return () => {
       isMounted.current = false;
     };
-  }, [dispatch, isChangeLanguage]);
-
-  
+  }, [dispatch, isChangeLanguage, role]);
 
   const languangeList = useMemo(() => [{ id: "id", name: "Indonesia" }, { id: "en", name: "English" }], []);
   const [languageActive, setLanguageActive] = useState("id");
@@ -137,7 +138,6 @@ const Header: React.FC<HeaderProps> = ({ setConfirmDialogData, openConfirmDialog
           setValueSelected={handleSelectedLanguage}
           icont={Globe}
           className='mr-6'
-          color='#fff'
         />
         <button onClick={() => setNavigationDialog(true)}>
           <Image src={NavigationBar} alt="Language Icon" className="w-8 h-8" />

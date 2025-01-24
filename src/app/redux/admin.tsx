@@ -6,6 +6,7 @@ export const admin = createSlice({
     idTabActive: 'homeTab',
     isLoading: false,
     isLoadingSubmit: false,
+    isAdmin: false,
   },
   reducers: {
     resetState: (state) => {
@@ -27,6 +28,9 @@ export const admin = createSlice({
     hideLoadingSubmit: (state) => {
       state.isLoadingSubmit = false;
     },
+    handleSetIsAdmin: (state, action) => {
+      state.isAdmin = action.payload === 'superAdmin' ? true : false;
+    }
   },
 });
 
@@ -37,6 +41,7 @@ export const {
   hideLoadingAdmin,
   showLoadingSubmit,
   hideLoadingSubmit,
+  handleSetIsAdmin,
 } = admin.actions;
 
 export default admin.reducer;

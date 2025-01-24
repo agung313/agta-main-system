@@ -33,6 +33,7 @@ const SideBar: React.FC<SidebarProps> = ({ setConfirmDialogData, openConfirmDial
   const route = useRouter();
   const dispatch = useDispatch<typeof store.dispatch>();
   const idTabActive = useSelector((state: { admin: { idTabActive: string } }) => state.admin.idTabActive);
+  const isAdmin = useSelector((state: { admin: { isAdmin: boolean } }) => state.admin.isAdmin);
 
   const changeTab = (tab: string) => {
     dispatch(changeTabActive(tab));
@@ -106,12 +107,14 @@ const SideBar: React.FC<SidebarProps> = ({ setConfirmDialogData, openConfirmDial
             Contacts
           </p>
         </button>
-        <button className="flex items-center mt-8 pl-1" onClick={() => changeTab('messagesTab')}>
-          <MessagesIcont size={25} color={idTabActive === 'messagesTab' ? '#fff' : '#4A4E56'} />
-          <p className={`font-medium text-[2vh] ml-3 ${idTabActive === 'messagesTab' ? 'text-white' : 'text-neutral-600'}`}>
-            Messagaes
-          </p>
-        </button>
+        {isAdmin &&
+          <button className="flex items-center mt-8 pl-1" onClick={() => changeTab('messagesTab')}>
+            <MessagesIcont size={25} color={idTabActive === 'messagesTab' ? '#fff' : '#4A4E56'} />
+            <p className={`font-medium text-[2vh] ml-3 ${idTabActive === 'messagesTab' ? 'text-white' : 'text-neutral-600'}`}>
+              Messagaes
+            </p>
+          </button>
+        }
         <button className="flex items-center mt-8" onClick={() => changeTab('profileTab')}>
           <AcountIcont size={35} color={idTabActive === 'profileTab' ? '#fff' : '#4A4E56'} />
           <p className={`font-medium text-[2vh] ml-2 ${idTabActive === 'profileTab' ? 'text-white' : 'text-neutral-600'}`}>

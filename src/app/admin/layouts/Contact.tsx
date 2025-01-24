@@ -29,6 +29,7 @@ interface SloganProps {
 const Contact: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialog, disableConfirmDialog }) => {
   const dispatch = useDispatch();
   const isLoadingSubmit = useSelector((state: { admin: { isLoadingSubmit: boolean } }) => state.admin.isLoadingSubmit);
+  const isAdmin = useSelector((state: { admin: { isAdmin: boolean } }) => state.admin.isAdmin);
   const isMounted = useRef(true);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -112,7 +113,7 @@ const Contact: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                 <div className="ml-4 w-[90%]">
                   <p className="text-purple-400 text-[2vh] sm:text-[2.5vh] mb-2">Email</p>
                   <InputContent
-                    disabled={isLoadingSubmit}
+                    disabled={isLoadingSubmit || isAdmin === false}
                     id='contact-email'
                     type='text'
                     placeholder='Type email here...'
@@ -130,7 +131,7 @@ const Contact: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                 <div className="ml-4 w-[90%]">
                   <p className="text-purple-400 text-[2vh] sm:text-[2.5vh] mb-2">Instagram</p>
                   <InputContent
-                    disabled={isLoadingSubmit}
+                    disabled={isLoadingSubmit || isAdmin === false}
                     id='contact-instagram'
                     type='text'
                     placeholder='Type instagram here...'
@@ -148,7 +149,7 @@ const Contact: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                 <div className="ml-4 w-[90%]">
                   <p className="text-purple-400 text-[2vh] sm:text-[2.5vh] mb-2">Linkedin Link</p>
                   <InputContent
-                    disabled={isLoadingSubmit}
+                    disabled={isLoadingSubmit || isAdmin === false}
                     id='contact-Linkedin'
                     type='text'
                     placeholder='Type linkedin link here...'
@@ -166,7 +167,7 @@ const Contact: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                 <div className="ml-4 w-[90%]">
                   <p className="text-purple-400 text-[2vh] sm:text-[2.5vh] mb-2">Address</p>
                   <InputContent
-                    disabled={isLoadingSubmit}
+                    disabled={isLoadingSubmit || isAdmin === false}
                     id='contact-address'
                     type='text'
                     placeholder='Type address here...'
@@ -184,7 +185,7 @@ const Contact: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                 <div className="ml-4 w-[90%]">
                   <p className="text-purple-400 text-[2vh] sm:text-[2.5vh] mb-2">Address Link</p>
                   <InputContent
-                    disabled={isLoadingSubmit}
+                    disabled={isLoadingSubmit || isAdmin === false}
                     id='contact-addressLink'
                     type='text'
                     placeholder='Type address link here...'
@@ -202,7 +203,7 @@ const Contact: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
                 <div className="ml-4 w-[90%]">
                   <p className="text-purple-400 text-[2vh] sm:text-[2.5vh] mb-2">Telephone</p>
                   <InputContent
-                    disabled={isLoadingSubmit}
+                    disabled={isLoadingSubmit || isAdmin === false}
                     id='contact-phone'
                     type='text'
                     placeholder='Type telephone here...'
@@ -215,13 +216,15 @@ const Contact: React.FC<SloganProps> = ({ setConfirmDialogData, openConfirmDialo
 
             </div>
           </DivContent>
-          <button
-            type="submit"
-            className="my-10 text-[2vh] w-full font-extrabold p-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white rounded-md hover:bg-gradient-to-r hover:from-purple-600 hover:via-pink-700 hover:to-red-700"
-            onClick={confirm}
-          >
-            Save Changes
-          </button>
+          {isAdmin &&
+            <button
+              type="submit"
+              className="my-10 text-[2vh] w-full font-extrabold p-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white rounded-md hover:bg-gradient-to-r hover:from-purple-600 hover:via-pink-700 hover:to-red-700"
+              onClick={confirm}
+            >
+              Save Changes
+            </button>
+          }
         </div>
       }
     </div>
